@@ -5,10 +5,10 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.cmbb.smartkids.mbproject"
+        applicationId 'com.cmbb.smartkids'
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 1
+        versionCode 24
         versionName "1.0"
     }
     buildTypes {
@@ -22,15 +22,12 @@ android {
         wandoujia {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
         }
-
         baidu {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
         }
-
         c360 {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c360"]
         }
-
         uc {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "uc"]
         }
@@ -40,23 +37,18 @@ android {
         Umeng {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Umeng"]
         }
-
         Meizu {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Meizu"]
         }
-
         XiaoMi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "XiaoMi"]
         }
-
         HuaWei {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "HuaWei"]
         }
-
         Oppo {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Oppo"]
         }
-
         Lenovo {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Lenovo"]
         }
