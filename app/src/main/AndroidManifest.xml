@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.cmbb.smartkids.mbproject"
+    package="com.cmbb.smartkids"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- umeng-analytics -->
@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- umeng-analytics -->
-
-
     <!-- pgyer -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 读写sdcard，storage等等 -->
@@ -64,6 +62,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="com.cmbb.smartkids.photopicker.PhotoPagerActivity"/>
         <!-- MengPhotoPicker -->
+        <provider
+            android:name=".provider.ProviderUserAccount"
+            android:authorities="com.cmbb.smartkids.useraccount"
+            android:enabled="true"
+            android:exported="false"/>
+
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home">
