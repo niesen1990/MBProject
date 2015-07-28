@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.cmbb.smartkids.mbproject.tools.log.Log;
 import com.cmbb.smartkids.mbproject.tools.log.LogWrapper;
-import com.cmbb.smartkids.mbproject.tools.sp.SpCache;
+import com.cmbb.smartkids.mbproject.tools.sp.SPCache;
 import com.facebook.stetho.Stetho;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.umeng.analytics.MobclickAgent;
@@ -64,6 +64,6 @@ public class MApplication extends Application {
      * SpCache.putInt(ACTIVITY_CREATE_COUNT, count);
      */
     private void initSharePreference() {
-        SpCache.init(this);
+        SPCache.init(this);
     }
 }
