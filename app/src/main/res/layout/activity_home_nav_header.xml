@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/head_bac"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
+        android:id="@+id/iv_head"
         android:layout_width="72.0dp"
         android:layout_height="72.0dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/activity_vertical_margin"
         android:layout_marginBottom="20.0dp"
-        android:src="@mipmap/ic_launcher"
-        />
+        tools:src="@mipmap/ic_launcher"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SmartKids"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_alignTop="@id/iv_head"
+        android:layout_toRightOf="@id/iv_head"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="Nike"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="https://www.smart-kids.com"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:layout_alignBottom="@id/iv_head"
+        android:layout_toRightOf="@id/iv_head"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        tools:text="150"/>
 
-</LinearLayout>
+</RelativeLayout>

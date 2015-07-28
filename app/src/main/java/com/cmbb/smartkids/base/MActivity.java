@@ -1,11 +1,10 @@
 package com.cmbb.smartkids.base;
 
-import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import com.umeng.analytics.MobclickAgent;
  * Created by javon on 2015/7/28.
  */
 public abstract class MActivity extends AppCompatActivity implements View
-        .OnClickListener,DialogControl, ToastControl {
+        .OnClickListener, DialogControl, ToastControl {
     private static final String TAG = MActivity.class.getSimpleName();
 
     // Toast
@@ -49,19 +48,20 @@ public abstract class MActivity extends AppCompatActivity implements View
         setContentView(getLayoutId());
         TDevice.saveDisplaySize(this);
         initToolbar();
-        init();
         init(savedInstanceState);
-        initShare();
     }
 
 
     protected void initToolbar() {
         try {
-            toolbar = (Toolbar) findViewById(R.id.tl_custom_main);
-            toolbar.setTitleTextColor(Color.parseColor("#FFFFFF")); //设置标题颜色
+            // 设置Toolbar
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(true); //设置返回键可用
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         } catch (NullPointerException e) {
 
         }
@@ -73,21 +73,15 @@ public abstract class MActivity extends AppCompatActivity implements View
 
     protected abstract void init(Bundle savedInstanceState);
 
-    protected abstract void init();
-
-    // umeng wxapi
-    private void initShare() {
-        // UMSocialService umSocialService = UMServiceFactory.getUmS
-    }
 
     @Override
     protected void onResume() {
         _isVisible = true;
-//        if (System.currentTimeMillis() - Application.getLastClearImageCache() > 24 * 3600 * 1000l) {
-//            ImageLoader.getInstance().clearDiskCache();
-//            ImageLoader.getInstance().clearMemoryCache();
-//            Application.setLastClearImageCache(System.currentTimeMillis());
-//        }
+        //        if (System.currentTimeMillis() - Application.getLastClearImageCache() > 24 * 3600 * 1000l) {
+        //            ImageLoader.getInstance().clearDiskCache();
+        //            ImageLoader.getInstance().clearMemoryCache();
+        //            Application.setLastClearImageCache(System.currentTimeMillis());
+        //        }
         super.onResume();
         MobclickAgent.onResume(this);
     }
@@ -252,7 +246,7 @@ public abstract class MActivity extends AppCompatActivity implements View
             }
         }*/
 
-        if ( _waitDialog != null) {
+        if (_waitDialog != null) {
             try {
                 _waitDialog.dismiss();
                 _waitDialog = null;
@@ -271,12 +265,11 @@ public abstract class MActivity extends AppCompatActivity implements View
             // 如果图片还未回收，先强制回收该图片
             if (bitmapDrawable.getBitmap() != null
                     && !bitmapDrawable.getBitmap().isRecycled()) {
-//                Log.i(TAG, "图片回收");
+                //                Log.i(TAG, "图片回收");
                 bitmapDrawable.getBitmap().recycle();
             }
         }
     }
-
 
 
 }

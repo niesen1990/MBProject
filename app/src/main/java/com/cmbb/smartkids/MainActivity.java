@@ -24,10 +24,6 @@ public class MainActivity extends MActivity {
 
     }
 
-    @Override
-    protected void init() {
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

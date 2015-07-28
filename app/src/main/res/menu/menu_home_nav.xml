@@ -1,35 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@android:drawable/ic_menu_help"
-            android:title="SimpleDraweeView" />
-        <item
-            android:id="@+id/nav_viewpager"
-            android:icon="@android:drawable/ic_menu_agenda"
-            android:title="PhotoView" />
-        <item
-            android:id="@+id/nav_subsamplingScale"
-            android:icon="@android:drawable/ic_menu_add"
-            android:title="SubsamplingScaleImage" />
-        <item
-            android:id="@+id/nav_gifview"
-            android:icon="@android:drawable/ic_menu_camera"
-            android:title="CustomGifView" />
-    </group>
+
+    <item android:title="萌宝空间">
+        <menu>
+            <item
+                android:id="@+id/nav_attention"
+                android:icon="@drawable/ic_home_attention"
+                android:title="@string/nav_home_iattention"/>
+            <item
+                android:id="@+id/nav_collection"
+                android:icon="@drawable/ic_home_collection"
+                android:title="@string/nav_home_icollection"/>
+            <item
+                android:id="@+id/nav_publish"
+                android:icon="@drawable/ic_home_publish"
+                android:title="@string/nav_home_ipublish"/>
+        </menu>
+    </item>
 
     <item android:title="系统组建">
         <menu>
             <item
-                android:id="@+id/nav_sub_item1"
-                android:icon="@android:drawable/ic_menu_compass"
-                android:title="Sub item 1" />
-            <item
-                android:id="@+id/nav_sub_item2"
-                android:icon="@android:drawable/ic_menu_edit"
-                android:title="Sub item 2" />
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_home_setting"
+                android:title="@string/nav_home_setting"/>
         </menu>
     </item>
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_titlebar_left">广场</string>
+    <string name="home_titlebar_right">关注</string>
+    <string name="nav_home_setting">我的设置</string>
+    <string name="nav_home_ipublish">我的发布</string>
+    <string name="nav_home_icollection">我的收藏</string>
+    <string name="nav_home_iattention">我的关注</string>
+</resources>
