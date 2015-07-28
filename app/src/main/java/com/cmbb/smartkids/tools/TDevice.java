@@ -1,0 +1,288 @@
+package com.cmbb.smartkids.tools;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.TrafficStats;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewConfiguration;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import com.cmbb.smartkids.base.Constants;
+import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.tools.sp.SPCache;
+
+import java.io.File;
+
+@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+public class TDevice {
+
+    public static boolean GTE_HC;
+    public static boolean GTE_ICS;
+    public static boolean PRE_HC;
+    private static Boolean _hasBigScreen = null;
+    private static Boolean _hasCamera = null;
+    private static Boolean _isTablet = null;
+    private static int _pageSize = -1;
+    public static float displayDensity = 0.0F;
+
+    static {
+        boolean flag = true;
+        boolean flag1;
+        boolean flag2;
+        if (Build.VERSION.SDK_INT >= 14)
+            flag1 = flag;
+        else
+            flag1 = false;
+        GTE_ICS = flag1;
+        if (Build.VERSION.SDK_INT >= 11)
+            flag2 = flag;
+        else
+            flag2 = false;
+        GTE_HC = flag2;
+        if (Build.VERSION.SDK_INT >= 11)
+            flag = false;
+        PRE_HC = flag;
+    }
+
+    public TDevice() {
+    }
+
+    public static float dpToPixel(float dp) {
+        return dp * (getDisplayMetrics().densityDpi % 160F);
+    }
+
+
+    public static float getDensity() {
+        if (displayDensity == 0.0)
+            displayDensity = getDisplayMetrics().density;
+        return displayDensity;
+    }
+
+    public static DisplayMetrics getDisplayMetrics() {
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        ((WindowManager) MApplication.getContext().getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getMetrics(displaymetrics);
+        return displaymetrics;
+    }
+
+    public static int getPageSize() {
+        if (_pageSize == -1)
+            if (TDevice.isTablet())
+                _pageSize = 50;
+            else if (TDevice.hasBigScreen())
+                _pageSize = 20;
+            else
+                _pageSize = 10;
+        return _pageSize;
+    }
+
+    public static float getScreenHeight() {
+        return getDisplayMetrics().heightPixels;
+    }
+
+    public static float getScreenWidth() {
+        return getDisplayMetrics().widthPixels;
+    }
+
+    /**
+     * @param activity
+     * 保存屏幕宽高
+     */
+    public static void saveDisplaySize(Activity activity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        SPCache.putInt(Constants.SharePreference.SCREEN_WIDTH, displayMetrics.widthPixels);
+        SPCache.putInt(Constants.SharePreference.SCREEN_HEIGHT, displayMetrics.heightPixels);
+    }
+
+
+    public static boolean hasBigScreen() {
+        boolean flag = true;
+        if (_hasBigScreen == null) {
+            boolean flag1;
+            Boolean boolean1;
+            if ((0xf & MApplication.getContext().getResources().getConfiguration().screenLayout) >= 3)
+                flag1 = flag;
+            else
+                flag1 = false;
+            boolean1 = Boolean.valueOf(flag1);
+            _hasBigScreen = boolean1;
+            if (!boolean1.booleanValue()) {
+                if (getDensity() <= 1.5F)
+                    flag = false;
+                _hasBigScreen = Boolean.valueOf(flag);
+            }
+        }
+        return _hasBigScreen.booleanValue();
+    }
+
+    public static final boolean hasCamera() {
+        if (_hasCamera == null) {
+            PackageManager pckMgr = MApplication.getContext().getPackageManager();
+            boolean flag = pckMgr
+                    .hasSystemFeature("android.hardware.camera.front");
+            boolean flag1 = pckMgr.hasSystemFeature("android.hardware.camera");
+            boolean flag2;
+            if (flag || flag1)
+                flag2 = true;
+            else
+                flag2 = false;
+            _hasCamera = Boolean.valueOf(flag2);
+        }
+        return _hasCamera.booleanValue();
+    }
+
+    public static boolean hasHardwareMenuKey(Context context) {
+        boolean flag = false;
+        if (PRE_HC)
+            flag = true;
+        else if (GTE_ICS) {
+            flag = ViewConfiguration.get(context).hasPermanentMenuKey();
+        } else
+            flag = false;
+        return flag;
+    }
+
+    public static boolean hasInternet() {
+        boolean flag;
+        if (((ConnectivityManager) MApplication.getContext().getSystemService(
+                Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null)
+            flag = true;
+        else
+            flag = false;
+        return flag;
+    }
+
+    public static boolean isPackageExist(String pckName) {
+        try {
+            PackageInfo pckInfo = MApplication.getContext().getPackageManager()
+                    .getPackageInfo(pckName, 0);
+            if (pckInfo != null)
+                return true;
+        } catch (NameNotFoundException e) {
+        }
+        return false;
+    }
+
+    public static void hideAnimatedView(View view) {
+        if (PRE_HC && view != null)
+            view.setPadding(view.getWidth(), 0, 0, 0);
+    }
+
+    public static void hideSoftKeyboard(View view) {
+        if (view == null)
+            return;
+        ((InputMethodManager) MApplication.getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                view.getWindowToken(), 0);
+    }
+
+    public static boolean isLandscape() {
+        boolean flag;
+        if (MApplication.getContext().getResources().getConfiguration().orientation == 2)
+            flag = true;
+        else
+            flag = false;
+        return flag;
+    }
+
+    public static boolean isPortrait() {
+        boolean flag = true;
+        if (MApplication.getContext().getResources().getConfiguration().orientation != 1)
+            flag = false;
+        return flag;
+    }
+
+    public static boolean isTablet() {
+        if (_isTablet == null) {
+            boolean flag;
+            if ((0xf & MApplication.getContext().getResources().getConfiguration().screenLayout) >= 3)
+                flag = true;
+            else
+                flag = false;
+            _isTablet = Boolean.valueOf(flag);
+        }
+        return _isTablet.booleanValue();
+    }
+
+    public static float pixelsToDp(float f) {
+        return f / (getDisplayMetrics().densityDpi / 160F);
+    }
+
+    public static int pixelsToDp(int f) {
+        return (int) (f / (getDisplayMetrics().densityDpi / 160F));
+    }
+
+
+    public static boolean isSdcardReady() {
+        return Environment.MEDIA_MOUNTED.equals(Environment
+                .getExternalStorageState());
+    }
+
+    public static int getVersionCode() {
+        int versionCode = 0;
+        try {
+            versionCode = MApplication.getContext().getPackageManager()
+                    .getPackageInfo(MApplication.getContext().getPackageName(), 0).versionCode;
+        } catch (NameNotFoundException ex) {
+            versionCode = 0;
+        }
+        return versionCode;
+    }
+
+    public static String getVersionName() {
+        String name = "";
+        try {
+            name = MApplication.getContext().getPackageManager()
+                    .getPackageInfo(MApplication.getContext().getPackageName(), 0).versionName;
+        } catch (NameNotFoundException ex) {
+            name = "";
+        }
+        return name;
+    }
+
+
+    public static void installAPK(Context context, File file) {
+        Intent intent = new Intent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file),
+                "application/vnd.android.package-archive");
+        context.startActivity(intent);
+    }
+
+    public static void openDial(Context context, String number) {
+        Uri uri = Uri.parse("tel:" + number);
+        Intent it = new Intent(Intent.ACTION_DIAL, uri);
+        context.startActivity(it);
+    }
+
+    public static void openSMS(Context context, String smsBody, String tel) {
+        Uri uri = Uri.parse("smsto:" + tel);
+        Intent it = new Intent(Intent.ACTION_SENDTO, uri);
+        it.putExtra("sms_body", smsBody);
+        context.startActivity(it);
+    }
+
+    //获取总的接收字节（mobile and wifi）
+    public static long getTotalRxBytes() {
+        return TrafficStats.getUidRxBytes(android.os.Process.myPid()) == TrafficStats.UNSUPPORTED ? 0 : (TrafficStats
+                .getUidRxBytes(android.os.Process.myPid()) / 1024);
+    }
+
+    //获取总的发送字节（mobile and wifi）
+    public static long getTotalTxBytes() {
+        return TrafficStats.getUidTxBytes(android.os.Process.myPid()) == TrafficStats.UNSUPPORTED ? 0 : (TrafficStats
+                .getUidTxBytes(android.os.Process.myPid()) / 1024);
+    }
+}

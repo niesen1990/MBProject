@@ -1,6 +1,7 @@
-package com.cmbb.smartkids;
+package com.cmbb.smartkids.base;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.log.LogWrapper;
@@ -16,12 +17,17 @@ import com.umeng.analytics.MobclickAgent;
  * 创建时间：15/7/28 上午9:04
  */
 public class MApplication extends Application {
+    private static MApplication instance = null;
+    private static Context mContext = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
+        mContext = getApplicationContext();
         initStetho();
         initUmengAnalytics();
+        initSharePreference();
         initLog();
     }
 
@@ -50,6 +56,15 @@ public class MApplication extends Application {
         PgyCrashManager.register(this, appId);
     }
 
+
+    /**
+     * @return instance
+     * 获取Application 单例
+     */
+    public static MApplication getInstance(){ return instance;}
+
+    public static Context getContext(){return mContext;}
+
     /**
      * 初始化 日志
      */
@@ -66,4 +81,6 @@ public class MApplication extends Application {
     private void initSharePreference() {
         SPCache.init(this);
     }
+
+
 }

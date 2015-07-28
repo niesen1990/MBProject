@@ -1,16 +1,32 @@
 package com.cmbb.smartkids;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import com.cmbb.smartkids.base.MActivity;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class MainActivity extends MActivity {
+    private static Boolean isQuit = false;// 退出应用标识符
+    private Timer timer = new Timer();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void init(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void init() {
+
     }
 
     @Override
@@ -28,5 +44,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (!isQuit) {
+                isQuit = true;
+                showToastShort(R.string.back_more_quit);
+                TimerTask task = null;
+                task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        isQuit = false;
+                    }
+                };
+                timer.schedule(task, 2000);
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return false;
     }
 }

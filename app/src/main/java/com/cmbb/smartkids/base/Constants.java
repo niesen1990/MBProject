@@ -170,6 +170,9 @@ public class Constants {
 
         }
 
+        public static final String SCREEN_WIDTH = "screen_width";
+        public static final String SCREEN_HEIGHT = "screen_height";
+
     }
 }
 
