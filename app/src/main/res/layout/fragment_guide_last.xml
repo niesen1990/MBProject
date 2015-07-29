@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/guide_bac_03"
+        android:scaleType="fitXY"
+        android:id="@+id/iv_guide_bac"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="新版本升级"
+            android:padding="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            style="@android:style/TextAppearance.DeviceDefault.Large"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#298D91"
+            android:text=""
+            android:background="@drawable/start"
+            android:padding="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            style="@android:style/TextAppearance.DeviceDefault.Large"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+</FrameLayout>
+

@@ -2,8 +2,8 @@ package com.cmbb.smartkids.fragment.test;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
-import com.cmbb.smartkids.mengrecyclerview.fragments.CommonFragment;
 
 /**
  * 项目名称：MengBao

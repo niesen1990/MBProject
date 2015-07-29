@@ -172,6 +172,8 @@ public class Constants {
 
         public static final String SCREEN_WIDTH = "screen_width";
         public static final String SCREEN_HEIGHT = "screen_height";
+        public static final String IS_FIRST_INTO = "is_first_into";
+        public static final String USER_TOKEN = "user_token";
 
     }
 }

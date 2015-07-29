@@ -1,4 +1,4 @@
-package com.cmbb.smartkids.mengrecyclerview.fragments;
+package com.cmbb.smartkids.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,7 +14,7 @@ import java.util.List;
  * 创建人：N.Sun
  * 创建时间：2015/6/30 11:13
  */
-public class ContentFragmentBase<T> extends Fragment implements UIRespondent<T>, AdapterRespondent, SwipeRefreshLayout.OnRefreshListener {
+public class ContentFragmentBase<T> extends MFragment implements UIRespondent<T>, AdapterRespondent, SwipeRefreshLayout.OnRefreshListener {
     /**
      * 数据发生变化
      */

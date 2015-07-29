@@ -1,4 +1,4 @@
-package com.cmbb.smartkids.mengrecyclerview.fragments;
+package com.cmbb.smartkids.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
