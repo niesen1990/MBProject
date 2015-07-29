@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/custom_toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.cmbb.smartkids.activities.tools.ToolsSugDetailActivity">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <View
+                android:layout_height="5px"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:background="#44000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="护理要点"
+                />
+
+            <TextView
+                android:id="@+id/huli_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="喂养要点"
+                />
+
+            <TextView
+                android:id="@+id/weiyang_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text=""
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="男孩发育指标"
+                />
+
+            <TextView
+                android:id="@+id/boys_zhibiao_shengao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="身高  :  "
+                />
+
+            <TextView
+                android:id="@+id/boys_zhibiao_tizhong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="体重  :  "
+                />
+
+            <TextView
+                android:id="@+id/boys_zhibiao_zuogao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="#8000"
+                android:text="坐高  :  "
+                />
+
+            <TextView
+                android:id="@+id/boys_zhibiao_touwei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="头围  :  "
+                />
+
+            <TextView
+                android:id="@+id/boys_zhibiao_xiongwei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="胸围  :  "
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:text="女孩发育指标"
+                />
+
+            <TextView
+                android:id="@+id/girls_zhibiao_shengao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="身高  :  "
+                />
+
+            <TextView
+                android:id="@+id/girls_zhibiao_tizhong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="体重  :  "
+                />
+
+            <TextView
+                android:id="@+id/girls_zhibiao_zuogao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="坐高  :  "
+                />
+
+            <TextView
+                android:id="@+id/girls_zhibiao_touwei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="头围  :  "
+                />
+
+            <TextView
+                android:id="@+id/girls_zhibiao_xiongwei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#8000"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:text="胸围  :  "
+                android:layout_marginBottom="20dp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

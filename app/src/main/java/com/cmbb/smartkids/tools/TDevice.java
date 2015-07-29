@@ -57,9 +57,43 @@ public class TDevice {
     public TDevice() {
     }
 
-    public static float dpToPixel(float dp) {
-        return dp * (getDisplayMetrics().densityDpi % 160F);
+    /**
+     * 将px类型的尺寸转换成dp类型的尺寸
+     *
+     * @param pxValue
+     * @param context
+     * @return
+     */
+    public static int px2dip(Context context, float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
     }
+
+    /**
+     * 将dp类型的尺寸转换成px类型的尺寸
+     *
+     * @param size
+     * @param context
+     * @return
+     */
+    public static int dip2px(int size, Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getMetrics(metrics);
+        return (int) ((float) size * metrics.density + 0.5);
+    }
+
+
+    public static int px2sp(float pxValue, Context context) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
+    public static int sp2px(int spValue, Context context) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
 
 
     public static float getDensity() {
@@ -214,15 +248,6 @@ public class TDevice {
         }
         return _isTablet.booleanValue();
     }
-
-    public static float pixelsToDp(float f) {
-        return f / (getDisplayMetrics().densityDpi / 160F);
-    }
-
-    public static int pixelsToDp(int f) {
-        return (int) (f / (getDisplayMetrics().densityDpi / 160F));
-    }
-
 
     public static boolean isSdcardReady() {
         return Environment.MEDIA_MOUNTED.equals(Environment

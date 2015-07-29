@@ -1,0 +1,82 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.fragment.YuMiaoActivity">
+
+    <include layout="@layout/custom_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin_half"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="宝宝预防接时间表"
+                android:textColor="@color/button_material_dark" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Part1：\n           计划内疫苗 \u3000\u3000计划内疫苗（一类疫苗）是国家规定纳入计划免疫，属于免费疫苗，是从宝宝出生后必须进行接种的。计划免疫包括两个程序：一个是全程足量的基础免疫，即在1周岁内完成的初次接种；二是以后的加强免疫，即根据疫苗的免疫持久性及人群的免疫水平和疾病流行情况适时地进行复种。 "
+                android:textColor="@color/button_material_dark" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tools_vaccination_top_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Part2：\n           计划外疫苗
+\u3000\u3000除了国家规定宝宝必须接种的疫苗外，其它需要接种的疫苗都属于计划外疫苗（二类疫苗）。这些疫苗都是本着自费、自愿的原则，家长可以根据宝宝的实际需要有选择性地为其接种。
+	    "
+
+                android:textColor="@color/button_material_dark" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:src="@drawable/tools_vaccination_bot_bg" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="接种注意事项\n
+Q:宝宝接种疫苗之前，家长应该做好哪些准备工作？\n
+\u3000\u3000A：接触疫苗前，家长做好准备工作很有必要，避免宝宝因发烧、腹泻等常见的呼吸道及消化道疾病而延期接种。\n准备工作包括：\n
+•	局部注射部位皮肤的清洁。\n
+•	饮食宜清淡，不要吃太油的食物。食量适中，预防腹泻、呕吐。\n
+•	不要到人多拥挤的场所,不要与有伤风感冒者接触,避免传染上疾病。睡眠时避免受凉，夏季不要吃冷饮等。\n
+•	已有疾病争取早日治愈。\n\n
+Q：宝宝打疫苗处出现硬结，会自行消失吗？\n
+\u3000\u3000A：接种卡介苗的部位所形成的小硬结一般不会消退，及时热敷也无效。由注射其它疫苗引起的硬结，只要加强热敷多数可以消失。下次再次注射疫苗时要避开硬结部位。\n\n
+Q：一般打完疫苗后医生会要求观察半小时，如果有不适这半小内就会发现吗？\n
+\u3000\u3000A：接种疫苗后要求观察半小时，就是要观察是否出现前面所讲的异常反应，尤其是对疫苗的过敏反应，这类反应绝大多数发生在接种疫苗后30分钟内。如果接种后没有别的事再延长一些时间也可以。\n\n
+Q：宝宝回老家几个月，又正好碰到疫苗接种日，请问在外地可以接种吗？还是必须回原来的医院接种？\n
+\u3000\u3000A：按理是可以在异地接种，但是需要带好预防接种手册，根据手册上登记记录的情况决定。国家有最低要求免费接种内容，但全国友协省市（如上海、北京、广东等）有地方的接种内容及顺序。当地卫生部门执行当地的规定，如果两者不一致时可能出现困难，所以异地是否接种还应尊重当地的意见。
+	    "
+                android:textColor="@color/button_material_dark" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -25,10 +25,10 @@ public class MApplication extends Application {
         super.onCreate();
         instance = this;
         mContext = getApplicationContext();
+        initLog();
         initStetho();
         initUmengAnalytics();
         initSharePreference();
-        initLog();
     }
 
     /**

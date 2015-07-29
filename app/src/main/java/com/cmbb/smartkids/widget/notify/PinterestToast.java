@@ -22,6 +22,7 @@ public class PinterestToast {
     private static final String TAG = "PinterestToast";
     private long _duration = 3500l;
     private ToastView _toastVw;
+    private Activity activity;
 
     public PinterestToast(Activity activity) {
         init(activity);
@@ -38,6 +39,7 @@ public class PinterestToast {
     }
 
     private void init(Activity activity) {
+        this.activity = activity;
         _toastVw = new ToastView(activity);
         setLayoutGravity(81);
     }
@@ -63,7 +65,7 @@ public class PinterestToast {
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(-2,
                     -2);
             params.gravity = i;
-            int j = (int) TDevice.dpToPixel(16F);
+            int j = TDevice.dip2px(16, activity);
             params.setMargins(j, j, j, j);
             _toastVw.setLayoutParams(params);
         }

@@ -1,0 +1,119 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.cmbb.smartkids.fragment.FragmentToolss">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center_horizontal|bottom"
+        android:text="实用工具"
+        android:textColor="@color/button_material_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:background="@drawable/round_yellow_emergency"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/toolss_tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/selector_tools_emergency"
+                android:text="急症室"
+                android:textColor="@color/color_brown" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:layout_marginLeft="76dp"
+            android:background="@drawable/round_pink_map"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/toolss_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/selector_tools_location"
+                android:text="导航帮助"
+                android:textColor="@color/color_white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center_horizontal|bottom"
+        android:text="知识工具"
+        android:textColor="@color/button_material_dark" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="1dp">
+
+        <RelativeLayout
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:background="@drawable/round_blue_suggest"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/toolss_tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/selector_tools_suggestions"
+                android:text="育儿建议"
+                android:textColor="@color/color_white" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="92dp"
+            android:layout_height="92dp"
+            android:layout_marginLeft="76dp"
+            android:background="@drawable/round_green_vaccine"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/toolss_tv5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/selector_tools_seedling"
+                android:text="疫苗接种"
+                android:textColor="@color/color_white" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginTop="32dp"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"/>
+
+
+
+</LinearLayout>

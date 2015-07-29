@@ -3,4 +3,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="activity_vertical_margin_half">8.0dip</dimen>
+    <!--字体大小-->
+    <dimen name="large_txt">18sp</dimen>
+    <dimen name="middle_txt">16sp</dimen>
+    <dimen name="normal_txt">14sp</dimen>
+    <dimen name="small_txt">12sp</dimen>
+    <dimen name="mirco_txt">8sp</dimen>
 </resources>

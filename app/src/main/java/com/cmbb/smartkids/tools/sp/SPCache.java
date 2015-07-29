@@ -23,7 +23,7 @@ public class SPCache {
     private static final String TAG = SPCache.class.getSimpleName();
     private static SPCache INSTANCE;
     private ConcurrentMap<String, SoftReference<Object>> mCache;
-    private String mPrefFileName = "com.zhy.spcache";
+    private String mPrefFileName = "com.cbmm.smartkids";
     private Context mContext;
 
     private SPCache(Context context, String prefFileName) {
@@ -108,7 +108,7 @@ public class SPCache {
     }
 
     public static boolean getBoolean(String key, boolean defaultVal) {
-        return (boolean) (getInstance().get(key, Boolean.class));
+        return (boolean) (getInstance().get(key, defaultVal));
     }
 
     public static float getFloat(String key, float defaultVal) {

@@ -82,7 +82,7 @@ public class WaitDialog extends Dialog {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         if (TDevice.isTablet()) {
-            int i = (int) TDevice.dpToPixel(360F);
+            int i = TDevice.dip2px(360, getContext());
             if (i < TDevice.getScreenWidth()) {
                 WindowManager.LayoutParams params = getWindow()
                         .getAttributes();

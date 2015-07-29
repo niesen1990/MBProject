@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,7 +56,7 @@ public abstract class MActivity extends AppCompatActivity implements View
     protected void initToolbar() {
         try {
             // 设置Toolbar
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            toolbar = (Toolbar) findViewById(R.id.tl_main_custom);
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -72,7 +73,6 @@ public abstract class MActivity extends AppCompatActivity implements View
     }
 
     protected abstract void init(Bundle savedInstanceState);
-
 
     @Override
     protected void onResume() {
@@ -271,6 +271,16 @@ public abstract class MActivity extends AppCompatActivity implements View
                 bitmapDrawable.getBitmap().recycle();
             }
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

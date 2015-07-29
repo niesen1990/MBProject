@@ -22,6 +22,8 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_gray">#808080</color>
     <color name="home_title_bar_divider">#8BBE61</color>
+    <color name="color_brown">#A52A2A</color>
+    <color name="transparent_gray">#CFDDDDDD</color>
 
     <!--灰色 -->
 
