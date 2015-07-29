@@ -1,87 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="?attr/colorPrimary">
-
-            <ImageView
-                android:id="@+id/back_drop"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="?attr/actionBarSize"
-                android:fitsSystemWindows="true"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_height="match_parent">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:id="@+id/titlebar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/ic_home_titlebar_rb"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:padding="6dp">
-
-                        <TextView
-                            android:id="@+id/toolbar_ground"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/home_titlebar_left"
-                            android:textColor="@color/colorPrimary"/>
-
-                        <TextView
-                            android:id="@+id/toolbar_attention"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/home_titlebar_right"
-                            android:textColor="@android:color/white"/>
-                    </LinearLayout>
-                </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <fragment
-        android:id="@+id/frame_container"
-        android:name="com.cmbb.smartkids.fragment.test.EntryListFragment"
+    <com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout
+        android:id="@+id/coordinatorlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </fragment>
+        android:layout_above="@+id/ll_bottom1">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="256dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:expandedTitleMarginEnd="64dp"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <ImageView
+                    android:id="@+id/back_drop"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:fitsSystemWindows="true"
+                    android:src="@mipmap/ic_launcher"/>
 
 
-</android.support.design.widget.CoordinatorLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="gone">
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tabs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="?attr/actionBarSize"
+                            android:layout_centerInParent="true"
+                            app:tabGravity="center"
+                            app:tabIndicatorColor="@android:color/white"
+                            app:tabMode="scrollable"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_titlebar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/titlebar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/ic_home_titlebar_rb"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="6dp">
+
+                            <TextView
+                                android:id="@+id/toolbar_ground"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/home_titlebar_left"
+                                android:textColor="@color/colorPrimary"/>
+
+                            <TextView
+                                android:id="@+id/toolbar_attention"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="@string/home_titlebar_right"
+                                android:textColor="@android:color/white"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    </com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout>
+
+
+    <ImageView
+        android:id="@+id/btn_add2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_home_middle_add"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_bottom1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/btn_add2"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/btn_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_home_bar_home"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="主页"
+            android:textColor="@drawable/selector_text_color_pressed_gray_to_blue"
+            android:textSize="12sp"/>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/btn_active"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:clickable="true"
+                android:drawableTop="@drawable/selector_home_bar_active"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="动态"
+                android:textColor="@drawable/selector_text_color_pressed_gray_to_blue"
+                android:textSize="12sp"/>
+
+            <ImageView
+                android:id="@+id/iv_unread"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/shape_message_tip"
+                android:gravity="center"
+                android:visibility="invisible"/>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_bottom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/btn_add2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_doc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_home_bar_master"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="达人"
+            android:textColor="@drawable/selector_text_color_pressed_gray_to_blue"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/btn_tools"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/selector_home_bar_tools"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="工具"
+            android:textColor="@drawable/selector_text_color_pressed_gray_to_blue"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_line_bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/ll_bottom1"
+        android:background="@color/home_title_bar_divider"/>
+
+
+    <TextView
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/ic_home_middle_add"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="5dp"/>
+
+
+</RelativeLayout>

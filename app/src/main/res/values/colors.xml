@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="theme_color">#5bbffd</color>
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#42A5F5</color>
     <color name="colorAccent">#1E88E5</color>
-
 
 
     //自定义WaitDialog
@@ -22,6 +20,9 @@
 
     //自定义颜色
     <color name="color_white">#FFFFFF</color>
-    <color name="color_gray">#808080</color><!--灰色 -->
+    <color name="color_gray">#808080</color>
+    <color name="home_title_bar_divider">#8BBE61</color>
+
+    <!--灰色 -->
 
 </resources>

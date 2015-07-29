@@ -122,6 +122,8 @@ public abstract class MActivity extends AppCompatActivity implements View
         showToast(message, Toast.LENGTH_LONG, icon, 17);
     }
 
+
+
     @Override
     public void showToastShort(int message) {
         showToast(message, Toast.LENGTH_SHORT, 0);

@@ -14,24 +14,42 @@
         android:layout_height="72.0dp"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/activity_vertical_margin"
-        android:layout_marginBottom="20.0dp"
-        tools:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_launcher"/>
 
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_nick"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/iv_head"
         android:layout_toRightOf="@id/iv_head"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="Nike"/>
+        android:padding="4dp"
+        android:text="Nike"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_gold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_head"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:drawableLeft="@drawable/ic_gold"
+        android:gravity="right"
+        android:padding="4dp"
+        android:text="150"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:visibility="gone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/iv_head"
         android:layout_toRightOf="@id/iv_head"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        tools:text="150"/>
+        android:drawableLeft="@drawable/ic_user_status"
+        android:gravity="right"
+        android:padding="4dp"
+        android:text="怀孕中"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
 </RelativeLayout>
