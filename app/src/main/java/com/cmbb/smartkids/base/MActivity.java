@@ -26,8 +26,7 @@ import com.umeng.analytics.MobclickAgent;
 /**
  * Created by javon on 2015/7/28.
  */
-public abstract class MActivity extends AppCompatActivity implements View
-        .OnClickListener, DialogControl, ToastControl {
+public abstract class MActivity extends AppCompatActivity implements View.OnClickListener, DialogControl, ToastControl {
     private static final String TAG = MActivity.class.getSimpleName();
 
     // Toast
@@ -121,7 +120,6 @@ public abstract class MActivity extends AppCompatActivity implements View
     public void showToast(String message, int icon) {
         showToast(message, Toast.LENGTH_LONG, icon, 17);
     }
-
 
 
     @Override

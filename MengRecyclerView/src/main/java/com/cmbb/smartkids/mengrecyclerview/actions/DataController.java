@@ -26,7 +26,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     private boolean isBusy = false;
     private boolean isEnd = false;
-    private List<T> mRepository;
+    public List<T> mRepository;
 
     //分页的count
     private int mPageSize = 10;
@@ -291,6 +291,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     /**
      * 刷新成功
+     *
      * @param data List<T>
      */
     public void refreshSuccess(List<T> data) {
@@ -307,6 +308,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     /**
      * 刷新失败
+     *
      * @param e
      */
     public void refreshFailure(Exception e) {
@@ -339,6 +341,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     /**
      * 加载更多成功
+     *
      * @param data List<T>
      */
     public void moreSuccess(List<T> data) {
@@ -355,6 +358,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     /**
      * 加载更多失败
+     *
      * @param e
      */
     public void moreFailure(Exception e) {
@@ -412,6 +416,8 @@ public abstract class DataController<T> implements DataProvider<T> {
         private UIPosterHandler(Looper looper) {
             super(looper);
         }
+
+
 
         @Override
         public void handleMessage(Message msg) {

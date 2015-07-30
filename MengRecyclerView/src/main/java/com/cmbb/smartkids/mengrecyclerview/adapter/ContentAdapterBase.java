@@ -30,6 +30,11 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
     protected DataController<T> mDataController;
     protected View mLoadingMoreView;
 
+    //HeadViewHolder
+    protected RecyclerView.ViewHolder headViewHolder;
+
+    protected boolean needHeadView;
+
     public enum CommonFeature {
         HEADER,
         COMMON,
@@ -80,7 +85,8 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
             mLoadingMoreView = mInflater.inflate(R.layout.recyclerview_footer_mengrecycler, parent, false);
             return new FooterViewHolder(mLoadingMoreView);
         } else if (viewType == CommonFeature.HEADER.ordinal()) {
-            return onCreateCustomHeaderHolder(parent);
+            headViewHolder = onCreateCustomHeaderHolder(parent);
+            return headViewHolder;
         } else {
             return onCreateCustomContentHolder(parent, viewType);
         }
@@ -135,10 +141,18 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
     }
 
     protected boolean needHeader() {
-        return false;
+        return this.needHeadView;
+    }
+
+    public void setNeedHeadView(boolean needHeadView) {
+        this.needHeadView = needHeadView;
     }
 
     protected void onBindCustomHeaderHolder(RecyclerView.ViewHolder holder) {
+
+    }
+
+    protected void onLoadFinishedHeadBind(RecyclerView.ViewHolder holder) {
 
     }
 
@@ -154,6 +168,13 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
      * UI 响应
      */
     private class DataObserver extends SimpleUIRespondent<T> {
+
+        @Override
+        public void onInitializeDone(Exception e, List<T> data) {
+            super.onInitializeDone(e, data);
+            onLoadFinishedHeadBind(headViewHolder);
+        }
+
         @Override
         public void onLoadMoreDone(Exception e, List data) {
             if (e != null && mLoadingMoreView != null) {

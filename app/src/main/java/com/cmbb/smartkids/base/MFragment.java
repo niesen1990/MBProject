@@ -1,14 +1,8 @@
 package com.cmbb.smartkids.base;
 
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.cmbb.smartkids.R;
@@ -17,14 +11,12 @@ import com.cmbb.smartkids.widget.notify.ToastControl;
 import com.cmbb.smartkids.widget.notify.WaitDialog;
 import com.umeng.analytics.MobclickAgent;
 
-import java.io.IOException;
-
 /**
  * Created by javon on 2015/7/28.
  */
 public class MFragment extends Fragment implements View.OnClickListener {
 
-    protected static final  String TAG = MFragment.class.getSimpleName();
+    protected static final String TAG = MFragment.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

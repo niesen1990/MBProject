@@ -1,0 +1,64 @@
+package com.cmbb.smartkids.fragment.homeplate;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
+import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.log.Log;
+
+import java.util.List;
+
+/**
+ * 项目名称：MBProject
+ * 类描述：
+ * 创建人：N.Sun
+ * 创建时间：15/7/29 下午2:37
+ */
+public class HomeListHeadViewHolder extends RecyclerView.ViewHolder {
+
+    public final LinearLayout linearlayout_master;
+
+    private HomeListHeadViewHolder(View view) {
+        super(view);
+        linearlayout_master = (LinearLayout) view.findViewById(R.id.linearlayout_master);
+    }
+
+    public static HomeListHeadViewHolder create(final Context context, ViewGroup parent) {
+        View v = LayoutInflater.from(context).inflate(R.layout.activity_home_list_headview, parent, false);
+        return new HomeListHeadViewHolder(v);
+    }
+
+    public void onBindViewHolder(Context context) {
+        // 静态数据bind
+    }
+
+    // 动态数据bind
+    public void onLoadFinishedHeadBindViewHolder(Context context, DataController<HomePlateModel> mDataController) {
+        linearlayout_master.removeAllViews();
+        List<HomeEredarModel> listEredar = ((HomeListProvider) mDataController).baseData.getContext().getEredarList();
+        for (int i = 0; i < listEredar.size(); i++) {
+            Log.i("scroll", "scroll size = " + i);
+            View view = LayoutInflater.from(context).inflate(R.layout.activity_home_list_headview_item, null, false);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(26, 12, 26, 12);
+
+            TextView tvName = (TextView) view.findViewById(R.id.tv_name);
+            tvName.setText(listEredar.get(i).getNike());
+            TextView tvMaster = (TextView) view.findViewById(R.id.tv_master);
+            tvMaster.setText(listEredar.get(i).getEredarName() + "达人");
+            GlideTool.loadImage(context, listEredar.get(i).getUserSmallHeadImg(), (ImageView) view.findViewById(R.id.civ_head), true);
+            view.setLayoutParams(params);
+            linearlayout_master.addView(view);
+        }
+    }
+
+
+}

@@ -12,6 +12,15 @@ import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
  * 创建时间：2015/7/1 10:54
  */
 public class EntryListFragment extends CommonFragment<HomeSameAge> {
+    boolean need;
+
+
+    public EntryListFragment() {
+    }
+
+    public EntryListFragment(boolean need) {
+        this.need = need;
+    }
 
     @Override
     protected DataController<HomeSameAge> onGenerateDataController() {
@@ -20,11 +29,13 @@ public class EntryListFragment extends CommonFragment<HomeSameAge> {
 
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<HomeSameAge> controller) {
-        return new EntryListAdapter(getActivity(), controller);
+        return new EntryListAdapter(getActivity(), controller, need);
     }
 
     @Override
     protected boolean enableRefresh() {
         return false;
     }
+
+
 }

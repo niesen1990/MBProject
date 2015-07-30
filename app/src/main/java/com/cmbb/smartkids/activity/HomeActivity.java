@@ -1,5 +1,9 @@
 package com.cmbb.smartkids.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -7,8 +11,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,11 +22,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.adapter.HomeAutoScrollBannerAdapter;
+import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
+import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
+import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
 import com.cmbb.smartkids.fragment.test.EntryListFragment;
+import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
+import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,9 +43,62 @@ public class HomeActivity extends MActivity {
     private Timer timer = new Timer();// 程序退出定时器
     private DrawerLayout mDrawerLayout;
 
+    NavigationView navigationView;
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
     MengCoordinatorLayout coordinatorlayout;
+
+    // TabLayout
+    TabLayout tabLayout;
+    TextView toolbarGround;
+    TextView toolbarAttention;
+
+    // 顶部
+    RelativeLayout rlTab;
+    RelativeLayout rlTitlebar;
+
+    //底部
+    TextView btnAdd;
+    TextView btnHome;
+    TextView btnActive;
+    TextView btnMaster;
+    TextView btnTools;
+
+    // content
+    ViewPager viewPager;
+
+    // content adapter
+    HomeFragmentPagerAdapter mHomeFragmentPagerAdapter;
+    HomeFragmentPagerAdapter mActiveFragmentPagerAdapter;
+    HomeFragmentPagerAdapter mMasterFragmentPagerAdapter;
+    HomeFragmentPagerAdapter mToolsFragmentPagerAdapter;
+
+    // home content
+    Fragment[] homeFragments;
+    String[] homeTitles;
+
+    // active content
+    Fragment[] activeFragments;
+    String[] activeTitles;
+
+    // master content
+    Fragment[] masterFragments;
+    String[] masterTitles;
+
+    // tools content
+    Fragment[] toolsFragments;
+    String[] toolsTitles;
+
+    // Banner Receiver
+    HomeAutoScrollBannerAdapter homeAutoScrollBannerAdapter;
+    BroadcastReceiver bannerReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            List<HomeBannerModel> cacheBanner = intent.getParcelableArrayListExtra(Constants.Home.BANNER_DATA);
+            homeAutoScrollBannerAdapter.setData(cacheBanner);
+        }
+    };
+
 
     @Override
     protected int getLayoutId() {
@@ -47,38 +108,43 @@ public class HomeActivity extends MActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_menu);
+        mHomeFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        mActiveFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        mMasterFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        mToolsFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        initData();
+        initView();
+    }
+
+    private void initView() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         // 设置Navigation
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-
-        // 设置TabView
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        if (viewPager != null) {
-            setupViewPager(viewPager);
-            tabLayout.setupWithViewPager(viewPager);
-        }
-
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         coordinatorlayout = (MengCoordinatorLayout) findViewById(R.id.coordinatorlayout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
-        final RelativeLayout rlTab = (RelativeLayout) findViewById(R.id.rl_tab);
-        final RelativeLayout rlTitlebar = (RelativeLayout) findViewById(R.id.rl_titlebar);
-        TextView btn_add = (TextView) findViewById(R.id.btn_add);
-        TextView btnHome = (TextView) findViewById(R.id.btn_home);
-        btn_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rlTitlebar.setVisibility(View.GONE);
-                rlTab.setVisibility(View.VISIBLE);
-                collapseToolbar();
-                coordinatorlayout.setAllowForScrool(false);
-            }
-        });
+        rlTab = (RelativeLayout) findViewById(R.id.rl_tab);
+        rlTitlebar = (RelativeLayout) findViewById(R.id.rl_titlebar);
+        btnAdd = (TextView) findViewById(R.id.btn_add);
+        btnHome = (TextView) findViewById(R.id.btn_home);
+
+        // content
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (viewPager != null) {
+            viewPager.setAdapter(mHomeFragmentPagerAdapter);
+            tabLayout.setupWithViewPager(viewPager);
+        }
+        //初始化btnHome
+        btnHome.setSelected(true);
+        btnActive = (TextView) findViewById(R.id.btn_active);
+        btnMaster = (TextView) findViewById(R.id.btn_master);
+        btnTools = (TextView) findViewById(R.id.btn_tools);
+
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,49 +152,155 @@ public class HomeActivity extends MActivity {
                 rlTab.setVisibility(View.GONE);
                 expandToolbar();
                 coordinatorlayout.setAllowForScrool(true);
-
+                // 设置底部Button显示
+                btnHome.setSelected(true);
+                btnActive.setSelected(false);
+                btnMaster.setSelected(false);
+                btnTools.setSelected(false);
+                // 设置内容
+                viewPager.setAdapter(mHomeFragmentPagerAdapter);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+        btnActive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlTitlebar.setVisibility(View.GONE);
+                rlTab.setVisibility(View.VISIBLE);
+                collapseToolbar();
+                coordinatorlayout.setAllowForScrool(false);
+                // 设置底部Button显示
+                btnHome.setSelected(false);
+                btnActive.setSelected(true);
+                btnMaster.setSelected(false);
+                btnTools.setSelected(false);
+                // 设置内容
+                viewPager.setAdapter(mActiveFragmentPagerAdapter);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
             }
         });
 
-        //getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new EntryListFragment()).commit();
+
+        btnMaster.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlTitlebar.setVisibility(View.GONE);
+                rlTab.setVisibility(View.VISIBLE);
+                collapseToolbar();
+                coordinatorlayout.setAllowForScrool(false);
+                // 设置底部Button显示
+                btnHome.setSelected(false);
+                btnActive.setSelected(false);
+                btnMaster.setSelected(true);
+                btnTools.setSelected(false);
+                // 设置内容
+                viewPager.setAdapter(mMasterFragmentPagerAdapter);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+
+        btnTools.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlTitlebar.setVisibility(View.GONE);
+                rlTab.setVisibility(View.GONE);
+                collapseToolbar();
+                coordinatorlayout.setAllowForScrool(false);
+                // 设置底部Button显示
+                btnHome.setSelected(false);
+                btnActive.setSelected(false);
+                btnMaster.setSelected(false);
+                btnTools.setSelected(true);
+                // 设置内容
+                viewPager.setAdapter(mToolsFragmentPagerAdapter);
+                tabLayout.setupWithViewPager(viewPager);
+            }
+        });
+
+
+        AutoScrollViewPager scrollPager = (AutoScrollViewPager) findViewById(R.id.scroll_pager);
+        homeAutoScrollBannerAdapter = new HomeAutoScrollBannerAdapter(this);
+        scrollPager.setAdapter(homeAutoScrollBannerAdapter);
+        scrollPager.startAutoScroll();
+        CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.tab_indicator);
+        mIndicator.setViewPager(scrollPager);
+        mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
+
+    private void initData() {
+
+        homeFragments = new Fragment[1];
+        homeFragments[0] = new HomeListFragment(true);
+        homeTitles = new String[1];
+        homeTitles[0] = "Home";
+        mHomeFragmentPagerAdapter.addFragment(homeFragments, homeTitles);
+
+        activeFragments = new Fragment[2];
+        activeFragments[0] = new EntryListFragment();
+        activeFragments[1] = new EntryListFragment();
+        activeTitles = new String[2];
+        activeTitles[0] = "动态";
+        activeTitles[1] = "消息";
+        mActiveFragmentPagerAdapter.addFragment(activeFragments, activeTitles);
+
+        masterFragments = new Fragment[2];
+        masterFragments[0] = new EntryListFragment();
+        masterFragments[1] = new EntryListFragment();
+        masterTitles = new String[2];
+        masterTitles[0] = "达人";
+        masterTitles[1] = "专家";
+        mMasterFragmentPagerAdapter.addFragment(masterFragments, masterTitles);
+
+        toolsFragments = new Fragment[1];
+        toolsFragments[0] = new EntryListFragment();
+        toolsTitles = new String[1];
+        toolsTitles[0] = "Tools";
+        mToolsFragmentPagerAdapter.addFragment(toolsFragments, toolsTitles);
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter intentFilter = new IntentFilter(Constants.Home.BANNER_DATA_INTENT);
+        registerReceiver(bannerReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(bannerReceiver);
     }
 
     /**
-     * 关闭Toolbar
+     * 设置侧滑栏
+     *
+     * @param navigationView NavigationView
      */
-    public void collapseToolbar() {
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-
-        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-        if (behavior != null) {
-            behavior.onNestedFling(coordinatorlayout, appBarLayout, null, 0, 10000, true);
-        }
-    }
-
-    /**
-     * 展开Toolbar
-     */
-    public void expandToolbar() {
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-        if (behavior != null) {
-            behavior.onNestedFling(coordinatorlayout, appBarLayout, null, 0, -10000, false);
-        }
-    }
-
-
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        Fragment fragment = new EntryListFragment();
-        adapter.addFragment(fragment, "摄影");
-        fragment = new EntryListFragment();
-        adapter.addFragment(fragment, "绘本");
-        fragment = new EntryListFragment();
-        adapter.addFragment(fragment, "美食");
-        viewPager.setAdapter(adapter);
-    }
-
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -155,16 +327,19 @@ public class HomeActivity extends MActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        // 控制DrawerLayout
-        if (id == android.R.id.home) {
-            mDrawerLayout.openDrawer(GravityCompat.START);
-            return true;
+
+        switch (id) {
+            case android.R.id.home: // 控制DrawerLayout
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.action_search:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    // 程序退出的控制
-    @Override
+
+    @Override // 程序退出的控制
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -187,32 +362,27 @@ public class HomeActivity extends MActivity {
         return false;
     }
 
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
+    /**
+     * 关闭Toolbar
+     */
+    public void collapseToolbar() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
 
-        public Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            behavior.onNestedFling(coordinatorlayout, appBarLayout, null, 0, 10000, true);
         }
     }
+
+    /**
+     * 展开Toolbar
+     */
+    public void expandToolbar() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            behavior.onNestedFling(coordinatorlayout, appBarLayout, null, 0, -10000, false);
+        }
+    }
+
 }

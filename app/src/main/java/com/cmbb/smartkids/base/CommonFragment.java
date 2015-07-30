@@ -35,7 +35,6 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
     protected Button mLoadingRetry;
 
 
-
     protected SwipeRefreshLayout mSwipeRefresh;
     protected RecyclerView.Adapter mAdapter;
     protected DataController<T> mDataController;
@@ -53,7 +52,7 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
         //设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
-       // mRecyclerView.addItemDecoration(new Div);
+        // mRecyclerView.addItemDecoration(new Div);
         mPagerPage = (ViewGroup) rootView.findViewById(R.id.pager_page);
         mLoadingPage = (ViewGroup) rootView.findViewById(R.id.loading_page);
         mLoadingBar = (ContentLoadingProgressBar) mLoadingPage.findViewById(R.id.loading_bar);
@@ -67,6 +66,12 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
             mSwipeRefresh.setEnabled(false);
         }
         return rootView;
+    }
+
+    public void setHorizontalLayoutManager() {
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(manager);
     }
 
     @Override

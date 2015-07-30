@@ -128,6 +128,10 @@ public class Constants {
 
         }
 
+        // Banner
+        public static final String BANNER_DATA = "banner_data";
+        public static final String BANNER_DATA_INTENT = "com.cmbb.smartkids.banner";
+
         public static final String AREATYPEPLATE_URL = BASE_URL + "/plate/findByAreaTypeFromPlate";
         public static final String FINDHOMEPAGE_URL = BASE_URL + "/home/findHomePage";
         public static final String FINDHOMEPAGEATTENTIONPLATE_URL = BASE_URL + "/home/findHomePageAttentionPlate";

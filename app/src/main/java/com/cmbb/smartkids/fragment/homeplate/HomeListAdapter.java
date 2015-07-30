@@ -1,4 +1,4 @@
-package com.cmbb.smartkids.fragment.test;
+package com.cmbb.smartkids.fragment.homeplate;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +13,11 @@ import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:59
  */
-public class EntryListAdapter extends ContentAdapterBase<HomeSameAge> {
+public class HomeListAdapter extends ContentAdapterBase<HomePlateModel> {
     private Context mContext;
 
 
-    public EntryListAdapter(Context mContext, DataController<HomeSameAge> mDataController, boolean need) {
+    public HomeListAdapter(Context mContext, DataController<HomePlateModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
         // 设置HeaderView
@@ -26,23 +26,29 @@ public class EntryListAdapter extends ContentAdapterBase<HomeSameAge> {
 
     @Override
     protected RecyclerView.ViewHolder onCreateCustomContentHolder(ViewGroup parent, int viewType) {
-        return EntryListViewHolder.create(mContext, parent);
+        return HomeListViewHolder.create(mContext, parent);
     }
 
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((EntryListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((HomeListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
     }
 
     // 创建HeaderView
     @Override
     protected RecyclerView.ViewHolder onCreateCustomHeaderHolder(ViewGroup parent) {
-        return EntryListHeadViewHolder.create(mContext, parent);
+        return HomeListHeadViewHolder.create(mContext, parent);
     }
 
     @Override
     protected void onBindCustomHeaderHolder(RecyclerView.ViewHolder holder) {
-        ((EntryListHeadViewHolder) holder).onBindViewHolder(mContext);
+        ((HomeListHeadViewHolder) holder).onBindViewHolder(mContext);
+    }
+
+    @Override
+    protected void onLoadFinishedHeadBind(RecyclerView.ViewHolder holder) {
+        super.onLoadFinishedHeadBind(holder);
+        ((HomeListHeadViewHolder) holder).onLoadFinishedHeadBindViewHolder(mContext, mDataController);
     }
 }

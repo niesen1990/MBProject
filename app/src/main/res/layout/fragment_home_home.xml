@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.cmbb.smartkids.fragment.test.HomeHomeFragment">
+
+    <TextView
+        android:id="@+id/tv_title_master"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="4dp"
+        android:text="达人推荐"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_master"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/tv_title_master"
+        android:scrollbars="horizontal"/>
+
+    <TextView
+        android:id="@+id/tv_title_meng"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_master"
+        android:padding="4dp"
+        android:text="萌宝热度"/>
+
+    <FrameLayout
+        android:id="@+id/container_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_title_meng"
+        />
+
+</RelativeLayout>

@@ -44,7 +44,7 @@ public class EntryListViewHolder extends RecyclerView.ViewHolder {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeSameAge homeSameAge = (HomeSameAge) v.getTag();
+                //HomeSameAge homeSameAge = (HomeSameAge) v.getTag();
             }
         });
         return new EntryListViewHolder(v);
@@ -56,5 +56,13 @@ public class EntryListViewHolder extends RecyclerView.ViewHolder {
         content.setText(entry.getContext());
         time.setText(entry.getSmallImgWidth() + entry.getConnector());
         Glide.with(context).load("http://mengbaopai.smart-kids.com/image" + entry.getBigImg()).into(thumb);
+    }
+
+    public void onBindViewHolder(Context context) {
+        parent.setTag("dd");
+        title.setText("meizu");
+        content.setText("meizu fa bu hui ");
+        time.setText("you are good");
+        Glide.with(context).load("http://pic2.ooopic.com/01/26/61/83bOOOPIC72.jpg").into(thumb);
     }
 }
