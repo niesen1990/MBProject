@@ -22,6 +22,7 @@ import com.cmbb.smartkids.widget.notify.PinterestToast;
 import com.cmbb.smartkids.widget.notify.ToastControl;
 import com.cmbb.smartkids.widget.notify.WaitDialog;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by javon on 2015/7/28.
@@ -37,6 +38,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     private WaitDialog _waitDialog;
     //声明相关变量
     protected Toolbar toolbar;
+    protected PushAgent mPushAgent;
 
     // ContentView
     protected abstract int getLayoutId();
@@ -47,6 +49,8 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getLayoutId());
         TDevice.saveDisplaySize(this);
+        mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.onAppStart();
         initToolbar();
         init(savedInstanceState);
     }
@@ -227,7 +231,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
                 _waitDialog = DialogHelper.getCancelableWaitDialog(this,
                         getString(resid));
             } else
-                _waitDialog.setMessage(getString(resid));
+                _waitDialog.setMessage(getString(resid)); 
             _waitDialog.setOnCancelListener(listener);
             _waitDialog.show();
             return _waitDialog;

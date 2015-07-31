@@ -12,6 +12,7 @@ import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -22,6 +23,8 @@ import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.tools.sp.SPCache;
 
 import java.io.File;
+import java.util.Random;
+import java.util.UUID;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class TDevice {
@@ -309,5 +312,35 @@ public class TDevice {
     public static long getTotalTxBytes() {
         return TrafficStats.getUidTxBytes(android.os.Process.myPid()) == TrafficStats.UNSUPPORTED ? 0 : (TrafficStats
                 .getUidTxBytes(android.os.Process.myPid()) / 1024);
+    }
+
+    /**
+     * 获取设备基本信息
+     * @param context
+     * @return
+     */
+    public static String getDeviceId(Context context) {
+        try {
+            android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+
+            String device_id = tm.getDeviceId();
+
+            android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+            String mac = wifi.getConnectionInfo().getMacAddress();
+
+            if (TextUtils.isEmpty(device_id)) {
+                device_id = mac;
+            }
+
+            if (TextUtils.isEmpty(device_id)) {
+                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+            }
+
+            return device_id;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return UUID.randomUUID().toString();
     }
 }

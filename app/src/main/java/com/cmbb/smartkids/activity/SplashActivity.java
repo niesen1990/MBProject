@@ -2,10 +2,14 @@ package com.cmbb.smartkids.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.sp.SPCache;
+import com.umeng.message.IUmengRegisterCallback;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,6 +27,7 @@ public class SplashActivity extends MActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mPushAgent.enable(mRegisterCallback);
         initTask();
     }
 
@@ -36,6 +41,19 @@ public class SplashActivity extends MActivity {
         super.onPause();
 
     }
+
+
+    // 友盟推送注册器
+    private IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
+
+        @Override
+        public void onRegistered(String registrationId) {
+            // TODO Auto-generated method stub
+            Log.e("mRegisterCallback", "mRegisterCallback is already register");
+            Log.e("mRegisterCallback", "token:"+mPushAgent.getRegistrationId());
+
+        }
+    };
 
     private void initTask() {
         // 引导界面

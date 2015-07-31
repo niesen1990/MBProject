@@ -9,6 +9,13 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- umeng-analytics -->
+    <!--umeng 推送-->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--umeng 推送-->
     <!-- pgyer -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 读写sdcard，storage等等 -->
@@ -26,8 +33,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-
     <!--baidu-->
+
     <!-- pgyer -->
     <application
         android:name=".base.MApplication"
@@ -44,6 +51,10 @@
             android:name="UMENG_APPKEY"
             android:value="5538a77367e58e41e0000c09"/>
         <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="86d804b234623b949528183d9ae65ede" >
+        </meta-data>
+        <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>
         <!-- umeng-analytics -->
@@ -59,6 +70,7 @@
         </activity>
         <!-- umeng-update -->
         <!-- Baidu Location -->
+        <!--0fLZmwArllMjQ2bxuGz3uGf6-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="yad43op0GDKnFliKgy5S1QX2"/>
@@ -68,6 +80,105 @@
             android:enabled="true"
             android:process=":remote"/>
         <!-- Baidu Location -->
+
+        <!--友盟推送manifest必备-->
+        <receiver
+            android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
+            android:exported="false" >
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.SystemReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.MessageReceiver"
+            android:exported="false"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.ElectionReceiver"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
+                <category android:name="umeng" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.umeng.message.RegistrationReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.cmbb.smartkids.intent.action.COMMAND" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.umeng.message.UmengMessageBootReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.umeng.message.UmengService"
+            android:label="PushService"
+            android:exported="true"
+            android:process=":push" >
+            <intent-filter>
+                <action android:name="com.cmbb.smartkids.intent.action.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.cmbb.smartkids.intent.action.COCKROACH" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.agoo.android.intent.action.PING_V4" />
+                <category android:name="umeng" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.umeng.message.UmengIntentService"
+            android:process=":push" />
+
+        <service
+            android:name="com.umeng.message.UmengMessageIntentReceiverService"
+            android:process=":push"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.umeng.messge.registercallback.action" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.unregistercallback.action"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.message.handler.action"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.umeng.message.autoupdate.handler.action"/>
+            </intent-filter>
+        </service>
+        <!-- V1.3.0添加的service，负责下载通知的资源 -->
+        <service android:name="com.umeng.message.UmengDownloadResourceService" />
+        <!--友盟推送manifest必备-->
 
         <!-- MengPhotoPicker -->
         <activity
@@ -88,7 +199,6 @@
 
         <activity
             android:name=".activity.SplashActivity"
-            android:label="@string/title_activity_home"
             android:theme="@style/FullScreen.Theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -98,8 +208,17 @@
         </activity>
         <activity
             android:name=".activity.GuideActivity"
-            android:label="GuideActivity"
             android:theme="@style/FullScreen.Theme"/>
+        <activity android:name=".activity.tools.ToolsCaseActivity"
+            android:label="急症室"/>
+        <activity android:name=".activity.tools.ToolsMapActivity"
+            android:label="导航帮助"/>
+        <activity android:name=".activity.tools.ToolsSuggestionsActivity"
+            android:label="育儿建议"/>
+        <activity android:name=".activity.tools.ToolsSugDetailActivity"
+            android:label="建议详情"/>
+        <activity android:name=".activity.tools.ToolsVaccinationActivity"
+            android:label="疫苗接种"/>
     </application>
 
 </manifest>
