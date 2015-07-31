@@ -4,10 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- umeng-analytics -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- umeng-analytics -->
     <!--umeng 推送-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -17,22 +17,22 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--umeng 推送-->
     <!-- pgyer -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 读写sdcard，storage等等 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- 允许程序录制音频 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
     <!-- 获取logcat日志 -->
 
     <!--baidu-->
     <!-- 这个权限用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- 这个权限用于访问GPS定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- SD卡读取权限，用户写入离线定位数据-->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <!--baidu-->
 
     <!-- pgyer -->
@@ -41,10 +41,10 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
         </activity>
         <!-- umeng-analytics -->
         <meta-data
@@ -52,7 +52,8 @@
             android:value="5538a77367e58e41e0000c09"/>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="86d804b234623b949528183d9ae65ede" />
+            android:value="86d804b234623b949528183d9ae65ede" >
+        </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}"/>
@@ -60,16 +61,16 @@
         <!-- umeng-update -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
+            android:process=":DownloadingService">
         </service>
-        
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <!-- umeng-update -->
         <!-- Baidu Location -->
+        <!--0fLZmwArllMjQ2bxuGz3uGf6-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="yad43op0GDKnFliKgy5S1QX2"/>
@@ -77,7 +78,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote"/>
         <!-- Baidu Location -->
 
         <!--友盟推送manifest必备-->
@@ -102,14 +103,14 @@
         <receiver
             android:name="com.umeng.message.MessageReceiver"
             android:exported="false"
-            android:process=":push">
+            android:process=":push" >
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.RECEIVE" />
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
-            android:process=":push">
+            android:process=":push" >
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
                 <category android:name="umeng" />
@@ -117,7 +118,7 @@
         </receiver>
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.cmbb.smartkids.intent.action.COMMAND" />
             </intent-filter>
@@ -130,9 +131,9 @@
 
         <service
             android:name="com.umeng.message.UmengService"
-            android:exported="true"
             android:label="PushService"
-            android:process=":push">
+            android:exported="true"
+            android:process=":push" >
             <intent-filter>
                 <action android:name="com.cmbb.smartkids.intent.action.START" />
             </intent-filter>
@@ -145,14 +146,13 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="com.umeng.message.UmengIntentService"
+        <service android:name="com.umeng.message.UmengIntentService"
             android:process=":push" />
 
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
-            android:exported="true"
-            android:process=":push">
+            android:process=":push"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="org.android.agoo.client.MessageReceiverService" />
             </intent-filter>
@@ -161,149 +161,53 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="com.umeng.message.UmengMessageCallbackHandlerService"
+        <service android:name="com.umeng.message.UmengMessageCallbackHandlerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.umeng.messge.registercallback.action" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.unregistercallback.action" />
+                <action android:name="com.umeng.message.unregistercallback.action"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.message.handler.action" />
+                <action android:name="com.umeng.message.message.handler.action"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.autoupdate.handler.action" />
+                <action android:name="com.umeng.message.autoupdate.handler.action"/>
             </intent-filter>
         </service>
         <!-- V1.3.0添加的service，负责下载通知的资源 -->
         <service android:name="com.umeng.message.UmengDownloadResourceService" />
         <!--友盟推送manifest必备-->
 
-
-        <!-- *************************    分享相关的注册 START **************************** -->
-        <!-- 分享内容编辑页 -->
-        <activity
-            android:name="com.umeng.socialize.view.ShareActivity"
-            android:configChanges="orientation|keyboard"
-            android:launchMode="singleTask"
-            android:noHistory="true"
-            android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
-
-        <!-- 腾讯SSO授权的Activity注册 -->
-        <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:launchMode="singleTask"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="tencent100424468" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.tencent.connect.common.AssistActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- 微信回调activity -->
-        <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- *************************    分享相关的注册 END **************************** -->
-
-
         <!-- MengPhotoPicker -->
         <activity
             android:name=".photopicker.PhotoPickerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".photopicker.PhotoPagerActivity" />
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".photopicker.PhotoPagerActivity"/>
         <!-- MengPhotoPicker -->
         <provider
             android:name=".provider.ProviderUserAccount"
             android:authorities="com.cmbb.smartkids.useraccount"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"/>
 
         <activity
             android:name=".activity.HomeActivity"
-            android:label="@string/title_activity_home" >
-            
+            android:label="@string/title_activity_home">>
         </activity>
+
         <activity
             android:name=".activity.SplashActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/FullScreen.Theme" >
+            android:theme="@style/FullScreen.Theme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.GuideActivity"
-            android:label="GuideActivity"
-            android:theme="@style/FullScreen.Theme" />
-        <activity
-            android:name=".activity.user.UserInfoActivity"
-            android:label="@string/title_activity_user_info"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.user.UserAttentionActivity"
-            android:label="@string/title_activity_user_attention"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.user.UserCollectionActivity"
-            android:label="@string/title_activity_user_collection"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.user.UserPublishActivity"
-            android:label="@string/title_activity_user_publish" >
-        </activity>
-        <activity
-            android:name=".activity.user.SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
-        <activity
-            android:name=".activity.user.UserActivity"
-            android:label="@string/title_activity_user"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.post.PlateListActivity"
-            android:label="@string/title_activity_post_list"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".activity.post.PostWonderListActivity"
-            android:label="@string/title_activity_post_list" >
-        </activity>
             android:theme="@style/FullScreen.Theme"/>
         <activity android:name=".activity.tools.ToolsCaseActivity"
             android:label="急症室"/>

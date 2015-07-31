@@ -43,6 +43,8 @@ public class SplashActivity extends MActivity {
     }
 
 
+
+
     // 友盟推送注册器
     private IUmengRegisterCallback mRegisterCallback = new IUmengRegisterCallback() {
 

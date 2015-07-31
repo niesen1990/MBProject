@@ -1,1 +1,1 @@
-include ':app', ':MengRecyclerView', ':MengPhotoPicker', ':MengBottomSheets'
+include ':app',':MengPhotoPicker',':MengRecyclerView','MengBottomSheets'

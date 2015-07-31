@@ -119,9 +119,11 @@ public class Constants {
     }
 
     public static final class Share {
-        private Share() {
+        public static final String WEIXIN_APP_KEY = "wx766b807ef51aa8da";
+        public static final String WEIXIN_APPSECRET = "139fc6ccddba72262d94688368082312";
 
-        }
+        public static final String QQ_APP_KEY = "1104000906";
+        public static final String QQ_APPSECRET = "T73NH4Tz75dWsPdy";
 
         public static final String DESCRIPTOR = "com.umeng.share";
     }
