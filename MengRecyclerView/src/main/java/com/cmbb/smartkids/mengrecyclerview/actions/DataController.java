@@ -29,7 +29,7 @@ public abstract class DataController<T> implements DataProvider<T> {
     public List<T> mRepository;
 
     //分页的count
-    private int mPageSize = 10;
+    private int mPageSize = 0;
     private int mNextTimeOffset = 0;
     private int mRequestTimes = 0;
 
@@ -416,7 +416,6 @@ public abstract class DataController<T> implements DataProvider<T> {
         private UIPosterHandler(Looper looper) {
             super(looper);
         }
-
 
 
         @Override

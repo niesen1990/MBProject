@@ -9,13 +9,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- umeng-analytics -->
-    <!--umeng 推送-->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!--umeng 推送-->
     <!-- pgyer -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 读写sdcard，storage等等 -->
@@ -41,44 +34,43 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
         </activity>
         <!-- umeng-analytics -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5538a77367e58e41e0000c09"/>
+            android:value="5538a77367e58e41e0000c09" />
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
             android:value="86d804b234623b949528183d9ae65ede" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}"/>
+            android:value="${UMENG_CHANNEL_VALUE}" />
         <!-- umeng-analytics -->
         <!-- umeng-update -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService">
+            android:process=":DownloadingService" >
         </service>
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
         </activity>
         <!-- umeng-update -->
         <!-- Baidu Location -->
-        <!--0fLZmwArllMjQ2bxuGz3uGf6-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="yad43op0GDKnFliKgy5S1QX2"/>
+            android:value="yad43op0GDKnFliKgy5S1QX2" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
         <!-- Baidu Location -->
 
         <!--友盟推送manifest必备-->
@@ -180,34 +172,90 @@
         <service android:name="com.umeng.message.UmengDownloadResourceService" />
         <!--友盟推送manifest必备-->
 
+
         <!-- MengPhotoPicker -->
         <activity
             android:name=".photopicker.PhotoPickerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".photopicker.PhotoPagerActivity"/>
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".photopicker.PhotoPagerActivity" />
         <!-- MengPhotoPicker -->
         <provider
             android:name=".provider.ProviderUserAccount"
             android:authorities="com.cmbb.smartkids.useraccount"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name=".activity.HomeActivity"
-            android:label="@string/title_activity_home">>
+            android:label="@string/title_activity_home" >
+            
         </activity>
-
         <activity
             android:name=".activity.SplashActivity"
-            android:theme="@style/FullScreen.Theme">
+            android:label="@string/title_activity_home"
+            android:theme="@style/FullScreen.Theme" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.GuideActivity"
+            android:label="GuideActivity"
+            android:theme="@style/FullScreen.Theme" />
+        <activity
+            android:name=".activity.user.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.user.UserAttentionActivity"
+            android:label="@string/title_activity_user_attention"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.user.UserCollectionActivity"
+            android:label="@string/title_activity_user_collection"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.user.UserPublishActivity"
+            android:label="@string/title_activity_user_publish" >
+        </activity>
+        <activity
+            android:name=".activity.user.SettingActivity"
+            android:label="@string/title_activity_setting" >
+        </activity>
+        <activity
+            android:name=".activity.user.UserActivity"
+            android:label="@string/title_activity_user"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.post.PlateListActivity"
+            android:label="@string/title_activity_post_list"
+            android:parentActivityName=".activity.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activity.post.PostWonderListActivity"
+            android:label="@string/title_activity_post_list" >
+        </activity>
             android:theme="@style/FullScreen.Theme"/>
         <activity android:name=".activity.tools.ToolsCaseActivity"
             android:label="急症室"/>

@@ -84,8 +84,7 @@ public class WaitDialog extends Dialog {
         if (TDevice.isTablet()) {
             int i = TDevice.dip2px(360, getContext());
             if (i < TDevice.getScreenWidth()) {
-                WindowManager.LayoutParams params = getWindow()
-                        .getAttributes();
+                WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.width = i;
                 getWindow().setAttributes(params);
             }

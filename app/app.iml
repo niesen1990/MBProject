@@ -127,17 +127,18 @@
     <orderEntry type="library" exported="" name="stetho-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="commons-cli-1.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
-    <orderEntry type="library" exported="" name="umeng-update-v2.6.0.1" level="project" />
     <orderEntry type="library" exported="" name="com.umeng.message.lib_v2.4.1" level="project" />
+    <orderEntry type="library" exported="" name="umeng-update-v2.6.0.1" level="project" />
     <orderEntry type="library" exported="" name="palette-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="glide-3.6.1" level="project" />
     <orderEntry type="library" exported="" name="okhttp-integration-1.3.1" level="project" />
     <orderEntry type="library" exported="" name="pgyer_sdk_2.1.2" level="project" />
-    <orderEntry type="library" exported="" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="okio-1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="jsr305-2.0.1" level="project" />
     <orderEntry type="library" exported="" name="design-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-22.2.1" level="project" />
     <orderEntry type="module" module-name="MengRecyclerView" exported="" />
     <orderEntry type="module" module-name="MengPhotoPicker" exported="" />
+    <orderEntry type="module" module-name="MengBottomSheets" exported="" />
   </component>
 </module>

@@ -6,4 +6,7 @@
     <string name="nav_home_ipublish">我的发布</string>
     <string name="nav_home_icollection">我的收藏</string>
     <string name="nav_home_iattention">我的关注</string>
+    <string name="nav_nick_name">昵称</string>
+    <string name="input_nick">请输入昵称.....</string>
+    <string name="action_submit">提交</string>
 </resources>

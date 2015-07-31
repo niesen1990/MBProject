@@ -18,8 +18,8 @@ public class HomeListFragment extends CommonFragment<HomePlateModel> {
     public HomeListFragment() {
     }
 
-    public HomeListFragment(boolean need) {
-        this.need = need;
+    public HomeListFragment(boolean needHeadView) {
+        this.need = needHeadView;
     }
 
     @Override

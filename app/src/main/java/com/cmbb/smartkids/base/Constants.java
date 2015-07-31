@@ -14,7 +14,11 @@ public class Constants {
     }
 
     // Receiver
+    // 请求失败Receiver
+
     public static final String RefreshFlag = "com.refresh";
+    public static final String NETWORK_FAILURE = "network_failure";
+    public static final String NETWORK_FLAG = "network_flag";
     //public static final String BASE_URL = "http://192.168.100.151:8089/spring";
     //public static final String BASE_IMAGE_URL = "http://192.168.100.151:8089/image";
     public static final String BASE_URL = "http://mengbaopai.smart-kids.com/iosAndroid";
@@ -131,6 +135,10 @@ public class Constants {
         // Banner
         public static final String BANNER_DATA = "banner_data";
         public static final String BANNER_DATA_INTENT = "com.cmbb.smartkids.banner";
+        // User
+        public static final String USERINFO_DATA = "userinfo_data";
+        public static final String USERINFO_DATA_INTENT = "com.cmbb.smartkids.userinfo";
+
 
         public static final String AREATYPEPLATE_URL = BASE_URL + "/plate/findByAreaTypeFromPlate";
         public static final String FINDHOMEPAGE_URL = BASE_URL + "/home/findHomePage";

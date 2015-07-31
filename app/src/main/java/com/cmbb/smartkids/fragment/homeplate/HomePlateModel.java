@@ -1,9 +1,9 @@
 package com.cmbb.smartkids.fragment.homeplate;
 
-/**
- * Created by Administrator on 2015/4/23.
- */
-public class HomePlateModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class HomePlateModel implements Parcelable {
     private String bigImg;
     private Integer bigImgHeight;
     private Integer bigImgWidth;
@@ -199,4 +199,56 @@ public class HomePlateModel {
     public void setType(String type) {
         this.type = type;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.bigImg);
+        dest.writeValue(this.bigImgHeight);
+        dest.writeValue(this.bigImgWidth);
+        dest.writeString(this.connector);
+        dest.writeString(this.context);
+        dest.writeValue(this.count);
+        dest.writeValue(this.id);
+        dest.writeString(this.plateParentType);
+        dest.writeString(this.smallImg);
+        dest.writeValue(this.smallImgHeight);
+        dest.writeValue(this.smallImgWidth);
+        dest.writeString(this.title);
+        dest.writeString(this.type);
+    }
+
+    public HomePlateModel() {
+    }
+
+    protected HomePlateModel(Parcel in) {
+        this.bigImg = in.readString();
+        this.bigImgHeight = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.bigImgWidth = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.connector = in.readString();
+        this.context = in.readString();
+        this.count = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.plateParentType = in.readString();
+        this.smallImg = in.readString();
+        this.smallImgHeight = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.smallImgWidth = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.title = in.readString();
+        this.type = in.readString();
+    }
+
+    public static final Parcelable.Creator<HomePlateModel> CREATOR = new Parcelable.Creator<HomePlateModel>() {
+        public HomePlateModel createFromParcel(Parcel source) {
+            return new HomePlateModel(source);
+        }
+
+        public HomePlateModel[] newArray(int size) {
+            return new HomePlateModel[size];
+        }
+    };
 }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.tools.TDevice;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.notify.DialogControl;
 import com.cmbb.smartkids.widget.notify.DialogHelper;
 import com.cmbb.smartkids.widget.notify.PinterestToast;
@@ -65,9 +66,10 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
             if (actionBar != null) {
                 actionBar.setHomeButtonEnabled(true); //设置返回键可用
                 actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(true);
             }
         } catch (NullPointerException e) {
-
+            Log.i("Toolbar", "toolbar = null");
         }
     }
 

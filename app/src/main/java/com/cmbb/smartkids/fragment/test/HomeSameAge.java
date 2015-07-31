@@ -242,7 +242,9 @@ public class HomeSameAge implements Parcelable {
         dest.writeInt(this.smallImgWidth);
         dest.writeString(this.title);
         dest.writeString(this.type);
+
     }
+
 
     protected HomeSameAge(Parcel in) {
         this.bigImg = in.readString();
@@ -268,4 +270,6 @@ public class HomeSameAge implements Parcelable {
             return new HomeSameAge[size];
         }
     };
+
+
 }

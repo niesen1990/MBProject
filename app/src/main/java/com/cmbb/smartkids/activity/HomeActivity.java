@@ -14,14 +14,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.user.UserAttentionActivity;
+import com.cmbb.smartkids.activity.user.UserCollectionActivity;
+import com.cmbb.smartkids.activity.user.UserInfoActivity;
+import com.cmbb.smartkids.activity.user.UserPublishActivity;
 import com.cmbb.smartkids.adapter.HomeAutoScrollBannerAdapter;
 import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
 import com.cmbb.smartkids.base.Constants;
@@ -29,6 +33,10 @@ import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
 import com.cmbb.smartkids.fragment.test.EntryListFragment;
+import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
+import com.cmbb.smartkids.network.api.ApiNetwork;
+import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
@@ -50,12 +58,9 @@ public class HomeActivity extends MActivity {
 
     // TabLayout
     TabLayout tabLayout;
-    TextView toolbarGround;
-    TextView toolbarAttention;
 
     // 顶部
     RelativeLayout rlTab;
-    RelativeLayout rlTitlebar;
 
     //底部
     TextView btnAdd;
@@ -89,6 +94,13 @@ public class HomeActivity extends MActivity {
     Fragment[] toolsFragments;
     String[] toolsTitles;
 
+    // User 用户数据
+    ImageView ivHead;
+    TextView tvNick;
+    TextView tvStatus;
+    RelativeLayout headBac;
+    UserInfoDetailModel userInfoDetailModel;
+
     // Banner Receiver
     HomeAutoScrollBannerAdapter homeAutoScrollBannerAdapter;
     BroadcastReceiver bannerReceiver = new BroadcastReceiver() {
@@ -98,7 +110,31 @@ public class HomeActivity extends MActivity {
             homeAutoScrollBannerAdapter.setData(cacheBanner);
         }
     };
-
+    // Userinfo Receiver
+    BroadcastReceiver userInfoReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.i("userinfo", "userinfo flag = " + intent.getBooleanExtra(Constants.NETWORK_FLAG, false));
+            if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
+                userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
+                tvNick.setText(userInfoDetailModel.getNike());
+                switch (userInfoDetailModel.getUserStatus()) {
+                    case 1:
+                        tvStatus.setText("备孕中");
+                        break;
+                    case 2:
+                        tvStatus.setText("怀孕中");
+                        break;
+                    case 3:
+                        tvStatus.setText("已出生");
+                        break;
+                }
+                GlideTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
+            } else {
+                showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
+            }
+        }
+    };
 
     @Override
     protected int getLayoutId() {
@@ -118,6 +154,20 @@ public class HomeActivity extends MActivity {
     }
 
     private void initView() {
+        // 用户数据
+        ivHead = (ImageView) findViewById(R.id.iv_head);
+        tvNick = (TextView) findViewById(R.id.tv_nick);
+        tvStatus = (TextView) findViewById(R.id.tv_status);
+        headBac = (RelativeLayout) findViewById(R.id.head_bac);
+        headBac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
+                if (null != userInfoDetailModel)
+                    intent.putExtra("user", userInfoDetailModel);
+                startActivity(intent);
+            }
+        });
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         // 设置Navigation
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -127,9 +177,10 @@ public class HomeActivity extends MActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         coordinatorlayout = (MengCoordinatorLayout) findViewById(R.id.coordinatorlayout);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
+        collapsingToolbarLayout.setExpandedTitleColor(android.R.color.transparent);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         rlTab = (RelativeLayout) findViewById(R.id.rl_tab);
-        rlTitlebar = (RelativeLayout) findViewById(R.id.rl_titlebar);
         btnAdd = (TextView) findViewById(R.id.btn_add);
         btnHome = (TextView) findViewById(R.id.btn_home);
 
@@ -148,7 +199,6 @@ public class HomeActivity extends MActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlTitlebar.setVisibility(View.VISIBLE);
                 rlTab.setVisibility(View.GONE);
                 expandToolbar();
                 coordinatorlayout.setAllowForScrool(true);
@@ -165,7 +215,6 @@ public class HomeActivity extends MActivity {
         btnActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlTitlebar.setVisibility(View.GONE);
                 rlTab.setVisibility(View.VISIBLE);
                 collapseToolbar();
                 coordinatorlayout.setAllowForScrool(false);
@@ -189,7 +238,6 @@ public class HomeActivity extends MActivity {
         btnMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlTitlebar.setVisibility(View.GONE);
                 rlTab.setVisibility(View.VISIBLE);
                 collapseToolbar();
                 coordinatorlayout.setAllowForScrool(false);
@@ -207,7 +255,6 @@ public class HomeActivity extends MActivity {
         btnTools.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlTitlebar.setVisibility(View.GONE);
                 rlTab.setVisibility(View.GONE);
                 collapseToolbar();
                 coordinatorlayout.setAllowForScrool(false);
@@ -252,6 +299,8 @@ public class HomeActivity extends MActivity {
 
     private void initData() {
 
+        // 初始化用户信息
+        ApiNetwork.getUserInfo(this);
         homeFragments = new Fragment[1];
         homeFragments[0] = new HomeListFragment(true);
         homeTitles = new String[1];
@@ -288,12 +337,16 @@ public class HomeActivity extends MActivity {
         super.onResume();
         IntentFilter intentFilter = new IntentFilter(Constants.Home.BANNER_DATA_INTENT);
         registerReceiver(bannerReceiver, intentFilter);
+
+        IntentFilter intentFilter2 = new IntentFilter(Constants.Home.USERINFO_DATA_INTENT);
+        registerReceiver(userInfoReceiver, intentFilter2);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(bannerReceiver);
+        unregisterReceiver(userInfoReceiver);
     }
 
     /**
@@ -309,9 +362,16 @@ public class HomeActivity extends MActivity {
                         // 关闭Navigation
                         mDrawerLayout.closeDrawers();
                         if (menuItem.getItemId() == R.id.nav_attention) {
+                            Intent intent = new Intent(HomeActivity.this, UserAttentionActivity.class);
+                            startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.nav_collection) {
-                        } else if (menuItem.getItemId() == R.id.nav_collection) {
+                            Intent intent = new Intent(HomeActivity.this, UserCollectionActivity.class);
+                            startActivity(intent);
+                        } else if (menuItem.getItemId() == R.id.nav_publish) {
+                            Intent intent = new Intent(HomeActivity.this, UserPublishActivity.class);
+                            startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.nav_setting) {
+
                         }
                         return true;
                     }
@@ -327,39 +387,35 @@ public class HomeActivity extends MActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case android.R.id.home: // 控制DrawerLayout
                 mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
+                return true;
             case R.id.action_search:
-                break;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
 
-    @Override // 程序退出的控制
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (!isQuit) {
-                isQuit = true;
-                showToastShort(R.string.back_more_quit);
-                TimerTask task = null;
-                task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        isQuit = false;
-                    }
-                };
-                timer.schedule(task, 2000);
-            } else {
-                finish();
-                System.exit(0);
-            }
+    @Override
+    public void onBackPressed() {
+        if (!isQuit) {
+            isQuit = true;
+            showToastShort(R.string.back_more_quit);
+            TimerTask task = null;
+            task = new TimerTask() {
+                @Override
+                public void run() {
+                    isQuit = false;
+                }
+            };
+            timer.schedule(task, 2000);
+        } else {
+            finish();
+            System.exit(0);
         }
-        return false;
     }
 
     /**

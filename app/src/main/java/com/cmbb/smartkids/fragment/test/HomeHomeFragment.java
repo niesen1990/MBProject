@@ -72,7 +72,6 @@ public class HomeHomeFragment extends MFragment {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
             tvMaster = (TextView) itemView.findViewById(R.id.tv_master);
         }
     }

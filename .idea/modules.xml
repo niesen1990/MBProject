@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MBProject.iml" filepath="$PROJECT_DIR$/MBProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MengBottomSheets/MengBottomSheets.iml" filepath="$PROJECT_DIR$/MengBottomSheets/MengBottomSheets.iml" />
       <module fileurl="file://$PROJECT_DIR$/MengPhotoPicker/MengPhotoPicker.iml" filepath="$PROJECT_DIR$/MengPhotoPicker/MengPhotoPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/MengRecyclerView/MengRecyclerView.iml" filepath="$PROJECT_DIR$/MengRecyclerView/MengRecyclerView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

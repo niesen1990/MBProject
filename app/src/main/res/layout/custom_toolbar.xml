@@ -9,11 +9,11 @@
     app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
     app:theme="@style/AppTheme.Base">
 
-  <!--  <TextView
+    <TextView
+        android:id="@+id/toolbar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="@dimen/large_txt"
         android:textColor="@android:color/white"
-        android:id="@+id/toolbar_title"/>-->
+        android:textSize="@dimen/large_txt"/>
 </android.support.v7.widget.Toolbar>

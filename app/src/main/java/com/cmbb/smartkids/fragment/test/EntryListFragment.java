@@ -34,7 +34,7 @@ public class EntryListFragment extends CommonFragment<HomeSameAge> {
 
     @Override
     protected boolean enableRefresh() {
-        return false;
+        return true;
     }
 
 

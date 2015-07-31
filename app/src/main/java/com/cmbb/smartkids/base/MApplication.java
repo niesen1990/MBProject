@@ -33,6 +33,8 @@ public class MApplication extends Application {
     private static Context mContext = null;
     private PushAgent mPushAgent;
 
+    public static String token = "083cbf5c89a44c01a2fe92f9b81baaf5";
+
     @Override
     public void onCreate() {
         super.onCreate();

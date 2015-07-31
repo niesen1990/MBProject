@@ -77,7 +77,6 @@ public class MainActivity extends MActivity {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvName = (TextView) itemView.findViewById(R.id.tv_name);
             tvMaster = (TextView) itemView.findViewById(R.id.tv_master);
         }
     }

@@ -1,8 +1,10 @@
 package com.cmbb.smartkids.network;
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.cmbb.smartkids.tools.ImageUtils;
 import com.cmbb.smartkids.tools.log.Log;
 import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.CacheControl;
@@ -16,6 +18,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,9 +38,9 @@ public class OkHttp {
 
     // timeout
     static {
-        mOkHttpClient.setConnectTimeout(50, TimeUnit.SECONDS);
-        mOkHttpClient.setWriteTimeout(50, TimeUnit.SECONDS);
-        mOkHttpClient.setReadTimeout(50, TimeUnit.SECONDS);
+        mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+        mOkHttpClient.setWriteTimeout(30, TimeUnit.SECONDS);
+        mOkHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
         mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         //mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(Application.context()), CookiePolicy.ACCEPT_ALL));
         //mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
@@ -244,17 +247,16 @@ public class OkHttp {
 
     // 根据路径获得图片并压缩，返回bitmap用于显示
     public static byte[] getSmallBitmap(String filePath) {
-        /*final BitmapFactory.Options options = new BitmapFactory.Options();
+        final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
         options.inSampleSize = calculateInSampleSize(options, 480, 800);
         options.inJustDecodeBounds = false;
         Bitmap bitmap2 = BitmapFactory.decodeFile(filePath, options);
-        Bitmap bitmap = ImageTools.rotaingImageView(ImageTools.readPictureDegree(filePath), bitmap2);
+        Bitmap bitmap = ImageUtils.rotaingImageView(ImageUtils.readPictureDegree(filePath), bitmap2);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        return baos.toByteArray();*/
-        return null;
+        return baos.toByteArray();
     }
 
     //计算图片的缩放值
