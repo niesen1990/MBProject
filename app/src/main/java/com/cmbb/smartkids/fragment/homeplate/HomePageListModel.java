@@ -1,5 +1,7 @@
 package com.cmbb.smartkids.fragment.homeplate;
 
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
 public class HomePageListModel {
     private List<HomeEredarModel> eredarList = new ArrayList<HomeEredarModel>();
     private List<HomeBannerModel> homeImgList = new ArrayList<HomeBannerModel>();
-    private List<HomePlateModel> plateList = new ArrayList<HomePlateModel>();
+    private List<PlateModel> plateList = new ArrayList<PlateModel>();
 
     /**
      * @return The eredarList
@@ -42,14 +44,14 @@ public class HomePageListModel {
     /**
      * @return The plateList
      */
-    public List<HomePlateModel> getPlateList() {
+    public List<PlateModel> getPlateList() {
         return plateList;
     }
 
     /**
      * @param plateList The plateList
      */
-    public void setPlateList(List<HomePlateModel> plateList) {
+    public void setPlateList(List<PlateModel> plateList) {
         this.plateList = plateList;
     }
 

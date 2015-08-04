@@ -172,7 +172,9 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
         @Override
         public void onInitializeDone(Exception e, List<T> data) {
             super.onInitializeDone(e, data);
-            onLoadFinishedHeadBind(headViewHolder);
+            if (needHeader()) {
+                onLoadFinishedHeadBind(headViewHolder);
+            }
         }
 
         @Override

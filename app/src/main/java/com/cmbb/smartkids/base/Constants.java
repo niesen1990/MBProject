@@ -63,6 +63,16 @@ public class Constants {
 
     }
 
+    public static final class Post {
+        private Post() {
+
+        }
+
+        public static final String POSTDETAIL_DATA = "post_detail_data";
+        public static final String POSTDETAIL_DATA_INTENT = "com.cmbb.smartkids.postdetail";
+
+    }
+
     public static final class Baby {
         private Baby() {
 

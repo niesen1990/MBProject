@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.user.UserActivity;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
@@ -42,7 +43,7 @@ public class HomeListHeadViewHolder extends RecyclerView.ViewHolder {
     }
 
     // 动态数据bind
-    public void onLoadFinishedHeadBindViewHolder(final Context context, DataController<HomePlateModel> mDataController) {
+    public void onLoadFinishedHeadBindViewHolder(final Context context, DataController<PlateModel> mDataController) {
         linearlayout_master.removeAllViews();
         List<HomeEredarModel> listEredar = ((HomeListProvider) mDataController).baseData.getContext().getEredarList();
         for (int i = 0; i < listEredar.size(); i++) {

@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.post.PlateListActivity;
 import com.cmbb.smartkids.activity.user.UserAttentionActivity;
 import com.cmbb.smartkids.activity.user.UserCollectionActivity;
 import com.cmbb.smartkids.activity.user.UserInfoActivity;
@@ -32,7 +33,6 @@ import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
-import com.cmbb.smartkids.fragment.test.EntryListFragment;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
@@ -231,6 +231,8 @@ public class HomeActivity extends MActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PlateListActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -308,23 +310,23 @@ public class HomeActivity extends MActivity {
         mHomeFragmentPagerAdapter.addFragment(homeFragments, homeTitles);
 
         activeFragments = new Fragment[2];
-        activeFragments[0] = new EntryListFragment();
-        activeFragments[1] = new EntryListFragment();
+        activeFragments[0] = new HomeListFragment();
+        activeFragments[1] = new HomeListFragment();
         activeTitles = new String[2];
         activeTitles[0] = "动态";
         activeTitles[1] = "消息";
         mActiveFragmentPagerAdapter.addFragment(activeFragments, activeTitles);
 
         masterFragments = new Fragment[2];
-        masterFragments[0] = new EntryListFragment();
-        masterFragments[1] = new EntryListFragment();
+        masterFragments[0] = new HomeListFragment();
+        masterFragments[1] = new HomeListFragment();
         masterTitles = new String[2];
         masterTitles[0] = "达人";
         masterTitles[1] = "专家";
         mMasterFragmentPagerAdapter.addFragment(masterFragments, masterTitles);
 
         toolsFragments = new Fragment[1];
-        toolsFragments[0] = new EntryListFragment();
+        toolsFragments[0] = new HomeListFragment();
         toolsTitles = new String[1];
         toolsTitles[0] = "Tools";
         mToolsFragmentPagerAdapter.addFragment(toolsFragments, toolsTitles);

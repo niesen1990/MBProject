@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
 import com.google.gson.Gson;
@@ -23,7 +24,7 @@ import java.util.Map;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:56
  */
-public class HomeListProvider extends DataController<HomePlateModel> {
+public class HomeListProvider extends DataController<PlateModel> {
 
     private Context mContext;
 
@@ -55,7 +56,7 @@ public class HomeListProvider extends DataController<HomePlateModel> {
     }
 
     @Override
-    public List<HomePlateModel> doParser(Response response) {
+    public List<PlateModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -74,7 +75,7 @@ public class HomeListProvider extends DataController<HomePlateModel> {
     }
 
     @Override
-    public void doSave(List<HomePlateModel> data) {
+    public void doSave(List<PlateModel> data) {
         try {
 
         } catch (Exception e) {

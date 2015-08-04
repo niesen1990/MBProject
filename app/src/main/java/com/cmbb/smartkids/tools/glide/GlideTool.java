@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.CircleImage.CircleImageTransform;
 
 /**
@@ -23,6 +24,7 @@ public class GlideTool {
      * @param circle  是否裁圆
      */
     public static void loadImage(Context context, String url, ImageView view, boolean circle) {
+        Log.i("image","image = " + url);
         if (url.contains("upload")) {
             if (circle) {
                 Glide.with(context).load(Constants.BASE_IMAGE_URL_OLD + url).transform(new CircleImageTransform(context)).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);
@@ -33,7 +35,10 @@ public class GlideTool {
             if (circle) {
                 Glide.with(context).load(Constants.BASE_IMAGE_URL + url).transform(new CircleImageTransform(context)).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);
             } else {
-                Glide.with(context).load(Constants.BASE_IMAGE_URL + url).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);
+                Glide.with(context).load(Constants.BASE_IMAGE_URL + url).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading)
+                        .override(500,758)
+                        .fitCenter()
+                        .into(view);
             }
         }
     }

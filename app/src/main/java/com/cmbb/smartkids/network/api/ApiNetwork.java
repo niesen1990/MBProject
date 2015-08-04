@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.replay.PostDetailBaseModel;
 import com.cmbb.smartkids.model.userinfo.UserInfoBaseModel;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.tools.log.Log;
@@ -120,6 +122,50 @@ public class ApiNetwork {
         body.put("code", "user");
         body.put("userId", userId);
         OkHttp.asyncPost(Constants.DELETEATTENTION_URL, body, callback);
+    }
+
+
+    /**
+     * 获取回复顶部详情
+     *
+     * @param context
+     */
+    public static void getReplayDetail(final Context context, PostModel mPostModel) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("id", mPostModel.getId() + "");
+        body.put("areaType", mPostModel.getAreaType());
+        body.put("type", mPostModel.getType());
+        body.put("userId", "" + mPostModel.getUserId());
+        OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindWonderfulDetails", body, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String result = response.body().string();
+                try {
+                    if (response.isSuccessful()) {
+                        Gson gson = new Gson();
+                        PostDetailBaseModel postDetailBaseModel = gson.fromJson(result, PostDetailBaseModel.class);
+
+                        if ("1".equals(postDetailBaseModel.getCode())) {
+                            Intent intent = new Intent(Constants.Post.POSTDETAIL_DATA_INTENT);
+                            intent.putExtra(Constants.NETWORK_FLAG, true);
+                            intent.putExtra(Constants.Post.POSTDETAIL_DATA, postDetailBaseModel.getContext());
+                            context.sendBroadcast(intent);
+                        }
+                    } else {
+                        sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+                    }
+                } catch (Exception e) {
+                    Log.i("userinfo", "e = " + e);
+                    sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+                }
+            }
+        });
     }
 
     /**

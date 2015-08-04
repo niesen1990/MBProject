@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">萌宝派</string>
 
-    <string name="action_search">搜索</string>
+    <string name="action_search" translatable="false">搜索</string>
     <string name="title_activity_home">萌宝派</string>
     <string name="home_titlebar_left">广场</string>
     <string name="home_titlebar_right">关注</string>
@@ -9,7 +9,7 @@
     <string name="nav_home_ipublish">我的发布</string>
     <string name="nav_home_icollection">我的收藏</string>
     <string name="nav_home_iattention">我的关注</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
     <string name="loading">Loading...</string>
     <string name="service_error">服务器异常，请稍后再试...</string>
     <string name="back_more_quit">再按一次退出整个应用</string>
@@ -17,20 +17,22 @@
     <string name="please_input_password">请输入密码</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_main2" translatable="false">Main2Activity</string>
     <string name="nav_nick_name">昵称</string>
     <string name="title_activity_user_info">资料修改</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
     <string name="input_nick">请输入昵称.....</string>
     <string name="action_submit">提交</string>
-    <string name="title_activity_user_attention">UserAttentionActivity</string>
-    <string name="title_activity_user_collection">UserCollectionActivity</string>
-    <string name="title_activity_user_publish">UserPublishActivity</string>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="title_activity_user">UserActivity</string>
-    <string name="title_activity_post_list">PostListActivity</string>
+    <string name="title_activity_user_attention" translatable="false">UserAttentionActivity</string>
+    <string name="title_activity_user_collection" translatable="false">UserCollectionActivity</string>
+    <string name="title_activity_user_publish" translatable="false">UserPublishActivity</string>
+    <string name="title_activity_setting" translatable="false">SettingActivity</string>
+    <string name="title_activity_user" translatable="false">UserActivity</string>
+    <string name="title_activity_post_list">定制关注</string>
+    <string name="action_attention">关注</string>
+    <string name="title_activity_replay_wonder" translatable="false">ReplayWonderActivity</string>
     <string name="title_activity_login">登录</string>
     <string name="title_activity_register">注册</string>
     <string name="title_activity_forget">忘记密码</string>

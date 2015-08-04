@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 
 
 /**
@@ -63,7 +64,7 @@ public class SameCityPublishListViewHolder extends RecyclerView.ViewHolder {
         return new SameCityPublishListViewHolder(v);
     }
 
-    public void onBindViewHolder(Context context, final SameCityPublishModel entry) {
+    public void onBindViewHolder(Context context, final PostModel entry) {
         //GlideTool.loadImage(context, entry.getSmallImg(), ivHead, false);
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
 
@@ -13,11 +14,11 @@ import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:59
  */
-public class HomeListAdapter extends ContentAdapterBase<HomePlateModel> {
+public class HomeListAdapter extends ContentAdapterBase<PlateModel> {
     private Context mContext;
 
 
-    public HomeListAdapter(Context mContext, DataController<HomePlateModel> mDataController, boolean need) {
+    public HomeListAdapter(Context mContext, DataController<PlateModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
         // 设置HeaderView

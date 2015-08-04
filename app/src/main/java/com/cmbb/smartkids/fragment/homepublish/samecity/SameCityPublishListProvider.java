@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
 import com.google.gson.Gson;
@@ -21,7 +22,7 @@ import java.util.Map;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:56
  */
-public class SameCityPublishListProvider extends DataController<SameCityPublishModel> {
+public class SameCityPublishListProvider extends DataController<PostModel> {
 
 
     @Override
@@ -46,7 +47,7 @@ public class SameCityPublishListProvider extends DataController<SameCityPublishM
     }
 
     @Override
-    public List<SameCityPublishModel> doParser(Response response) {
+    public List<PostModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -63,7 +64,7 @@ public class SameCityPublishListProvider extends DataController<SameCityPublishM
     }
 
     @Override
-    public void doSave(List<SameCityPublishModel> data) {
+    public void doSave(List<PostModel> data) {
         try {
 
         } catch (Exception e) {

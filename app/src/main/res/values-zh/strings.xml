@@ -9,4 +9,27 @@
     <string name="nav_nick_name">昵称</string>
     <string name="input_nick">请输入昵称.....</string>
     <string name="action_submit">提交</string>
+    <string name="action_attention">关注</string>
+    <string name="title_activity_post_list">定制关注</string>
+    <string name="app_name">萌宝派</string>
+    <string name="back_more_quit">再按一次退出整个应用</string>
+    <string name="loading">加载中...</string>
+    <string name="please_input_password">请输入密码</string>
+    <string name="please_input_phone_number">请输入手机号码</string>
+    <string name="service_error">服务器异常，请稍后再试...</string>
+    <string name="tb_munion_tip_download_prefix">正在下载:</string>
+    <string name="title_activity_forget">忘记密码</string>
+    <string name="title_activity_home">萌宝派</string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_register">注册</string>
+    <string name="title_activity_user_info">资料修改</string>
+    <string name="umeng_example_home_btn_plus">社交分享</string>
+    <string name="umeng_socialize_cancel_btn_str">取消</string>
+    <string name="umeng_socialize_content_hint">说点啥&#8230;</string>
+    <string name="umeng_socialize_login">登录</string>
+    <string name="umeng_socialize_login_qq">QQ空间</string>
+    <string name="umeng_socialize_send_btn_str">发送</string>
+    <string name="umeng_socialize_share">分享</string>
+    <string name="umeng_socialize_share_content">友盟社会化组件（SDK）让移动应用快速整合社交分享功能，我们简化了社交平台的接入，为开发者提供坚实的基础服务。（一）支持各大主流社交平台，  												（二）支持图片、文字、gif动图、音频、视频；@好友，关注官方微博等功能。 												（三）提供详尽的后台用户社交行为分析。www.umeng.com/social</string>
+    <string name="umeng_socialize_text_add_custom_platform">请配置用户平台</string>
 </resources>

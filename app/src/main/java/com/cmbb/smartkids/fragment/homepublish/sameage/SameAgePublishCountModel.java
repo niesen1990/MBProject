@@ -1,5 +1,7 @@
 package com.cmbb.smartkids.fragment.homepublish.sameage;
 
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+
 import java.util.ArrayList;
 
 /**
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class SameAgePublishCountModel {
     private String attention;
     private String count;
-    private ArrayList<SameAgePublishModel> homeSameAgeList;
+    private ArrayList<PostModel> homeSameAgeList;
 
     /**
      * @return The presentation
@@ -41,14 +43,14 @@ public class SameAgePublishCountModel {
     /**
      * @return The HomeSameAge
      */
-    public ArrayList<SameAgePublishModel> getHomeSameAgeList() {
+    public ArrayList<PostModel> getHomeSameAgeList() {
         return homeSameAgeList;
     }
 
     /**
      * @param HomeSameAge The HomeSameAge
      */
-    public void setHomeSameAgeList(ArrayList<SameAgePublishModel> HomeSameAge) {
+    public void setHomeSameAgeList(ArrayList<PostModel> HomeSameAge) {
         this.homeSameAgeList = HomeSameAge;
     }
 

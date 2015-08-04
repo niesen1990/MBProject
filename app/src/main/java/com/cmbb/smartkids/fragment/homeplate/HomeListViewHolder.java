@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.post.PostWonderListActivity;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
 
@@ -44,16 +45,16 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomePlateModel homePlateModel = (HomePlateModel) v.getTag();
+                PlateModel postModel = (PlateModel) v.getTag();
                 Intent intent = new Intent(context, PostWonderListActivity.class);
-                intent.putExtra("model", homePlateModel);
+                intent.putExtra("model", postModel);
                 context.startActivity(intent);
             }
         });
         return new HomeListViewHolder(v);
     }
 
-    public void onBindViewHolder(Context context, final HomePlateModel entry) {
+    public void onBindViewHolder(Context context, final PlateModel entry) {
         parent.setTag(entry);
         tvConstellation.setText(entry.getTitle());
         tvPost.setText(entry.getCount() + "");
