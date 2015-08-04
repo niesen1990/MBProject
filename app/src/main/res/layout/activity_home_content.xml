@@ -44,7 +44,7 @@
 
                     <com.cmbb.smartkids.widget.indicator.CirclePageIndicator
                         android:id="@+id/tab_indicator"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|right"/>
                 </FrameLayout>
@@ -74,40 +74,6 @@
 
                     </RelativeLayout>
 
-                    <!--<RelativeLayout
-                        android:id="@+id/rl_titlebar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:id="@+id/titlebar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/ic_home_titlebar_rb"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:padding="6dp">
-
-                            <TextView
-                                android:id="@+id/toolbar_ground"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="@string/home_titlebar_left"
-                                android:textColor="@color/colorPrimary"/>
-
-                            <TextView
-                                android:id="@+id/toolbar_attention"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="@string/home_titlebar_right"
-                                android:textColor="@android:color/white"/>
-                        </LinearLayout>
-                    </RelativeLayout>-->
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.CollapsingToolbarLayout>
 

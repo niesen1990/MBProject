@@ -42,14 +42,14 @@ public class HomeAutoScrollBannerAdapter extends RecyclingPagerAdapter {
     public View getView(final int position, View view, final ViewGroup container) {
         ViewHolder holder;
         if (view != null) {
-            holder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) view.getTag(R.id.img);
         } else {
             LayoutInflater inflater = (LayoutInflater) container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_home_banner_item, container, false);
             holder = new ViewHolder(view);
-            view.setTag(holder);
+            view.setTag(R.id.img, holder);
         }
-        holder.iv.setTag(R.id.img, data.get(position));
+        //holder.iv.setTag(R.id.img, data.get(position));
 
         GlideTool.loadImage(mContext, data.get(position).getBigImg(), holder.iv, false);
         holder.iv.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class HomeAutoScrollBannerAdapter extends RecyclingPagerAdapter {
         public ImageView iv;
 
         public ViewHolder(View view) {
-            iv = (ImageView) view.findViewById(R.id.img);
+            iv = (ImageView) view;
         }
     }
 
