@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_share_sina"
+        android:icon="@drawable/umeng_sina_selector"
+        android:title="新浪"/>
+    <item
+        android:id="@+id/btn_share_qq"
+        android:icon="@drawable/umeng_qq_selector"
+        android:title="QQ"/>
+    <item
+        android:id="@+id/btn_share_qzone"
+        android:icon="@drawable/umeng_qzone_selector"
+        android:title="Qzone"/>
+    <item
+        android:id="@+id/btn_share_wx"
+        android:icon="@drawable/umeng_wx_selector"
+        android:title="微信"/>
+    <item
+        android:id="@+id/btn_share_wxcircle"
+        android:icon="@drawable/umeng_wxcircle_selector"
+        android:title="朋友圈"/>
+
+</menu>

@@ -31,4 +31,7 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_user">UserActivity</string>
     <string name="title_activity_post_list">PostListActivity</string>
+    <string name="title_activity_login">登录</string>
+    <string name="title_activity_register">注册</string>
+    <string name="title_activity_forget">忘记密码</string>
 </resources>

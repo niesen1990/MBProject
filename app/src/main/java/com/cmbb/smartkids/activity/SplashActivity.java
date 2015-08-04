@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.tools.log.Log;
@@ -64,8 +65,9 @@ public class SplashActivity extends MActivity {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                if (isFirstInto) {
-                    startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+                if (true) {
+//                    startActivity(new Intent(SplashActivity.this, GuideActivity.class));
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     startActivity(new Intent(SplashActivity.this, HomeActivity.class));

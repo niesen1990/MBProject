@@ -125,7 +125,7 @@ public class Constants {
         public static final String QQ_APP_KEY = "1104000906";
         public static final String QQ_APPSECRET = "T73NH4Tz75dWsPdy";
 
-        public static final String DESCRIPTOR = "com.umeng.share";
+        public static final String DESCRIPTOR = "com.cmbb.smartkids";
     }
 
     public static final class Home {

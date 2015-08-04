@@ -5,6 +5,9 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.text.TextUtils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by javon on 2015/7/28.
  */
@@ -62,6 +65,19 @@ public class Utils {
         }
         return null;
     }
+
+    /**
+     * 手机号码验证
+     * @param phone
+     * @return
+     */
+    public static boolean isMobileNo(String phone) {
+        String match = "^((13|15|18|17|14)\\d{9})|147\\d{8}$";
+        Pattern pattern = Pattern.compile(match);
+        Matcher matcher = pattern.matcher(phone);
+        return matcher.matches();
+    }
+
 
 
 

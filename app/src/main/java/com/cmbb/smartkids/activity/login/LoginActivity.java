@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.activity.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,6 +15,13 @@ import android.widget.Toast;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
+import com.cmbb.smartkids.network.OkHttp;
+import com.cmbb.smartkids.tools.ShareUtils;
+import com.cmbb.smartkids.tools.Utils;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.bean.StatusCode;
@@ -27,6 +35,8 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,13 +44,15 @@ import java.util.Set;
  * Created by javon on 2015/7/31.
  */
 public class LoginActivity extends MActivity {
+    private final String TAG = LoginActivity.class.getSimpleName();
 
     private EditText etLoginPhone, etLoginPsw;
     private TextView btnLogin, btnForgetPassword, btnGoRegister;
     private ImageView btnLoginQq, btnLoginSina, btnLoginWx;
     private UMSocialService mController;
-    private final String UmengConstance = "com.umeng.login";
     private SHARE_MEDIA media;
+    private String uid = "";// 获取第三方平台用户id
+    private String userName = ""; // 获取第三方平台userName;
 
 
     @Override
@@ -68,7 +80,7 @@ public class LoginActivity extends MActivity {
     }
 
     private void initData() {
-        mController = UMServiceFactory.getUMSocialService(UmengConstance);
+        mController = ShareUtils.instanceOf(this);
     }
 
     private void addListener() {
@@ -83,19 +95,23 @@ public class LoginActivity extends MActivity {
 
     @Override
     public void onClick(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             case R.id.btn_login:
-
+                String account = etLoginPhone.getText().toString();
+                String pwd = etLoginPsw.getText().toString();
+                sendLoginRequest(account, pwd);
                 break;
             case R.id.btn_forget_password:
-
+                intent = new Intent(LoginActivity.this, PhoneVerifyActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_go_register:
 
                 break;
             case R.id.btn_login_qq:
                 media = SHARE_MEDIA.QQ;
-                addQQQZonePlatform();
+                ShareUtils.addQQQZonePlatform();
                 authToPlatform();
                 break;
             case R.id.btn_login_sina:
@@ -104,7 +120,7 @@ public class LoginActivity extends MActivity {
                 break;
             case R.id.btn_login_wx:
                 media = SHARE_MEDIA.WEIXIN;
-                addWXPlatform();
+                ShareUtils.addWXPlatform();
                 authToPlatform();
                 break;
         }
@@ -118,7 +134,7 @@ public class LoginActivity extends MActivity {
         mController.doOauthVerify(this, media, new SocializeListeners.UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
-
+                Log.e(TAG, "i come here");
             }
 
             @Override
@@ -176,9 +192,42 @@ public class LoginActivity extends MActivity {
 
         @Override
         public void onComplete(int status, Map<String, Object> info) {
-
+            if(media == SHARE_MEDIA.SINA || media == SHARE_MEDIA.QQ){
+                uid = info.get("uid").toString();
+                userName = info.get("screen_name").toString();
+            }else if(media == SHARE_MEDIA.WEIXIN){
+                uid = info.get("openid").toString();
+                userName = info.get("nickname").toString();
+            }
+            handleLogin(uid, userName);
         }
     };
+
+    /**
+     * 第三方平台登录
+     * @param uid
+     * @param userName
+     */
+    private void handleLogin(String uid, String userName){
+        showWaitDialog();
+        Map<String, String> params = new HashMap<>();
+        params.put("openId", uid);
+        params.put("nick", userName);
+        OkHttp.asyncPost(Constants.User.LOGINS_URL, params, TAG, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                hideWaitDialog();
+                showToast(R.string.service_error);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                hideWaitDialog();
+
+            }
+        });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -188,89 +237,37 @@ public class LoginActivity extends MActivity {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
     }
-    /**
-     * QQ QQ空间授权
-     * @return
-     */
-    private void addQQQZonePlatform() {
-        // 添加QQ支持, 并且设置QQ分享内容的target url
-        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this,
-                Constants.Share.QQ_APP_KEY, Constants.Share.QQ_APPSECRET);
-//        qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
-        qqSsoHandler.addToSocialSDK();
 
-        // 添加QZone平台
-        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, Constants.Share.QQ_APP_KEY, Constants.Share.QQ_APPSECRET);
-        qZoneSsoHandler.addToSocialSDK();
-
-        //要分享的平台
-        mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-                SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA);
-        mController.openShare(this, false);
-
-    }
-
-    /**
-     * 微信 朋友圈授权
-     * @return
-     */
-    private void addWXPlatform() {
-        // 注意：在微信授权的时候，必须传递appSecret
-        // wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
-        // 添加微信平台
-        UMWXHandler wxHandler = new UMWXHandler(this, Constants.Share.WEIXIN_APP_KEY, Constants.Share.WEIXIN_APPSECRET);
-        wxHandler.addToSocialSDK();
-
-        // 支持微信朋友圈
-        UMWXHandler wxCircleHandler = new UMWXHandler(this, Constants.Share.WEIXIN_APP_KEY, Constants.Share.WEIXIN_APPSECRET);
-        wxCircleHandler.setToCircle(true);
-        wxCircleHandler.addToSocialSDK();
-    }
-
-
-    //+++++++++++++++++++++++++++分享功能+++++++++++++++++++++++++++++++++++++++
-    private void configPlatforms() {
-        // 添加新浪SSO授权
-        mController.getConfig().setSsoHandler(new SinaSsoHandler());
-        // 添加QQ、QZone平台
-        addQQQZonePlatform();
-
-        // 添加微信、微信朋友圈平台
-        addWXPlatform();
-    }
-
-    /**
-     * 调用postShare分享。跳转至分享编辑页，然后再分享。</br> [注意]<li>
-     * 对于新浪，豆瓣，人人，腾讯微博跳转到分享编辑页，其他平台直接跳转到对应的客户端
-     *//*
-    private void postShare() {
-        CustomShareBoard shareBoard = new CustomShareBoard(getActivity());
-        shareBoard.showAtLocation(getActivity().getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
-    }
-
-    *//**
-     * 直接分享，底层分享接口。如果分享的平台是新浪、腾讯微博、豆瓣、人人，则直接分享，无任何界面弹出； 其它平台分别启动客户端分享</br>
-     *//*
-    private void directShare() {
-        mController.directShare(this, mPlatform, new SocializeListeners.SnsPostListener() {
-
+    private void sendLoginRequest(String account, String pwd){
+         if(TextUtils.isEmpty(account)){
+             showToast("请输入手机号码");
+             return;
+         }
+        if(!Utils.isMobileNo(account)){
+            showToast("请输入正确的手机号码");
+            return;
+        }
+        if(TextUtils.isEmpty(pwd)){
+            showToast("请输入密码");
+            return;
+        }
+        showWaitDialog("正在登录...");
+        Map<String, String> params = new HashMap<>();
+        params.put("registerPhone", account);
+        params.put("registerPassword", pwd);
+        OkHttp.asyncPost(Constants.User.LOGINS_URL, params, TAG, new Callback() {
             @Override
-            public void onStart() {
+            public void onFailure(Request request, IOException e) {
+                hideWaitDialog();
+                showToast(R.string.service_error);
+
             }
 
             @Override
-            public void onComplete(SHARE_MEDIA platform, int eCode, SocializeEntity entity) {
-                String showText = "分享成功";
-                if (eCode != StatusCode.ST_CODE_SUCCESSED) {
-                    showText = "分享失败 [" + eCode + "]";
-                }
-                Toast.makeText(getActivity(), showText, Toast.LENGTH_SHORT).show();
+            public void onResponse(Response response) throws IOException {
+
             }
         });
-    }*/
+    }
 
-
-
-
-    //=========================================================
 }

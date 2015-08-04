@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -178,7 +179,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
                 }
                 Toast toast = new Toast(this);
                 toast.setView(view);
-                toast.setGravity(gravity, 0, 0);
+                toast.setGravity(Gravity.BOTTOM | gravity, 0, 0);
                 // toast.setGravity(Gravity.TOP|Gravity.LEFT,0 ,0);
                 toast.setDuration(duration);
                 toast.show();

@@ -285,6 +285,18 @@
             android:label="@string/title_activity_setting" >
         </activity>
         <activity
+            android:name=".activity.login.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".activity.login.PhoneVerifyActivity"
+            android:label="PhoneVerifyActivity" />
+        <activity
+            android:name=".activity.login.ForgetActivity"
+            android:label="@string/title_activity_forget" />
+        <activity
+            android:name=".activity.login.RegisterActivity"
+            android:label="@string/title_activity_register" />
+        <activity
             android:name=".activity.user.UserActivity"
             android:label="@string/title_activity_user"
             android:parentActivityName=".activity.HomeActivity" >
