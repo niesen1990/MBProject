@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 /**
- * A {@link android.support.v4.view.PagerAdapter} which behaves like an {@link android.widget.Adapter} with view types and
+ * A {@link PagerAdapter} which behaves like an {@link android.widget.Adapter} with view types and
  * view recycling.
  */
 public abstract class RecyclingPagerAdapter extends PagerAdapter {

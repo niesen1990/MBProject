@@ -9,4 +9,4 @@
     <!-- Pressed -->
     <item android:drawable="@drawable/rc_call_answer_down" android:state_pressed="true"/>
 
-</selector><!-- From: file:/Users/niesen918/Downloads/demo-app-android-v2-2.2.6/kit/src/main/res/drawable/rc_btn_answer_selector.xml --><!-- From: file:/Users/niesen918/Downloads/demo-app-android-v2-2.2.6/kit/build/intermediates/bundles/debug/res/drawable/rc_btn_answer_selector.xml -->
+</selector><!-- From: file:/F:/android-studio-workspace/MBProject/MengRongKit/src/main/res/drawable/rc_btn_answer_selector.xml --><!-- From: file:/F:/android-studio-workspace/MBProject/MengRongKit/build/intermediates/bundles/debug/res/drawable/rc_btn_answer_selector.xml -->

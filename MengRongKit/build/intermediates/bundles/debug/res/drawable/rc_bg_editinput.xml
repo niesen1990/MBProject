@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/rc_bg_text_hover" android:state_selected="true"/>
     <item android:drawable="@drawable/rc_bg_text_normal"/>
-</selector><!-- From: file:/Users/niesen918/Downloads/demo-app-android-v2-2.2.6/kit/src/main/res/drawable/rc_bg_editinput.xml -->
+</selector><!-- From: file:/F:/android-studio-workspace/MBProject/MengRongKit/src/main/res/drawable/rc_bg_editinput.xml -->

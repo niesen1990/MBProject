@@ -251,4 +251,19 @@ public class PlateModel implements Parcelable {
             return new PlateModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "PlateModel{" +
+                "bigImg='" + bigImg + '\'' +
+                ", connector='" + connector + '\'' +
+                ", context='" + context + '\'' +
+                ", count=" + count +
+                ", id=" + id +
+                ", plateParentType='" + plateParentType + '\'' +
+                ", smallImg='" + smallImg + '\'' +
+                ", title='" + title + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

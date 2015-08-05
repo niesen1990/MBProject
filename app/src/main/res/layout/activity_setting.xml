@@ -1,16 +1,114 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.cmbb.smartkids.activity.user.SettingActivity">
+                android:background="@color/transparent_gray"
+                android:orientation="vertical"
+                tools:context="com.cmbb.smartkids.activity.setting.SettingActivity">
+    <RelativeLayout
+        android:id="@+id/rl_set_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin_half"
+        android:background="@color/color_white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_main_black"
+            android:textSize="@dimen/middle_txt"
+            android:text="清除缓存"/>
+    </RelativeLayout>
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:id="@+id/rl_set_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin_half"
+        android:background="@color/color_white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_main_black"
+            android:textSize="@dimen/middle_txt"
+            android:text="关于萌宝派"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_right_achor_bg"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/transparent_gray"/>
+    <RelativeLayout
+        android:id="@+id/rl_set_declaration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:background="@color/color_white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_main_black"
+            android:textSize="@dimen/middle_txt"
+            android:text="免责声明"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_right_achor_bg"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/transparent_gray"/>
+    <RelativeLayout
+        android:id="@+id/rl_set_suggest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:background="@color/color_white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_main_black"
+            android:textSize="@dimen/middle_txt"
+            android:text="意见反馈"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/btn_right_achor_bg"
+            android:layout_alignParentRight="true"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_set_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/color_white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/large_txt"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:text="注 销"/>
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

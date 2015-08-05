@@ -32,8 +32,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
-
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.tools.log.Log;
+import com.cmbb.smartkids.widget.indicator.PageIndicator;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 import static android.widget.LinearLayout.HORIZONTAL;
@@ -234,6 +235,8 @@ public class CirclePageIndicator extends View implements PageIndicator {
         float longOffset = longPaddingBefore + mRadius;
         if (mCentered) {
             longOffset += ((longSize - longPaddingBefore - longPaddingAfter) / 2.0f) - ((count * threeRadius) / 2.0f);
+        }else{
+            longOffset = longSize - longPaddingAfter - (count * threeRadius);
         }
 
         float dX;
@@ -280,7 +283,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         canvas.drawCircle(dX, dY, mRadius, mPaintFill);
     }
 
-    public boolean onTouchEvent(android.view.MotionEvent ev) {
+    public boolean onTouchEvent(MotionEvent ev) {
         if (super.onTouchEvent(ev)) {
             return true;
         }
@@ -323,7 +326,6 @@ public class CirclePageIndicator extends View implements PageIndicator {
                     final int width = getWidth();
                     final float halfWidth = width / 2f;
                     final float sixthWidth = width / 6f;
-
                     if ((mCurrentPage > 0) && (ev.getX() < halfWidth - sixthWidth)) {
                         if (action != MotionEvent.ACTION_CANCEL) {
                             mViewPager.setCurrentItem(mCurrentPage - 1);
@@ -542,7 +544,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
         }
 
         @SuppressWarnings("UnusedDeclaration")
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
             @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);

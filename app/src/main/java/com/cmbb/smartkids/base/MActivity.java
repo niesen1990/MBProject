@@ -39,7 +39,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     protected boolean _isVisible;
     private WaitDialog _waitDialog;
     //声明相关变量
-    protected Toolbar toolbar;
+    protected ActionBar actionBar;
     protected PushAgent mPushAgent;
 
     // ContentView
@@ -61,9 +61,9 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     protected void initToolbar() {
         try {
             // 设置Toolbar
-            toolbar = (Toolbar) findViewById(R.id.tl_main_custom);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.tl_main_custom);
             setSupportActionBar(toolbar);
-            ActionBar actionBar = getSupportActionBar();
+            actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setHomeButtonEnabled(true); //设置返回键可用
                 actionBar.setDisplayHomeAsUpEnabled(true);
@@ -74,8 +74,8 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    public Toolbar getToolbar() {
-        return toolbar != null ? toolbar : null;
+    public ActionBar getCustomBar() {
+        return actionBar != null ? actionBar : null;
     }
 
     protected abstract void init(Bundle savedInstanceState);

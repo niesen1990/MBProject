@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.post.PlateListActivity;
+import com.cmbb.smartkids.activity.setting.SettingActivity;
 import com.cmbb.smartkids.activity.user.UserAttentionActivity;
 import com.cmbb.smartkids.activity.user.UserCollectionActivity;
 import com.cmbb.smartkids.activity.user.UserInfoActivity;
@@ -38,6 +39,7 @@ import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
+import com.cmbb.smartkids.tools.TDevice;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
@@ -105,6 +107,8 @@ public class HomeActivity extends MActivity {
     UserInfoDetailModel userInfoDetailModel;
 
     // Banner Receiver
+
+
     HomeAutoScrollBannerAdapter homeAutoScrollBannerAdapter;
     BroadcastReceiver bannerReceiver = new BroadcastReceiver() {
         @Override
@@ -279,8 +283,12 @@ public class HomeActivity extends MActivity {
         AutoScrollViewPager scrollPager = (AutoScrollViewPager) findViewById(R.id.scroll_pager);
         homeAutoScrollBannerAdapter = new HomeAutoScrollBannerAdapter(this);
         scrollPager.setAdapter(homeAutoScrollBannerAdapter);
-        scrollPager.startAutoScroll();
+        scrollPager.startAutoScroll(4000);
         CirclePageIndicator mIndicator = (CirclePageIndicator) findViewById(R.id.tab_indicator);
+        mIndicator.setFillColor(getResources().getColor(R.color.colorPrimary));
+        mIndicator.setStrokeWidth(1.0f);
+        mIndicator.setStrokeColor(getResources().getColor(R.color.colorPrimary));
+        mIndicator.setSnap(true);
         mIndicator.setViewPager(scrollPager);
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -377,7 +385,8 @@ public class HomeActivity extends MActivity {
                             Intent intent = new Intent(HomeActivity.this, UserPublishActivity.class);
                             startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.nav_setting) {
-
+                            Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                            startActivity(intent);
                         }
                         return true;
                     }

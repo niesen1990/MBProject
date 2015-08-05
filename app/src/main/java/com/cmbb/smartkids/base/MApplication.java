@@ -3,6 +3,7 @@ package com.cmbb.smartkids.base;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.setting.SettingDetailActivity;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.rong.RongCloudEvent;
 import com.cmbb.smartkids.rong.RongInfoContext;
 import com.cmbb.smartkids.rong.message.DeAgreedFriendRequestMessage;
@@ -26,6 +29,8 @@ import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
+
+import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.ipc.RongExceptionHandler;
@@ -111,11 +116,10 @@ public class MApplication extends Application {
         String appId = "myappid";  //蒲公英注册或上传应用获取的AppId
         PgyCrashManager.register(this, appId);
     }
-
     /**
      * 友盟推送
      */
-    private void initPushAgent() {
+    private void initPushAgent(){
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDebugMode(true);
 
@@ -125,7 +129,7 @@ public class MApplication extends Application {
          * 2. IntentService里的onHandleIntent方法是并不处于主线程中，因此，如果需调用到主线程，需如下所示;
          * 	      或者可以直接启动Service
          * */
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+        UmengMessageHandler messageHandler = new UmengMessageHandler(){
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
                 new Handler(getMainLooper()).post(new Runnable() {
@@ -148,8 +152,8 @@ public class MApplication extends Application {
                         RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.view_umeng_notification);
                         myNotificationView.setTextViewText(R.id.notification_title, msg.title);
                         myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                        myNotificationView.setImageViewBitmap(R.id.notification_large_icon, getLargeIcon(context, msg));
-                        myNotificationView.setImageViewResource(R.id.notification_small_icon, getSmallIconId(context, msg));
+                        myNotificationView.setImageViewResource(R.id.notification_large_icon, R.mipmap.ic_launcher);
+                        myNotificationView.setImageViewResource(R.id.notification_small_icon, R.mipmap.ic_launcher);
                         builder.setContent(myNotificationView);
                         builder.setAutoCancel(true);
                         Notification mNotification = builder.build();
@@ -168,14 +172,29 @@ public class MApplication extends Application {
          * 该Handler是在BroadcastReceiver中被调用，故
          * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
          * */
-        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-                Toast.makeText(context, "i cclick :" + msg.custom, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "i cclick :"+msg.custom, Toast.LENGTH_LONG).show();
             }
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
     }
+
+
+    private void handleNotificationClick(UMessage msg){
+        Map<String, String> params = msg.extra;
+        String notifyTitle = params.get("title");
+        String notifyContent = params.get("content");
+        Intent intent = new Intent(getContext(), SettingDetailActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("flags", "notify");
+        intent.putExtra("title", "萌宝派");
+        intent.putExtra("notify_title", notifyTitle);
+        intent.putExtra("notify_content", notifyContent);
+        startActivity(intent);
+    }
+
 
 
     /**

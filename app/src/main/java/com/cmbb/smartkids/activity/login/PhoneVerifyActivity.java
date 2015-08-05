@@ -1,12 +1,10 @@
 package com.cmbb.smartkids.activity.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
@@ -17,7 +15,6 @@ import com.cmbb.smartkids.tools.Utils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import com.umeng.message.PushAgent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -53,12 +50,12 @@ public class PhoneVerifyActivity extends MActivity {
             isRegister = getIntent().getBooleanExtra("flags", false);
         }
         if(isRegister){
-            if(getToolbar() != null){
-                getToolbar().setTitle("用户注册");
+            if(getCustomBar() != null){
+                getCustomBar().setTitle("用户注册");
             }
         }else{
-            if(getToolbar() != null){
-                getToolbar().setTitle("忘记密码");
+            if(getCustomBar() != null){
+                getCustomBar().setTitle("忘记密码");
             }
         }
     }

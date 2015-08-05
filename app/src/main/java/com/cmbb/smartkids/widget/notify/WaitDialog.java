@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.tools.TDevice;
+import com.cmbb.smartkids.tools.log.Log;
 
 public class WaitDialog extends Dialog {
 

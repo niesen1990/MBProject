@@ -46,7 +46,6 @@ public class SplashActivity extends MActivity {
         super.onResume();
 
     }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -60,8 +59,7 @@ public class SplashActivity extends MActivity {
         @Override
         public void onRegistered(String registrationId) {
             // TODO Auto-generated method stub
-            Log.e("mRegisterCallback", "mRegisterCallback is already register");
-            Log.e("mRegisterCallback", "token:" + mPushAgent.getRegistrationId());
+            Log.e("mRegisterCallback", "token:"+mPushAgent.getRegistrationId());
 
         }
     };
@@ -75,7 +73,6 @@ public class SplashActivity extends MActivity {
             public void run() {
                 if (isFirstInto) {
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
-                    //startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
                 } else {
                     startActivity(new Intent(SplashActivity.this, HomeActivity.class));
