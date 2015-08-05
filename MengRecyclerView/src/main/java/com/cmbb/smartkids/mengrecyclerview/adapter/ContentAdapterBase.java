@@ -35,6 +35,16 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
 
     protected boolean needHeadView;
 
+    protected boolean moreFlag;
+
+    public boolean isMoreFlag() {
+        return moreFlag;
+    }
+
+    public void setMoreFlag(boolean moreFlag) {
+        this.moreFlag = moreFlag;
+    }
+
     public enum CommonFeature {
         HEADER,
         COMMON,
@@ -105,7 +115,7 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
 
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-            if (mDataController.isEnd()) {
+            if (mDataController.isEnd() || moreFlag) {
                 footerViewHolder.onBindViewHolder();
             } else {
                 mDataController.more();

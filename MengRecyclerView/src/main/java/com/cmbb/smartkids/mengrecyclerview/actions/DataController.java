@@ -170,6 +170,7 @@ public abstract class DataController<T> implements DataProvider<T> {
         if (data.size() < mPageSize) {
             isEnd = true;
         }
+        mRepository.clear();
         mRepository.addAll(0, data);
     }
 

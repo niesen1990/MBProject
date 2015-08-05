@@ -20,6 +20,7 @@ public class MessageListAdapter extends ContentAdapterBase<MessageModel> {
     public MessageListAdapter(Context mContext, DataController<MessageModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
+        moreFlag = true;
         // 设置HeaderView
         setNeedHeadView(need);
     }
