@@ -34,6 +34,7 @@ import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.active.ActiveFragment;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
+import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
@@ -314,7 +315,7 @@ public class HomeActivity extends MActivity {
 
         activeFragments = new Fragment[2];
         activeFragments[0] = new ActiveFragment();
-        activeFragments[1] = new FragmentHomeTools();
+        activeFragments[1] = new MessageListFragment();
         activeTitles = new String[2];
         activeTitles[0] = "动态";
         activeTitles[1] = "消息";
