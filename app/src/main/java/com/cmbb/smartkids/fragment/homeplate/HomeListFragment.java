@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homeplate;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -19,6 +20,7 @@ public class HomeListFragment extends CommonFragment<PlateModel> {
     public HomeListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public HomeListFragment(boolean needHeadView) {
         this.need = needHeadView;
     }

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.replay.ReplayAgeCityActivity;
 import com.cmbb.smartkids.activity.replay.ReplayWonderActivity;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
@@ -63,7 +64,12 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 PostModel mPostModel = (PostModel) v.getTag();
-                Intent intent = new Intent(context, ReplayWonderActivity.class);
+                Intent intent = null;
+                if (mPostModel.getPortConnector().contains("wonder")) {
+                    intent = new Intent(context, ReplayWonderActivity.class);
+                } else if (mPostModel.getPortConnector().contains("star")) {
+                    intent = new Intent(context, ReplayAgeCityActivity.class);
+                }
                 intent.putExtra("model", mPostModel);
                 context.startActivity(intent);
 

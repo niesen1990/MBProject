@@ -116,13 +116,13 @@ public class ToolsMapActivity extends MActivity implements BDLocationListener, O
         if (mBaiduMap != null) {
             mBaiduMap.setMyLocationData(locData);
         }
-//        if (isFirstLoc) {
-//            isFirstLoc = false;
-            LatLng ll = new LatLng(bdLocation.getLatitude(),
-                    bdLocation.getLongitude());
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-            mBaiduMap.animateMapStatus(u);
-//        }
+        //        if (isFirstLoc) {
+        //            isFirstLoc = false;
+        LatLng ll = new LatLng(bdLocation.getLatitude(),
+                bdLocation.getLongitude());
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+        mBaiduMap.animateMapStatus(u);
+        //        }
 
     }
 
@@ -201,7 +201,6 @@ public class ToolsMapActivity extends MActivity implements BDLocationListener, O
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         // 退出时销毁定位
         mLocClient.stop();
         //退出销毁Poi检索

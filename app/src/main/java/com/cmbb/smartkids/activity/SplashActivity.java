@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.sp.SPCache;
 import com.umeng.message.IUmengRegisterCallback;
@@ -29,6 +31,14 @@ public class SplashActivity extends MActivity {
     protected void init(Bundle savedInstanceState) {
         mPushAgent.enable(mRegisterCallback);
         initTask();
+        // 登陆
+        initLogin();
+    }
+
+    private void initLogin() {
+        // 萌宝登陆
+        ApiNetwork.login(MApplication.token);
+        ApiNetwork.getUserInfoList();
     }
 
     @Override
@@ -36,13 +46,12 @@ public class SplashActivity extends MActivity {
         super.onResume();
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
 
     }
-
-
 
 
     // 友盟推送注册器
@@ -52,7 +61,7 @@ public class SplashActivity extends MActivity {
         public void onRegistered(String registrationId) {
             // TODO Auto-generated method stub
             Log.e("mRegisterCallback", "mRegisterCallback is already register");
-            Log.e("mRegisterCallback", "token:"+mPushAgent.getRegistrationId());
+            Log.e("mRegisterCallback", "token:" + mPushAgent.getRegistrationId());
 
         }
     };

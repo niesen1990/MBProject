@@ -45,29 +45,34 @@ public class HomeListHeadViewHolder extends RecyclerView.ViewHolder {
     // 动态数据bind
     public void onLoadFinishedHeadBindViewHolder(final Context context, DataController<PlateModel> mDataController) {
         linearlayout_master.removeAllViews();
-        List<HomeEredarModel> listEredar = ((HomeListProvider) mDataController).baseData.getContext().getEredarList();
-        for (int i = 0; i < listEredar.size(); i++) {
-            final View view = LayoutInflater.from(context).inflate(R.layout.activity_home_list_headview_item, null, false);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(23, 12, 23, 12);
+        try {
+            List<HomeEredarModel> listEredar = ((HomeListProvider) mDataController).baseData.getContext().getEredarList();
+            for (int i = 0; i < listEredar.size(); i++) {
+                final View view = LayoutInflater.from(context).inflate(R.layout.activity_home_list_headview_item, null, false);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.setMargins(23, 12, 23, 12);
 
             /*TextView tvName = (TextView) view.findViewById(R.id.tv_name);
             tvName.setText(listEredar.get(i).getNike());*/
-            TextView tvMaster = (TextView) view.findViewById(R.id.tv_master);
-            tvMaster.setText(listEredar.get(i).getEredarName() + "达人");
-            GlideTool.loadImage(context, listEredar.get(i).getUserSmallHeadImg(), (ImageView) view.findViewById(R.id.civ_head), true);
-            view.setLayoutParams(params);
-            view.setTag(listEredar.get(i));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, UserActivity.class);
-                    intent.putExtra("user", (HomeEredarModel) (view.getTag()));
-                    context.startActivity(intent);
-                }
-            });
-            linearlayout_master.addView(view);
+                TextView tvMaster = (TextView) view.findViewById(R.id.tv_master);
+                tvMaster.setText(listEredar.get(i).getEredarName() + "达人");
+                GlideTool.loadImage(context, listEredar.get(i).getUserSmallHeadImg(), (ImageView) view.findViewById(R.id.civ_head), true);
+                view.setLayoutParams(params);
+                view.setTag(listEredar.get(i));
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, UserActivity.class);
+                        intent.putExtra("user", (HomeEredarModel) (view.getTag()));
+                        context.startActivity(intent);
+                    }
+                });
+                linearlayout_master.addView(view);
+            }
+        } catch (NullPointerException e) {
+
         }
+
     }
 
 

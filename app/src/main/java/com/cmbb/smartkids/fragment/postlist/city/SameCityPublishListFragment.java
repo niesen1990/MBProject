@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.postlist.city;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -16,6 +17,7 @@ public class SameCityPublishListFragment extends CommonFragment<PostModel> {
     boolean need;
     int userId;
 
+    @SuppressLint("ValidFragment")
     public SameCityPublishListFragment(boolean need, int userId) {
         this.need = need;
         this.userId = userId;

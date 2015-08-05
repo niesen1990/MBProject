@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/rc_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@id/rc_list"
+        android:dividerHeight="0dp"
+        android:listSelector="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:isScrollContainer="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout><!-- From: file:/Users/niesen918/Downloads/demo-app-android-v2-2.2.6/kit/src/main/res/layout/rc_fr_messagelist.xml -->

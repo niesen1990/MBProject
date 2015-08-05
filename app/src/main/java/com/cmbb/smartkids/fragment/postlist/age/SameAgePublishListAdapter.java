@@ -27,13 +27,13 @@ public class SameAgePublishListAdapter extends ContentAdapterBase<PostModel> {
 
     @Override
     protected RecyclerView.ViewHolder onCreateCustomContentHolder(ViewGroup parent, int viewType) {
-        return SameAgePublishListViewHolder.create(mContext, parent);
+        return SameAgeListViewHolder.create(mContext, parent);
     }
 
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SameAgePublishListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((SameAgeListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
     }
 
 }

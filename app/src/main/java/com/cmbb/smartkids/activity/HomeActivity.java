@@ -31,8 +31,10 @@ import com.cmbb.smartkids.adapter.HomeAutoScrollBannerAdapter;
 import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.fragment.active.ActiveFragment;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
+import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
@@ -226,6 +228,7 @@ public class HomeActivity extends MActivity {
                 // 设置内容
                 viewPager.setAdapter(mActiveFragmentPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
+
             }
         });
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -306,12 +309,12 @@ public class HomeActivity extends MActivity {
         homeFragments = new Fragment[1];
         homeFragments[0] = new HomeListFragment(true);
         homeTitles = new String[1];
-        homeTitles[0] = "Home";
+        homeTitles[0] = "";
         mHomeFragmentPagerAdapter.addFragment(homeFragments, homeTitles);
 
         activeFragments = new Fragment[2];
-        activeFragments[0] = new HomeListFragment();
-        activeFragments[1] = new HomeListFragment();
+        activeFragments[0] = new ActiveFragment();
+        activeFragments[1] = new FragmentHomeTools();
         activeTitles = new String[2];
         activeTitles[0] = "动态";
         activeTitles[1] = "消息";
@@ -326,9 +329,9 @@ public class HomeActivity extends MActivity {
         mMasterFragmentPagerAdapter.addFragment(masterFragments, masterTitles);
 
         toolsFragments = new Fragment[1];
-        toolsFragments[0] = new HomeListFragment();
+        toolsFragments[0] = new FragmentHomeTools();
         toolsTitles = new String[1];
-        toolsTitles[0] = "Tools";
+        toolsTitles[0] = "";
         mToolsFragmentPagerAdapter.addFragment(toolsFragments, toolsTitles);
 
     }

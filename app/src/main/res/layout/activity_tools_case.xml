@@ -9,28 +9,20 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_marginTop="0.5dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="0.5dp">
 
-        <ListView
-            android:id="@+id/lv_master_left"
-            android:layout_alignParentLeft="true"
+        <FrameLayout
+            android:id="@+id/lv_case_left"
             android:layout_width="104dp"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:scrollbars="none"
-            android:listSelector="@color/transparent_gray"
-            android:fitsSystemWindows="true"/>
+            android:layout_alignParentLeft="true"/>
 
-        <ListView
-            android:layout_toRightOf="@id/lv_master_left"
-            android:id="@+id/lv_master_right"
+        <FrameLayout
+            android:id="@+id/lv_case_right"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/transparent_gray"
-            android:dividerHeight="1px"
-            android:clipToPadding="false"
+            android:layout_toRightOf="@id/lv_case_left"
             android:fitsSystemWindows="true"/>
     </RelativeLayout>
 

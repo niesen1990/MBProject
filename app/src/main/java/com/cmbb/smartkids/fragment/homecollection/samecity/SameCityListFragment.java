@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homecollection.samecity;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class SameCityListFragment extends CommonFragment<SameCityModel> {
     public SameCityListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public SameCityListFragment(boolean need) {
         this.need = need;
     }

@@ -1,21 +1,17 @@
 package com.cmbb.smartkids.activity.login;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
-import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.tools.ShareUtils;
 import com.cmbb.smartkids.tools.Utils;
@@ -24,21 +20,14 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.bean.StatusCode;
-import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.sso.QZoneSsoHandler;
-import com.umeng.socialize.sso.SinaSsoHandler;
-import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by javon on 2015/7/31.
@@ -139,9 +128,9 @@ public class LoginActivity extends MActivity {
 
             @Override
             public void onComplete(Bundle bundle, SHARE_MEDIA share_media) {
-                if(bundle != null && !TextUtils.isEmpty(bundle.getString("uid"))){
+                if (bundle != null && !TextUtils.isEmpty(bundle.getString("uid"))) {
                     mController.login(LoginActivity.this, share_media, loginListener);
-                }else{
+                } else {
                     showToastShort("授权失败");
                 }
 
@@ -171,10 +160,10 @@ public class LoginActivity extends MActivity {
 
         @Override
         public void onComplete(int status, SocializeEntity socializeEntity) {
-            if(status == 200){
+            if (status == 200) {
                 showToastShort("登录成功");
                 mController.getPlatformInfo(LoginActivity.this, media, uMDataListener);
-            }else{
+            } else {
                 showToastShort("登录失败");
             }
         }
@@ -184,7 +173,7 @@ public class LoginActivity extends MActivity {
      * 第三方登录
      * 获取来自第三方用户的信息
      */
-    private SocializeListeners.UMDataListener uMDataListener = new SocializeListeners.UMDataListener(){
+    private SocializeListeners.UMDataListener uMDataListener = new SocializeListeners.UMDataListener() {
         @Override
         public void onStart() {
 
@@ -192,10 +181,10 @@ public class LoginActivity extends MActivity {
 
         @Override
         public void onComplete(int status, Map<String, Object> info) {
-            if(media == SHARE_MEDIA.SINA || media == SHARE_MEDIA.QQ){
+            if (media == SHARE_MEDIA.SINA || media == SHARE_MEDIA.QQ) {
                 uid = info.get("uid").toString();
                 userName = info.get("screen_name").toString();
-            }else if(media == SHARE_MEDIA.WEIXIN){
+            } else if (media == SHARE_MEDIA.WEIXIN) {
                 uid = info.get("openid").toString();
                 userName = info.get("nickname").toString();
             }
@@ -205,10 +194,11 @@ public class LoginActivity extends MActivity {
 
     /**
      * 第三方平台登录
+     *
      * @param uid
      * @param userName
      */
-    private void handleLogin(String uid, String userName){
+    private void handleLogin(String uid, String userName) {
         showWaitDialog();
         Map<String, String> params = new HashMap<>();
         params.put("openId", uid);
@@ -233,21 +223,21 @@ public class LoginActivity extends MActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
-        if(ssoHandler != null){
+        if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
     }
 
-    private void sendLoginRequest(String account, String pwd){
-         if(TextUtils.isEmpty(account)){
-             showToast("请输入手机号码");
-             return;
-         }
-        if(!Utils.isMobileNo(account)){
+    private void sendLoginRequest(String account, String pwd) {
+        if (TextUtils.isEmpty(account)) {
+            showToast("请输入手机号码");
+            return;
+        }
+        if (!Utils.isMobileNo(account)) {
             showToast("请输入正确的手机号码");
             return;
         }
-        if(TextUtils.isEmpty(pwd)){
+        if (TextUtils.isEmpty(pwd)) {
             showToast("请输入密码");
             return;
         }

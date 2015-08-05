@@ -1,12 +1,12 @@
 package com.cmbb.smartkids.fragment.postlist.wonder;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
-import com.cmbb.smartkids.tools.log.Log;
 
 /**
  * 项目名称：MengBao
@@ -21,8 +21,9 @@ public class AgePostListFragment extends CommonFragment<PostModel> {
     public AgePostListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public AgePostListFragment(boolean needHeadView, PlateModel postModel) {
-        super();
+
         this.need = needHeadView;
         this.mPlateModel = postModel;
 
@@ -36,7 +37,6 @@ public class AgePostListFragment extends CommonFragment<PostModel> {
 
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<PostModel> controller) {
-        Log.i("adapter", " generate");
         return new PostListAdapter(getActivity(), controller, need);
     }
 

@@ -16,6 +16,8 @@ public class Constants {
     // Receiver
     // 请求失败Receiver
 
+    // RongYun
+    public static final String RongToken = "rong_token";
     public static final String RefreshFlag = "com.refresh";
     public static final String NETWORK_FAILURE = "network_failure";
     public static final String NETWORK_FLAG = "network_flag";

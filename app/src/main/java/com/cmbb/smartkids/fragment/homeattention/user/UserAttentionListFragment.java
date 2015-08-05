@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homeattention.user;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class UserAttentionListFragment extends CommonFragment<UserAttentionModel
     public UserAttentionListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public UserAttentionListFragment(boolean need) {
         this.need = need;
     }

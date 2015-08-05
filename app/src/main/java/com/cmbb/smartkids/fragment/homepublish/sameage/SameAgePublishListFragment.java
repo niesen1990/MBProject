@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homepublish.sameage;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -19,6 +20,7 @@ public class SameAgePublishListFragment extends CommonFragment<PostModel> {
     public SameAgePublishListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public SameAgePublishListFragment(boolean need) {
         this.need = need;
     }

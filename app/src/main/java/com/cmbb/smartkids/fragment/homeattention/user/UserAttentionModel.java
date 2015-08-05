@@ -30,6 +30,44 @@ public class UserAttentionModel implements Parcelable {
     private String userSmallHeadImg;
     private Integer userStatus;
     private String userWeiXinHeadImg;
+    // rong yun
+    private  Integer unRead;
+    private String time;
+    private String contentLast;
+
+    private boolean isServer;
+
+    public boolean isServer() {
+        return isServer;
+    }
+
+    public void setIsServer(boolean isServer) {
+        this.isServer = isServer;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getContentLast() {
+        return contentLast;
+    }
+
+    public void setContentLast(String contentLast) {
+        this.contentLast = contentLast;
+    }
+
+    public Integer getUnRead() {
+        return unRead;
+    }
+
+    public void setUnRead(Integer unRead) {
+        this.unRead = unRead;
+    }
 
     public String getAttentionToken() {
         return attentionToken;
@@ -378,6 +416,9 @@ public class UserAttentionModel implements Parcelable {
         dest.writeString(this.userSmallHeadImg);
         dest.writeValue(this.userStatus);
         dest.writeString(this.userWeiXinHeadImg);
+        dest.writeValue(this.unRead);
+        dest.writeString(this.time);
+        dest.writeString(this.contentLast);
     }
 
     public UserAttentionModel() {
@@ -407,6 +448,9 @@ public class UserAttentionModel implements Parcelable {
         this.userSmallHeadImg = in.readString();
         this.userStatus = (Integer) in.readValue(Integer.class.getClassLoader());
         this.userWeiXinHeadImg = in.readString();
+        this.unRead = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.time = in.readString();
+        this.contentLast = in.readString();
     }
 
     public static final Creator<UserAttentionModel> CREATOR = new Creator<UserAttentionModel>() {
@@ -418,4 +462,36 @@ public class UserAttentionModel implements Parcelable {
             return new UserAttentionModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "UserAttentionModel{" +
+                "attentionToken='" + attentionToken + '\'' +
+                ", attentionCount=" + attentionCount +
+                ", authority=" + authority +
+                ", bigImgHeight=" + bigImgHeight +
+                ", bigImgWidth=" + bigImgWidth +
+                ", eredar=" + eredar +
+                ", eredarName='" + eredarName + '\'' +
+                ", eredarRank=" + eredarRank +
+                ", eredarType=" + eredarType +
+                ", flag='" + flag + '\'' +
+                ", gold=" + gold +
+                ", loginTimes=" + loginTimes +
+                ", nike='" + nike + '\'' +
+                ", publishCount=" + publishCount +
+                ", smallImgHeight=" + smallImgHeight +
+                ", smallImgWidth=" + smallImgWidth +
+                ", storeCount=" + storeCount +
+                ", userBigHeadImg='" + userBigHeadImg + '\'' +
+                ", userId=" + userId +
+                ", userPhone='" + userPhone + '\'' +
+                ", userSmallHeadImg='" + userSmallHeadImg + '\'' +
+                ", userStatus=" + userStatus +
+                ", userWeiXinHeadImg='" + userWeiXinHeadImg + '\'' +
+                ", unRead=" + unRead +
+                ", time='" + time + '\'' +
+                ", contentLast='" + contentLast + '\'' +
+                '}';
+    }
 }

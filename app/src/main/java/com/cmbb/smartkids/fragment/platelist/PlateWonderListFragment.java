@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.platelist;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class PlateWonderListFragment extends CommonFragment<PlateModel> {
     public PlateWonderListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public PlateWonderListFragment(boolean needHeadView) {
         this.need = needHeadView;
     }

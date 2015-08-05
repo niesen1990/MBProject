@@ -27,13 +27,13 @@ public class SameCityPublishListAdapter extends ContentAdapterBase<PostModel> {
 
     @Override
     protected RecyclerView.ViewHolder onCreateCustomContentHolder(ViewGroup parent, int viewType) {
-        return SameCityPublishListViewHolder.create(mContext, parent);
+        return SameCityListViewHolder.create(mContext, parent);
     }
 
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SameCityPublishListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((SameCityListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.postlist.wonder;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -21,6 +22,7 @@ public class WonderPublicListFragment extends CommonFragment<PostModel> {
     public WonderPublicListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public WonderPublicListFragment(boolean need, int userId) {
         super();
         this.need = need;

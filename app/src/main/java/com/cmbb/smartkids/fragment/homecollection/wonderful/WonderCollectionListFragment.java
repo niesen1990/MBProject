@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homecollection.wonderful;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class WonderCollectionListFragment extends CommonFragment<WonderCollectio
     public WonderCollectionListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public WonderCollectionListFragment(boolean need) {
         this.need = need;
     }

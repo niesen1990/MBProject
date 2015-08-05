@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homecollection.casecollection;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class CaseListFragment extends CommonFragment<CaseModel> {
     public CaseListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public CaseListFragment(boolean need) {
         this.need = need;
     }

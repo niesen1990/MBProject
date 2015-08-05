@@ -10,8 +10,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/MengBottomSheets" />
+            <option value="$PROJECT_DIR$/MengExpandableRecyclerview" />
             <option value="$PROJECT_DIR$/MengPhotoPicker" />
             <option value="$PROJECT_DIR$/MengRecyclerView" />
+            <option value="$PROJECT_DIR$/MengRongKit" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

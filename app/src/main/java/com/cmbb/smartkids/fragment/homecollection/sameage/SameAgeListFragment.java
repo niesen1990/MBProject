@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homecollection.sameage;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -18,6 +19,7 @@ public class SameAgeListFragment extends CommonFragment<SameAgeModel> {
     public SameAgeListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public SameAgeListFragment(boolean need) {
         this.need = need;
     }

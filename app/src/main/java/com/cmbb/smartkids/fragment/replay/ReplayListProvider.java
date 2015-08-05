@@ -41,6 +41,11 @@ public class ReplayListProvider extends DataController<ReplayModel> {
         body.put("areaType", mPostModel.getAreaType());
         body.put("type", mPostModel.getType());
         body.put("sort", sort + "");
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("map", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        Log.i("map", Constants.BASE_URL + mPostModel.getPortConnector() + "FindReplys");
+
         OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindReplys", body, callback);
     }
 
@@ -70,7 +75,7 @@ public class ReplayListProvider extends DataController<ReplayModel> {
     public List<ReplayModel> doParser(Response response) {
         try {
             String result = response.body().string();
-            Log.i("response", "response = " + result);
+            Log.i("responseReplay", "response = " + result);
             if (TextUtils.isEmpty(result)) {
                 return null;
             }

@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.replay;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 
@@ -23,6 +24,7 @@ public class ReplayListFragment extends CommonFragment<ReplayModel> {
     public ReplayListFragment() {
     }
 
+    @SuppressLint("ValidFragment")
     public ReplayListFragment(boolean needHeadView, PostModel postModel, LinearLayout headView) {
         super();
         this.need = needHeadView;

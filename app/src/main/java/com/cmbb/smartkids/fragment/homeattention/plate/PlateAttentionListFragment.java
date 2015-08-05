@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.fragment.homeattention.plate;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -17,7 +18,7 @@ public class PlateAttentionListFragment extends CommonFragment<PlateAttentionMod
 
     public PlateAttentionListFragment() {
     }
-
+    @SuppressLint("ValidFragment")
     public PlateAttentionListFragment(boolean need) {
         this.need = need;
     }

@@ -2,7 +2,7 @@ package com.cmbb.smartkids.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * 创建人：N.Sun
  * 创建时间：15/7/29 下午12:47
  */
-public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> mFragments = new ArrayList<>();
     private final List<String> mFragmentTitles = new ArrayList<>();
@@ -30,7 +30,6 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         if (mFragments.size() > 0 || mFragmentTitles.size() > 0) {
             mFragments.clear();
             mFragmentTitles.clear();
-
         }
         for (int i = 0; i < fragment.length; i++) {
             mFragments.add(fragment[i]);

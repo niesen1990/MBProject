@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.tools.ToolsCaseActivity;
+import com.cmbb.smartkids.activity.tools.ToolsMapActivity;
 import com.cmbb.smartkids.activity.tools.ToolsSuggestionsActivity;
 import com.cmbb.smartkids.activity.tools.ToolsVaccinationActivity;
 import com.cmbb.smartkids.base.MFragment;
@@ -46,8 +47,8 @@ public class FragmentHomeTools extends MFragment {
                 startActivity(intentCase);
                 return;
             case R.id.toolss_tv2://导航
-//                Intent intentMap = new Intent(getActivity(), ToolsMapActivity.class);
-//                startActivity(intentMap);
+                Intent intentMap = new Intent(getActivity(), ToolsMapActivity.class);
+                startActivity(intentMap);
                 return;
             case R.id.toolss_tv4://育儿建议
                 Intent intentSuggestions = new Intent(getActivity(), ToolsSuggestionsActivity.class);
