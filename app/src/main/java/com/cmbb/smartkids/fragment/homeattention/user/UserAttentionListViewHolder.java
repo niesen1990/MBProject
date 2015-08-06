@@ -51,7 +51,7 @@ public class UserAttentionListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBindViewHolder(Context context, final UserAttentionModel entry) {
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, false);
+        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
         tvContent.setText(entry.getEredarName() + "达人");
         tvConstellation.setText(entry.getNike());
     }

@@ -126,8 +126,8 @@
     <orderEntry type="library" exported="" name="commons-cli-1.2" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_scrshot" level="project" />
-    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQZone_1" level="project" />
+    <orderEntry type="library" exported="" name="SocialSDK_WeiXin_1" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_WeiXin_2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQZone_2" level="project" />
     <orderEntry type="library" exported="" name="SocialSDK_QQZone_3" level="project" />

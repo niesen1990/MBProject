@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <include
         layout="@layout/custom_toolbar"/>
@@ -13,65 +14,73 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"/>
+
         <TextView
             android:id="@+id/tv_setting_about_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:text="TextView"
             android:textColor="@color/color_main_black"
-            android:textSize="@dimen/large_txt"
-            android:text="TextView" />
+            android:textSize="@dimen/large_txt"/>
+
         <TextView
             android:id="@+id/tv_setting_about_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/transparent_black"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="@dimen/padding_5"
             android:shadowColor="@color/color_main_black"
             android:shadowDx="1.5"
             android:shadowDy="0.0"
             android:shadowRadius="10.0"
-            android:layout_marginRight="20dp"
-            android:textSize="@dimen/middle_txt"
-            android:lineSpacingExtra="@dimen/padding_5"
-            android:text="     萌宝派，为每一位父母送上最新鲜热辣的育儿资讯，预告最丰富有趣的亲子活动，解答所有棘手或细碎的孕、育问题。萌宝派，最酷、最炫、最好用的掌上育儿宝典，期待你的加入！" />
+            android:text="     萌宝派，为每一位父母送上最新鲜热辣的育儿资讯，预告最丰富有趣的亲子活动，解答所有棘手或细碎的孕、育问题。萌宝派，最酷、最炫、最好用的掌上育儿宝典，期待你的加入！"
+            android:textColor="@color/transparent_black"
+            android:textSize="@dimen/middle_txt"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.0"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="上海至臻文化传媒股份有限公司"
             android:textColor="@android:color/black"
             android:textSize="@dimen/normal_txt"/>
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/small_txt"
-            android:text="Shanghai Tops Media Communication" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/small_txt"
-            android:text="Co.,Ltd." />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:text="Shanghai Tops Media Communication"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_txt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Co.,Ltd."
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_txt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
+            android:layout_marginTop="10dp"
+            android:text="Copyright 2015 All Rights Reserved"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/small_txt"
-            android:text="Copyright 2015 All Rights Reserved" />
+            android:textSize="@dimen/small_txt"/>
     </LinearLayout>
     <!--免责声明-->
     <LinearLayout
@@ -79,78 +88,78 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:padding="20dp"
         android:orientation="vertical"
+        android:padding="20dp"
         android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:lineSpacingExtra="@dimen/padding_5"
-            android:textColor="@color/transparent_black"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="           鉴于上海至臻文化传媒股份有限公司提供的萌宝派软件平台，在平台上会员或其发布的相关信息均由会员自行提供，会员依法应对其提供的任何 信息承担全部责任。" />
+            android:lineSpacingExtra="@dimen/padding_5"
+            android:text="           鉴于上海至臻文化传媒股份有限公司提供的萌宝派软件平台，在平台上会员或其发布的相关信息均由会员自行提供，会员依法应对其提供的任何 信息承担全部责任。"
+            android:textColor="@color/transparent_black"/>
 
         <TextView
             android:id="@+id/tv_settings_responsible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:lineSpacingExtra="@dimen/padding_5"
-            android:textColor="@color/transparent_black"
+            android:layout_weight="1"
             android:gravity="top"
-            android:layout_weight="1"
-            android:text="           任何单位或个人认为萌宝派平台的内容可能涉嫌侵犯其合法权益，应及时向萌宝派提出书面权益通知并提供身份证明、权属证明、具体链接(URL)及详细侵权情况证明。萌宝派在收到上述法律文件后，将会依法尽快移除相关涉嫌侵权的内容。" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
             android:lineSpacingExtra="@dimen/padding_5"
-            android:textColor="@color/transparent_black"
-            android:gravity="center_vertical"
-            android:layout_weight="1"
-            android:text="           萌宝派平台转载作品(包括论坛内容)处于传递更多信息之目的，并不意味萌宝派赞同其观点或证明其内容的真实性。萌宝派尊重合法版权，反对侵权盗版。 若本平台有部分文字、摄像作品等侵害了您的权益，请您立即与萌宝派联系，萌宝派将尽快予以解决。" />
+            android:text="           任何单位或个人认为萌宝派平台的内容可能涉嫌侵犯其合法权益，应及时向萌宝派提出书面权益通知并提供身份证明、权属证明、具体链接(URL)及详细侵权情况证明。萌宝派在收到上述法律文件后，将会依法尽快移除相关涉嫌侵权的内容。"
+            android:textColor="@color/transparent_black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1.0"
-            android:textColor="@color/transparent_black"
-            android:gravity="center|bottom"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="@dimen/padding_5"
+            android:text="           萌宝派平台转载作品(包括论坛内容)处于传递更多信息之目的，并不意味萌宝派赞同其观点或证明其内容的真实性。萌宝派尊重合法版权，反对侵权盗版。 若本平台有部分文字、摄像作品等侵害了您的权益，请您立即与萌宝派联系，萌宝派将尽快予以解决。"
+            android:textColor="@color/transparent_black"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginBottom="10dp"
-            android:textSize="@dimen/small_txt"
-            android:text="如有任何异议，请发送邮件到\t\nmengbaopai@gmail.com" />
+            android:layout_weight="1.0"
+            android:gravity="center|bottom"
+            android:text="如有任何异议，请发送邮件到\t\nmengbaopai@gmail.com"
+            android:textColor="@color/transparent_black"
+            android:textSize="@dimen/small_txt"/>
     </LinearLayout>
     <!--意见反馈-->
     <LinearLayout
         android:id="@+id/ll_setting_suggest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
         android:orientation="vertical"
+        android:padding="10dp"
         android:visibility="gone">
 
         <EditText
             android:id="@+id/et_setting_suggest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:gravity="top"
-            android:textColor="#000"
             android:background="@drawable/edit_radius_bg"
-            android:lines="8"/>
+            android:gravity="top"
+            android:lines="8"
+            android:padding="5dp"
+            android:textColor="#000"/>
 
         <TextView
             android:id="@+id/tv_setting_suggest_commit"
-            android:layout_marginTop="35dp"
+            style="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:layout_marginTop="35dp"
             android:background="@drawable/btn_login_submit_selector"
             android:gravity="center"
+            android:padding="10dp"
             android:text="提 交"
-            android:textColor="@drawable/txt_white_to_black_selector"
-            style="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"/>
+            android:textColor="@drawable/txt_white_to_black_selector"/>
 
     </LinearLayout>
 

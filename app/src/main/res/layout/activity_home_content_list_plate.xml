@@ -6,8 +6,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="0.5dp"
-    android:layout_marginTop="0.5dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginLeft="@dimen/activity_vertical_margin_half"
+    android:layout_marginRight="@dimen/activity_vertical_margin_half"
+    android:layout_marginTop="4dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@android:color/white"
@@ -28,7 +30,7 @@
             android:layout_height="60dp"
             android:layout_centerVertical="true"
             android:alpha="1"
-            tools:src="@mipmap/ic_launcher"/>
+            tools:src="@drawable/ic_loading"/>
 
         <TextView
             android:id="@+id/tv_constellation"

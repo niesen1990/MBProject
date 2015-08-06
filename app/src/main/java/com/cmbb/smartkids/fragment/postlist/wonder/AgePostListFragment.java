@@ -1,6 +1,7 @@
 package com.cmbb.smartkids.fragment.postlist.wonder;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
@@ -17,13 +18,15 @@ import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 public class AgePostListFragment extends CommonFragment<PostModel> {
     boolean need;
     PlateModel mPlateModel;
+    Context mContext;
 
     public AgePostListFragment() {
     }
 
     @SuppressLint("ValidFragment")
-    public AgePostListFragment(boolean needHeadView, PlateModel postModel) {
+    public AgePostListFragment(Context context,boolean needHeadView, PlateModel postModel) {
 
+        this.mContext = context;
         this.need = needHeadView;
         this.mPlateModel = postModel;
 
@@ -31,7 +34,7 @@ public class AgePostListFragment extends CommonFragment<PostModel> {
 
     @Override
     protected DataController<PostModel> onGenerateDataController() {
-        return new AgePostListProvider(mPlateModel);
+        return new AgePostListProvider(mContext,mPlateModel);
 
     }
 

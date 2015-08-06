@@ -46,11 +46,10 @@
                         android:id="@+id/tab_indicator"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:centered__="false"
+                        android:layout_gravity="bottom"
                         android:padding="5dp"
-                        android:layout_gravity="bottom"/>
+                        app:centered__="false"/>
                 </FrameLayout>
-
 
 
                 <android.support.v7.widget.Toolbar

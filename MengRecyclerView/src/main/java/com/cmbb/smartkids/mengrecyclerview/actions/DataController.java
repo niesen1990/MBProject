@@ -26,6 +26,7 @@ public abstract class DataController<T> implements DataProvider<T> {
 
     private boolean isBusy = false;
     private boolean isEnd = false;
+    public boolean moreBusy = true;
     public List<T> mRepository;
 
     //分页的count
@@ -167,7 +168,7 @@ public abstract class DataController<T> implements DataProvider<T> {
         if (mRepository == null) {
             mRepository = new ArrayList<>();
         }
-        if (data.size() < mPageSize) {
+        if (data.size() <= mPageSize) {
             isEnd = true;
         }
         mRepository.clear();
@@ -187,7 +188,7 @@ public abstract class DataController<T> implements DataProvider<T> {
         if (mRepository == null) {
             mRepository = new ArrayList<>();
         }
-        if (data.size() < mPageSize) {
+        if (data.size() <= mPageSize) {
             isEnd = true;
         }
         mRepository.addAll(data);
@@ -219,6 +220,7 @@ public abstract class DataController<T> implements DataProvider<T> {
             return;
         }
         isBusy = true;
+        moreBusy = true;
         doInitialize(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -231,7 +233,6 @@ public abstract class DataController<T> implements DataProvider<T> {
                     Log.i("response", "response = " + response.toString());
                     List<T> data = doParser(response);
                     initSuccess(data);
-
                 } else {
                     Log.i("response", "response = " + response.toString());
                 }
@@ -246,6 +247,7 @@ public abstract class DataController<T> implements DataProvider<T> {
      */
     public void initSuccess(List<T> data) {
         add(data);
+        moreBusy = false;
         mRequestTimes++;
         mNextTimeOffset = mPageSize * mRequestTimes;
         dispatchAdapterMessage(AdapterMessageType.CHANGE, 0);
@@ -272,7 +274,9 @@ public abstract class DataController<T> implements DataProvider<T> {
      * 刷新
      */
     public final void refresh() {
+        isEnd = false;
         isBusy = true;
+        moreBusy = true;
         dispatchUIMessage(UIMessageType.InitializeStart, null, null);
         dispatchUIMessage(UIMessageType.RefreshingStart, null, null);
         doRefresh(new Callback() {
@@ -297,6 +301,7 @@ public abstract class DataController<T> implements DataProvider<T> {
      */
     public void refreshSuccess(List<T> data) {
         add(data);
+        moreBusy = false;
         mRequestTimes++;
         mNextTimeOffset = mPageSize * mRequestTimes;
         dispatchAdapterMessage(AdapterMessageType.CHANGE, 0);
@@ -305,6 +310,7 @@ public abstract class DataController<T> implements DataProvider<T> {
             dispatchUIMessage(UIMessageType.End, null, null);
         }
         isBusy = false;
+
     }
 
     /**

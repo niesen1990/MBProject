@@ -21,6 +21,7 @@ public class HomeListAdapter extends ContentAdapterBase<PlateModel> {
     public HomeListAdapter(Context mContext, DataController<PlateModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
+        moreFlag = true;
         // 设置HeaderView
         setNeedHeadView(need);
     }

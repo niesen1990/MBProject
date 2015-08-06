@@ -19,6 +19,7 @@ public class UserAttentionListAdapter extends ContentAdapterBase<UserAttentionMo
 
     public UserAttentionListAdapter(Context mContext, DataController<UserAttentionModel> mDataController, boolean need) {
         super(mContext, mDataController);
+        moreFlag = true;
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

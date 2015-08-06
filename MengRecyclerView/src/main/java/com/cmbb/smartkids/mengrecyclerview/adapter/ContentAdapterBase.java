@@ -116,9 +116,12 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             if (mDataController.isEnd() || moreFlag) {
-                footerViewHolder.onBindViewHolder();
+                footerViewHolder.onBindViewHolder(mDataController.isEnd(), moreFlag);
             } else {
-                mDataController.more();
+                footerViewHolder.onBindViewHolder(mDataController.isEnd(), moreFlag);
+                if (!mDataController.moreBusy) {
+                    mDataController.more();
+                }
             }
 
         } else {

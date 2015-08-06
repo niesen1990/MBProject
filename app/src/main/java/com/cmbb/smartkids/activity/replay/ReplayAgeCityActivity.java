@@ -88,12 +88,13 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
         mIvRanktag = (ImageView) findViewById(R.id.iv_ranktag);
         mIvRanklev = (ImageView) findViewById(R.id.iv_ranklev);
         mTvHeaderTime = (TextView) findViewById(R.id.tv_header_time);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(mPostModel.getTitle());
-        collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
+
     }
 
     private void setHeadViewData(PostDetail postDetails) {
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(mPostDetail.getTitle());
+        collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
         // 设置标题
         GlideTool.loadImage(this, mPostModel.getUserSmallHeadImg(), mRivHead, true);
         mTvNick.setText(mPostModel.getNike());

@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.baidu.mapapi.SDKInitializer;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.setting.SettingDetailActivity;
-import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.rong.RongCloudEvent;
 import com.cmbb.smartkids.rong.RongInfoContext;
 import com.cmbb.smartkids.rong.message.DeAgreedFriendRequestMessage;
@@ -48,6 +47,8 @@ public class MApplication extends Application {
 
     public static String token = "083cbf5c89a44c01a2fe92f9b81baaf5";
     public static String RongToken = "";
+    public static int authority;// 用户权限
+    public static int eredar;// 达人权限
 
     @Override
     public void onCreate() {
@@ -70,8 +71,6 @@ public class MApplication extends Application {
 
             /* 必须在使用 RongIM 的进程注册回调、注册自定义消息等 */
             if ("com.cmbb.smartkids".equals(TDevice.getCurProcessName(getApplicationContext()))) {
-                Log.i("MEIZU", "init RongIM");
-
                 RongCloudEvent.init(this);
                 RongInfoContext.init(this);
                 Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
@@ -116,10 +115,11 @@ public class MApplication extends Application {
         String appId = "myappid";  //蒲公英注册或上传应用获取的AppId
         PgyCrashManager.register(this, appId);
     }
+
     /**
      * 友盟推送
      */
-    private void initPushAgent(){
+    private void initPushAgent() {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.setDebugMode(true);
 
@@ -129,7 +129,7 @@ public class MApplication extends Application {
          * 2. IntentService里的onHandleIntent方法是并不处于主线程中，因此，如果需调用到主线程，需如下所示;
          * 	      或者可以直接启动Service
          * */
-        UmengMessageHandler messageHandler = new UmengMessageHandler(){
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
             @Override
             public void dealWithCustomMessage(final Context context, final UMessage msg) {
                 new Handler(getMainLooper()).post(new Runnable() {
@@ -172,9 +172,10 @@ public class MApplication extends Application {
          * 该Handler是在BroadcastReceiver中被调用，故
          * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK
          * */
-        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
+                Toast.makeText(context, "i cclick :" + msg.custom, Toast.LENGTH_LONG).show();
                 handleNotificationClick(msg);
             }
         };
@@ -182,19 +183,18 @@ public class MApplication extends Application {
     }
 
 
-    private void handleNotificationClick(UMessage msg){
+    private void handleNotificationClick(UMessage msg) {
         Map<String, String> params = msg.extra;
         String notifyTitle = params.get("title");
         String notifyContent = params.get("content");
         Intent intent = new Intent(getContext(), SettingDetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("flags", "notify");
         intent.putExtra("title", "萌宝派");
         intent.putExtra("notify_title", notifyTitle);
         intent.putExtra("notify_content", notifyContent);
         startActivity(intent);
     }
-
 
 
     /**

@@ -26,6 +26,7 @@ public class UserAttentionListProvider extends DataController<UserAttentionModel
 
     private Context mContext;
 
+
     public UserAttentionListProvider(Context context) {
         mContext = context;
     }
@@ -49,6 +50,9 @@ public class UserAttentionListProvider extends DataController<UserAttentionModel
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        for (String key : body.keySet()) {
+            Log.i("domore", key + " = " + body.get(key));
+        }
         OkHttp.asyncPost(Constants.User.FINDATTENTIONUSER_URL, body, callback);
     }
 

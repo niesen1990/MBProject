@@ -1,5 +1,7 @@
 package com.cmbb.smartkids.fragment.postlist.wonder;
 
+import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -27,9 +29,12 @@ public class AgePostListProvider extends DataController<PostModel> {
 
 
     PlateModel mPlateModel;
+    Context mContext;
+    int id = -1;
 
-    public AgePostListProvider(PlateModel postModel) {
+    public AgePostListProvider(Context context, PlateModel postModel) {
         this.mPlateModel = postModel;
+        this.mContext = context;
     }
 
     @Override
@@ -38,24 +43,17 @@ public class AgePostListProvider extends DataController<PostModel> {
         body.put("token", MApplication.token);
         body.put("plateId", mPlateModel.getId() + "");
         body.put("areaType", "AGEBREAKET");
-        /*if (!TextUtils.isEmpty(postId)) {
-            body.put("id", postId);
-            body.put("upDown", 2 + "");
-        }*/
         body.put("type", mPlateModel.getType());
         OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "FindStar", body, callback);
     }
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("plateId", mPlateModel.getId() + "");
         body.put("areaType", "AGEBREAKET");
-        /*if (!TextUtils.isEmpty(postId)) {
-            body.put("id", postId);
-            body.put("upDown", 2 + "");
-        }*/
         body.put("type", mPlateModel.getType());
         OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "FindStar", body, callback);
     }
@@ -66,16 +64,16 @@ public class AgePostListProvider extends DataController<PostModel> {
         body.put("token", MApplication.token);
         body.put("plateId", mPlateModel.getId() + "");
         body.put("areaType", "AGEBREAKET");
-        /*if (!TextUtils.isEmpty(postId)) {
-            body.put("id", postId);
+        if (-1 != id) {
+            body.put("id", id + "");
             body.put("upDown", 2 + "");
-        }*/
+        }
         body.put("type", mPlateModel.getType());
         OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "FindStar", body, callback);
     }
 
     @Override
-    public List<PostModel> doParser(Response response) {
+    public synchronized List<PostModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -85,6 +83,14 @@ public class AgePostListProvider extends DataController<PostModel> {
             Gson gson = new Gson();
             WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
             Log.i("list", "list = " + data.getContext().getHomeSameAgeList().size());
+            try {
+                id = data.getContext().getHomeSameAgeList().get(data.getContext().getHomeSameAgeList().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
+            Intent intent = new Intent(Constants.Post.PLATE_DATA_INTENT);
+            intent.putExtra(Constants.Post.PLATE_DATA, data.getContext());
+            mContext.sendBroadcast(intent);
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();

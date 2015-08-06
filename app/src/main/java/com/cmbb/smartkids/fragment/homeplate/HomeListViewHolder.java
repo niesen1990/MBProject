@@ -56,10 +56,10 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
 
     public void onBindViewHolder(Context context, final PlateModel entry) {
         parent.setTag(entry);
-        tvConstellation.setText(entry.getTitle());
+        tvConstellation.setText("【" + entry.getTitle() + "】");
         tvPost.setText(entry.getCount() + "");
         tvContent.setText(entry.getContext());
-        GlideTool.loadImage(context, entry.getSmallImg(), ivHead, false);
+        GlideTool.loadImage(context, entry.getSmallImg(), ivHead, true);
     }
 
 }

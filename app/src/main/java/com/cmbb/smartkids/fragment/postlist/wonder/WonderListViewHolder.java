@@ -75,6 +75,17 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
 
             }
         });
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                /*if (mActionMode != null) {
+                    return false;
+                }
+                ActionMode mActionMode = context.startActionMode(mActionModeCallback);
+                v.setSelected(true);*/
+                return true;
+            }
+        });
         return new WonderListViewHolder(v);
     }
 

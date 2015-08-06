@@ -25,7 +25,6 @@ import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.TDevice;
 import com.cmbb.smartkids.tools.glide.GlideTool;
-import com.cmbb.smartkids.tools.log.Log;
 
 public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -41,7 +40,6 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         public void onReceive(Context context, Intent intent) {
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
                 mPostDetail = intent.getParcelableExtra(Constants.Post.POSTDETAIL_DATA);
-                Log.i("PostDetail", mPostDetail.toString());
                 setHeadViewData(mPostDetail);
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
@@ -86,12 +84,14 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         mIvRanktag = (ImageView) findViewById(R.id.iv_ranktag);
         mIvRanklev = (ImageView) findViewById(R.id.iv_ranklev);
         mTvHeaderTime = (TextView) findViewById(R.id.tv_header_time);
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbar.setTitle(mPostModel.getTitle());
-        collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
+
     }
 
     private void setHeadViewData(PostDetail postDetails) {
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbar.setTitle(mPostDetail.getTitle());
+        collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
         // 设置标题
         GlideTool.loadImage(this, mPostModel.getUserSmallHeadImg(), mRivHead, true);
         mTvNick.setText(mPostModel.getNike());

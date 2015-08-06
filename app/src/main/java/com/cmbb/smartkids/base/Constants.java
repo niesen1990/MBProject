@@ -73,6 +73,9 @@ public class Constants {
         public static final String POSTDETAIL_DATA = "post_detail_data";
         public static final String POSTDETAIL_DATA_INTENT = "com.cmbb.smartkids.postdetail";
 
+        public static final String PLATE_DATA = "plate_data";
+        public static final String PLATE_DATA_INTENT = "com.cmbb.smartkids.plate";
+
     }
 
     public static final class Baby {

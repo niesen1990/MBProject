@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.R;
@@ -43,7 +40,7 @@ public class SettingActivity extends MActivity {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.rl_set_clear_cache:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
                 dialog.setTitle("确定清除缓存么？");
@@ -52,7 +49,7 @@ public class SettingActivity extends MActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         File cacheFile = Glide.getPhotoCacheDir(SettingActivity.this);
-                        if(cacheFile != null){
+                        if (cacheFile != null) {
                             cacheFile.delete();
                         }
                     }
@@ -94,10 +91,10 @@ public class SettingActivity extends MActivity {
         }
     }
 
-    private void sendLogoutRequest(){
+    private void sendLogoutRequest() {
         showWaitDialog("注销中...");
         Map<String, String> params = new HashMap<>();
-//        params.put("token", );
+        //        params.put("token", );
         OkHttp.asyncPost(Constants.User.LOGINOUT_URL, params, TAG, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {

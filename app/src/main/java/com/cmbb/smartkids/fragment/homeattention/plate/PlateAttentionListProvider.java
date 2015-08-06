@@ -53,7 +53,7 @@ public class PlateAttentionListProvider extends DataController<PlateAttentionMod
     }
 
     @Override
-    public List<PlateAttentionModel> doParser(Response response) {
+    public synchronized List<PlateAttentionModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);

@@ -28,7 +28,7 @@
     <string name="title_activity_user_attention" translatable="false">UserAttentionActivity</string>
     <string name="title_activity_user_collection" translatable="false">UserCollectionActivity</string>
     <string name="title_activity_user_publish" translatable="false">UserPublishActivity</string>
-    <string name="title_activity_setting" translatable="false">SettingActivity</string>
+    <string name="title_activity_setting" translatable="false">系统设置</string>
     <string name="title_activity_user" translatable="false">UserActivity</string>
     <string name="title_activity_post_list">定制关注</string>
     <string name="action_attention">关注</string>

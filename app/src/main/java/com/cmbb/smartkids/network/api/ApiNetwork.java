@@ -371,6 +371,47 @@ public class ApiNetwork {
 
 
     /**
+     * 意见反馈
+     *
+     * @param suggestion String
+     */
+    public static void sendSuggestion(String suggestion, Callback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token", MApplication.token);
+        params.put("context", suggestion);
+        OkHttp.asyncPost(Constants.User.ADDFEEDBACK_URL, params, callback);
+    }
+
+    /**
+     * 板块添加关注
+     *
+     * @param plateId  String
+     * @param callback Callback
+     */
+    public static void addAttentionPlate(String plateId, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("code", "plate");
+        body.put("plateId", plateId);
+        OkHttp.asyncPost(Constants.ADDATTENTION_URL, body, callback);
+    }
+
+    /**
+     * 板块取消关注
+     *
+     * @param plateId  String
+     * @param callback Callback
+     */
+    public static void cancelAttentionPlate(String plateId, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("code", "plate");
+        body.put("plateId", plateId);
+        OkHttp.asyncPost(Constants.DELETEATTENTION_URL, body, callback);
+    }
+
+
+    /**
      * 发送网络错误
      *
      * @param context Context

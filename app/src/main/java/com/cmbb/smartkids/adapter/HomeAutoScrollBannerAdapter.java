@@ -1,14 +1,17 @@
 package com.cmbb.smartkids.adapter;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.replay.ReplayAgeCityActivity;
+import com.cmbb.smartkids.activity.replay.ReplayWonderActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 import com.cmbb.smartkids.widget.autoscroll.RecyclingPagerAdapter;
 
@@ -43,19 +46,57 @@ public class HomeAutoScrollBannerAdapter extends RecyclingPagerAdapter {
     public View getView(final int position, View view, final ViewGroup container) {
         ViewHolder holder;
         if (view != null) {
-            holder = (ViewHolder) view.getTag(R.id.img);
+            holder = (ViewHolder) view.getTag();
         } else {
             LayoutInflater inflater = (LayoutInflater) container.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_home_banner_item, container, false);
             holder = new ViewHolder(view);
-            view.setTag(R.id.img, holder);
+            view.setTag(holder);
         }
-        //holder.iv.setTag(R.id.img, data.get(position));
-
+        holder.iv.setTag(R.id.img, data.get(position));
         GlideTool.loadImage(mContext, data.get(position).getBigImg(), holder.iv, false);
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HomeBannerModel homeBannerModel = (HomeBannerModel) v.getTag(R.id.img);
+                if (homeBannerModel.getPortConnector().contains("wonder")) {
+                    PostModel postModel = new PostModel();
+                    postModel.setEredarName(homeBannerModel.getEredarName());
+                    postModel.setEredar(homeBannerModel.getEredar());
+                    postModel.setUserSmallHeadImg(homeBannerModel.getUserSmallHeadImg());
+                    postModel.setNike(homeBannerModel.getNike());
+                    postModel.setAreaId(homeBannerModel.getId());
+                    postModel.setAreaType(homeBannerModel.getAreaType());
+                    postModel.setType(homeBannerModel.getType());
+                    postModel.setId(homeBannerModel.getId());
+                    postModel.setUserId(homeBannerModel.getUserId());
+                    postModel.setPortConnector(homeBannerModel.getPortConnector());
+                    postModel.setStore(homeBannerModel.getStore());
+                    postModel.setLoginTimes(homeBannerModel.getLoginTimes());
+                    postModel.setAuthority(homeBannerModel.getAuthority());
+                    Intent intent = new Intent(mContext, ReplayWonderActivity.class);
+                    intent.putExtra("model", postModel);
+                    mContext.startActivity(intent);
+                } else {
+                    PostModel postModel = new PostModel();
+                    postModel.setEredarName(homeBannerModel.getEredarName());
+                    postModel.setEredar(homeBannerModel.getEredar());
+                    postModel.setUserSmallHeadImg(homeBannerModel.getUserSmallHeadImg());
+                    postModel.setNike(homeBannerModel.getNike());
+                    postModel.setAreaId(homeBannerModel.getId());
+                    postModel.setAreaType(homeBannerModel.getAreaType());
+                    postModel.setType(homeBannerModel.getType());
+                    postModel.setId(homeBannerModel.getId());
+                    postModel.setUserId(homeBannerModel.getUserId());
+                    postModel.setPortConnector(homeBannerModel.getPortConnector());
+                    postModel.setStore(homeBannerModel.getStore());
+                    postModel.setLoginTimes(homeBannerModel.getLoginTimes());
+                    postModel.setAuthority(homeBannerModel.getAuthority());
+                    Intent intent = new Intent(mContext, ReplayAgeCityActivity.class);
+                    intent.putExtra("model", postModel);
+                    mContext.startActivity(intent);
+                }
+
             }
         });
         return view;
@@ -65,7 +106,7 @@ public class HomeAutoScrollBannerAdapter extends RecyclingPagerAdapter {
         public ImageView iv;
 
         public ViewHolder(View view) {
-            iv = (ImageView) view;
+            iv = (ImageView) view.findViewById(R.id.img);
         }
     }
 
