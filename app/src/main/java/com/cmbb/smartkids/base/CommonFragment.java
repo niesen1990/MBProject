@@ -59,6 +59,7 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
         mLoadingRetry = (Button) mLoadingPage.findViewById(R.id.loading_refresh);
         mLoadingTips = (TextView) mLoadingPage.findViewById(R.id.loading_tips);
         mSwipeRefresh = (SwipeRefreshLayout) mPagerPage;
+        mSwipeRefresh.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light, android.R.color.holo_orange_light, android.R.color.holo_green_light);
         mRoot = rootView;
         if (enableRefresh()) {
             mSwipeRefresh.setOnRefreshListener(this);

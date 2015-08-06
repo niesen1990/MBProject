@@ -404,7 +404,7 @@ public abstract class DataController<T> implements DataProvider<T> {
                 AdapterMessageType type = AdapterMessageType.values()[msg.arg1];
                 switch (type) {
                     case INSERT:
-                        adapterRespondent.onDataInsert(msg.arg1);
+                        adapterRespondent.onDataInsert(msg.arg2);
                         break;
                     case REMOVE:
                         adapterRespondent.onDataRemove(msg.arg2);
