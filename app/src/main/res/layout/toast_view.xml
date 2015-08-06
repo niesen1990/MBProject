@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:background="@color/transparent_black"
+             android:background="@drawable/view_toast_bg"
     >
 
     <RelativeLayout
@@ -32,7 +32,7 @@
             android:layout_toRightOf="@id/icon_iv"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
-            android:textSize="16.0dip"/>
+            android:textSize="14dp"/>
     </RelativeLayout>
 
 

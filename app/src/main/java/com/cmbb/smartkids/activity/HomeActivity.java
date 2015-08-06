@@ -407,6 +407,7 @@ public class HomeActivity extends MActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_search:
+                startActivity(new Intent(this, SearcheActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

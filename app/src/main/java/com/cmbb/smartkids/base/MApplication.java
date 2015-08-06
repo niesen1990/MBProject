@@ -175,7 +175,7 @@ public class MApplication extends Application {
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler(){
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-                Toast.makeText(context, "i cclick :"+msg.custom, Toast.LENGTH_LONG).show();
+                handleNotificationClick(msg);
             }
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);

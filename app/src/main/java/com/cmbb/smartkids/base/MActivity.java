@@ -179,8 +179,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
                 }
                 Toast toast = new Toast(this);
                 toast.setView(view);
-                toast.setGravity(Gravity.BOTTOM | gravity, 0, 0);
-                // toast.setGravity(Gravity.TOP|Gravity.LEFT,0 ,0);
+                toast.setGravity(Gravity.BOTTOM | gravity, 0, TDevice.dip2px(25, this));
                 toast.setDuration(duration);
                 toast.show();
                 lastToast = message;

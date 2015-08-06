@@ -75,7 +75,6 @@ public class OkHttp {
      * @return String
      */
     public static String syncGet(String url) throws IOException {
-        CacheControl cacheControl = CacheControl.FORCE_NETWORK;
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -151,7 +150,7 @@ public class OkHttp {
         for (String key : body.keySet()) {
             multipartBuilder.addFormDataPart(key, body.get(key));
         }
-        Date date = new Date();
+//        Date date = new Date();
         if (file != null && file.exists()) {
             ////            //图片处理
             //        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
@@ -255,7 +254,7 @@ public class OkHttp {
         Bitmap bitmap2 = BitmapFactory.decodeFile(filePath, options);
         Bitmap bitmap = ImageUtils.rotaingImageView(ImageUtils.readPictureDegree(filePath), bitmap2);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 60, baos);
         return baos.toByteArray();
     }
 

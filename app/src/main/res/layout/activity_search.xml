@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tl_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/Theme.AppCompat.Light.DarkActionBar"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/iv_search_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                android:background="@drawable/btn_search_clear"
+                android:visibility="invisible"/>
+
+            <EditText
+                android:id="@+id/et_search_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/iv_search_clear"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/ic_menu_search"
+                android:hint="搜索"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:textColor="@color/color_main_black"
+                android:textColorHint="@color/transparent_gray"
+                android:textSize="@dimen/middle_txt" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+    <RadioGroup
+        android:id="@+id/rg_searche"
+        android:orientation="horizontal"
+        android:background="@color/color_white"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <RadioButton
+            android:id="@+id/rb_search_user"
+            style="@style/fragment_tools_case_text"
+            android:checked="true"
+            android:background="@drawable/btn_search_content_selector"
+            android:text="话题"
+            android:button="@null"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_search_topic"
+            style="@style/fragment_tools_case_text"
+            android:background="@drawable/btn_search_content_selector"
+            android:text="话题"
+            android:button="@null"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_search_case"
+            style="@style/fragment_tools_case_text"
+            android:background="@drawable/btn_search_content_selector"
+            android:text="案例"
+            android:button="@null"
+            />
+    </RadioGroup>
+
+
+    <FrameLayout
+        android:id="@+id/lv_search_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:cacheColorHint="#00000000"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1px"
+        android:scrollbars="none">
+    </FrameLayout>
+
+</LinearLayout>
+
