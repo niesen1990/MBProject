@@ -19,6 +19,7 @@ public class CaseDetailListFragment extends CommonFragment<CaseDetailListModel> 
 
     public CaseDetailListFragment() {
     }
+
     @SuppressLint("ValidFragment")
     public CaseDetailListFragment(boolean need, CaseTypeModel caseTypeModel) {
         this.need = need;

@@ -1,6 +1,8 @@
 package com.cmbb.smartkids.fragment.homeattention.plate;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.post.PostAgeListActivity;
+import com.cmbb.smartkids.activity.post.PostCityListActivity;
+import com.cmbb.smartkids.activity.post.PostWonderListActivity;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
 
@@ -24,10 +30,12 @@ public class PlateAttentionListViewHolder extends RecyclerView.ViewHolder {
     private final TextView tvConstellation;
     private final TextView tvPost;
     private final TextView tvContent;
+    private final CardView mCardView;
 
 
     private PlateAttentionListViewHolder(View view) {
         super(view);
+        mCardView = (CardView) view.findViewById(R.id.cardview);
         ivHead = (ImageView) view.findViewById(R.id.iv_head);
         tvConstellation = (TextView) view.findViewById(R.id.tv_constellation);
         tvPost = (TextView) view.findViewById(R.id.tv_post);
@@ -46,11 +54,38 @@ public class PlateAttentionListViewHolder extends RecyclerView.ViewHolder {
         return new PlateAttentionListViewHolder(v);
     }
 
-    public void onBindViewHolder(Context context, final PlateAttentionModel entry) {
+    public void onBindViewHolder(final Context context, final PlateAttentionModel entry) {
+        mCardView.setTag(entry);
+        mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlateAttentionModel plateAttentionModel = (PlateAttentionModel) v.getTag();
+                PlateModel plateModel = new PlateModel();
+                plateModel.setId(plateAttentionModel.getId());
+                plateModel.setBigImg(plateAttentionModel.getBigImg());
+                plateModel.setConnector(plateAttentionModel.getConnector());
+                plateModel.setContext(plateAttentionModel.getContext());
+                plateModel.setCount(plateAttentionModel.getCount());
+                plateModel.setPlateParentType(plateAttentionModel.getPlateParentType());
+                plateModel.setSmallImg(plateAttentionModel.getSmallImg());
+                plateModel.setTitle(plateAttentionModel.getTitle());
+                plateModel.setType(plateAttentionModel.getType());
+                Intent intent = null;
+                if (plateModel.getPlateParentType().equals("WONDERFUL")) {
+                    intent = new Intent(context, PostWonderListActivity.class);
+                } else if (plateModel.getPlateParentType().equals("AGEBREAKET")) {
+                    intent = new Intent(context, PostAgeListActivity.class);
+                } else if (plateModel.getPlateParentType().equals("LOCAL")) {
+                    intent = new Intent(context, PostCityListActivity.class);
+                }
+                intent.putExtra("model", plateModel);
+                context.startActivity(intent);
+            }
+        });
         tvConstellation.setText(entry.getTitle());
         tvPost.setText(entry.getCount() + "");
         tvContent.setText(entry.getContext());
-        GlideTool.loadImage(context, entry.getSmallImg(), ivHead, false);
+        GlideTool.loadImage(context, entry.getSmallImg(), ivHead, true);
     }
 
 }

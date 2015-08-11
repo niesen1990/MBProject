@@ -21,6 +21,7 @@ public class CaseTpyeListAdapter extends ContentAdapterBase<CaseTypeModel> {
     public CaseTpyeListAdapter(Context mContext, DataController<CaseTypeModel> mDataController, boolean need, CaseTypeListViewHolder.OnCaseTypeClickListener mOnCaseTypeClickListener) {
         super(mContext, mDataController);
         this.mContext = mContext;
+        moreFlag = true;
         this.mOnCaseTypeClickListener = mOnCaseTypeClickListener;
         // 设置HeaderView
         setNeedHeadView(need);

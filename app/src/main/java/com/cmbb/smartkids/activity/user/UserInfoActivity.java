@@ -79,7 +79,21 @@ public class UserInfoActivity extends MActivity {
         });
         tvNick = (TextView) findViewById(R.id.tv_nick);
         tvRank = (TextView) findViewById(R.id.tv_rank);
+        tvRank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInfoActivity.this, UserLVActivity.class);
+                startActivity(intent);
+            }
+        });
         tvGold = (TextView) findViewById(R.id.tv_gold);
+        tvGold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserInfoActivity.this, UserGlodActivity.class);
+                startActivity(intent);
+            }
+        });
         etNick = (EditText) findViewById(R.id.et_nick);
         cardview = (CardView) findViewById(R.id.cardview);
 
@@ -160,8 +174,16 @@ public class UserInfoActivity extends MActivity {
             showWaitDialog();
             Map<String, String> body = new HashMap<>();
             body.put("token", MApplication.token);
-            if (!etNick.getText().toString().equals(userInfoDetailModel.getNike()))
+            if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
+                if (etNick.getText().toString().getBytes().length > 21) {
+                    Log.i("userinfo", "userinfo1 = ");
+                    hideWaitDialog();
+                    showToast("昵称设置过长");
+                    return true;
+                }
                 body.put("nike", etNick.getText().toString());
+            }
+            Log.i("userinfo", "userinfo1 = ");
             body.put("userStatus", status + "");
             File file = null;
             if (imgs.size() > 0) {

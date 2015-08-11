@@ -55,7 +55,7 @@ public class UserAttentionActivity extends MActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user_attention, menu);
+        //getMenuInflater().inflate(R.menu.menu_user_attention, menu);
         return true;
     }
 

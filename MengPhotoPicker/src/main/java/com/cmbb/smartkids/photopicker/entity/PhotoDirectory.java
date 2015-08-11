@@ -123,4 +123,15 @@ public class PhotoDirectory implements Parcelable {
             return new PhotoDirectory[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "PhotoDirectory{" +
+                "id='" + id + '\'' +
+                ", coverPath='" + coverPath + '\'' +
+                ", name='" + name + '\'' +
+                ", dateAdded=" + dateAdded +
+                ", photos=" + photos +
+                '}';
+    }
 }

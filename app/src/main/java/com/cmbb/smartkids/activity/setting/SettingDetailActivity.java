@@ -80,7 +80,7 @@ public class SettingDetailActivity extends MActivity {
             showToast("请输入反馈的内容");
             return;
         }
-        showWaitDialog();
+        showWaitDialog("提交中...");
         ApiNetwork.sendSuggestion(suggestContent, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {

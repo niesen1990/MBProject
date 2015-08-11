@@ -65,7 +65,9 @@ public class PlateWonderListProvider extends DataController<PlateModel> {
             }
             Gson gson = new Gson();
             PlateBaseModel data = gson.fromJson(result, PlateBaseModel.class);
-            return data.getContext();
+            List<PlateModel> plateModels = data.getContext();
+            plateModels.remove(0);
+            return plateModels;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

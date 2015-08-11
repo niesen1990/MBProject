@@ -2,8 +2,10 @@ package com.cmbb.smartkids.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
@@ -31,21 +33,15 @@ public class SplashActivity extends MActivity {
     protected void init(Bundle savedInstanceState) {
         mPushAgent.enable(mRegisterCallback);
         initTask();
-        // 登陆
-        initLogin();
     }
 
-    private void initLogin() {
-        // 萌宝登陆
-        ApiNetwork.login(MApplication.token);
-        ApiNetwork.getUserInfoList();
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -58,8 +54,7 @@ public class SplashActivity extends MActivity {
 
         @Override
         public void onRegistered(String registrationId) {
-            // TODO Auto-generated method stub
-            Log.e("mRegisterCallback", "token:"+mPushAgent.getRegistrationId());
+            Log.e("mRegisterCallback", "token:" + mPushAgent.getRegistrationId());
 
         }
     };
@@ -75,7 +70,21 @@ public class SplashActivity extends MActivity {
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                    // 登陆
+                    MApplication.token = SPCache.getString(Constants.SharePreference.USER_TOKEN, "");
+                    MApplication.rongToken = SPCache.getString(Constants.SharePreference.RONG_TOKEN, "");
+                    MApplication.eredar = SPCache.getInt(Constants.SharePreference.USER_EREDAR, 0);
+                    MApplication.userStatus = SPCache.getInt(Constants.SharePreference.USER_USERSTATUS, 0);
+                    MApplication.authority = SPCache.getInt(Constants.SharePreference.USER_AUTHORITY, 0);
+
+                    if (TextUtils.isEmpty(MApplication.token)) {
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    } else {
+                        ApiNetwork.login(MApplication.token);
+                        ApiNetwork.getUserInfoList();
+                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                    }
                     finish();
                 }
             }

@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/riv_head"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_margin="2dp"
             android:src="@drawable/ic_loading"/>
 
@@ -77,7 +77,7 @@
 
             <TextView
                 android:id="@+id/tv_content_replay"
-                style="@android:style/TextAppearance.DeviceDefault.Small"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/rl_header_up"

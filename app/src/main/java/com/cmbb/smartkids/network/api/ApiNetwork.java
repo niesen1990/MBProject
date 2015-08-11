@@ -8,9 +8,12 @@ import android.text.TextUtils;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.caselist.CaseDetailListModel;
 import com.cmbb.smartkids.fragment.homeattention.user.UserAttentionBaseModel;
+import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.fragment.replay.PostDetailBaseModel;
+import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.model.userinfo.LoginBaseModel;
 import com.cmbb.smartkids.model.userinfo.RongInfoBaseModel;
 import com.cmbb.smartkids.model.userinfo.UserInfoBaseModel;
@@ -200,6 +203,48 @@ public class ApiNetwork {
     }
 
     /**
+     * @param context
+     * @param caseDetailListModel
+     */
+    public static void getCaseReplayDetail(final Context context, CaseDetailListModel caseDetailListModel) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("id", caseDetailListModel.getId() + "");
+        body.put("userId", "" + caseDetailListModel.getUserId());
+        OkHttp.asyncPost(Constants.Case.FINDBYCASEID_URL, body, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                String result = response.body().string();
+                Log.i("getReplayDetail", "getReplayDetail = " + result);
+                try {
+                    if (response.isSuccessful()) {
+                        Gson gson = new Gson();
+                        PostDetailBaseModel postDetailBaseModel = gson.fromJson(result, PostDetailBaseModel.class);
+
+                        if ("1".equals(postDetailBaseModel.getCode())) {
+                            Intent intent = new Intent(Constants.Post.POSTDETAIL_DATA_INTENT);
+                            intent.putExtra(Constants.NETWORK_FLAG, true);
+                            intent.putExtra(Constants.Post.POSTDETAIL_DATA, postDetailBaseModel.getContext());
+                            context.sendBroadcast(intent);
+                        }
+                    } else {
+                        sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+                    }
+                } catch (Exception e) {
+                    Log.i("getReplayDetail", "e = " + e);
+                    sendFailureBroadcast(context, Constants.Post.POSTDETAIL_DATA_INTENT);
+                }
+            }
+        });
+    }
+
+
+    /**
      * 获取回复顶部详情
      *
      * @param context
@@ -306,9 +351,9 @@ public class ApiNetwork {
 
                     LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
                     SPCache.putString(Constants.RongToken, loginBaseModel.getContext().getRongyunToken());
-                    MApplication.RongToken = loginBaseModel.getContext().getRongyunToken();
+                    MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
                     // 融云登陆
-                    RongIM.connect(MApplication.RongToken, new RongIMClient.ConnectCallback() {
+                    RongIM.connect(MApplication.rongToken, new RongIMClient.ConnectCallback() {
                                 @Override
                                 public void onTokenIncorrect() {
                                     Log.i("MEIZU", "---------onTokenIncorrect userId----------:");
@@ -330,6 +375,34 @@ public class ApiNetwork {
                 }
             }
         });
+    }
+
+    /**
+     * 登陆融云服务器
+     *
+     * @param rongToken String
+     */
+    public static void loginRongYun(String rongToken) {
+        // 融云登陆
+        RongIM.connect(rongToken, new RongIMClient.ConnectCallback() {
+                    @Override
+                    public void onTokenIncorrect() {
+                        Log.i("MEIZU", "---------onTokenIncorrect userId----------:");
+                    }
+
+                    @Override
+                    public void onSuccess(String userId) {
+                        Log.i("MEIZU", "---------onSuccess userId----------:" + userId);
+                        // 获取用户信息
+                        RongCloudEvent.getInstance().setOtherListener();
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode e) {
+                        Log.i("MEIZU", "---------onError ----------:" + e);
+                    }
+                }
+        );
     }
 
 
@@ -408,6 +481,98 @@ public class ApiNetwork {
         body.put("code", "plate");
         body.put("plateId", plateId);
         OkHttp.asyncPost(Constants.DELETEATTENTION_URL, body, callback);
+    }
+
+
+    /**
+     * 删除Wonder帖子
+     *
+     * @param type
+     * @param connector
+     * @param id
+     * @param callback
+     */
+    public static void deleteWonderPost(String type, String connector, String plate, int id, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("type", type);
+        body.put("id", "" + id);
+        OkHttp.asyncPost(Constants.BASE_URL + connector + plate, body, callback);
+    }
+
+    /**
+     * 删除AgeCity帖子
+     *
+     * @param type
+     * @param connector
+     * @param id
+     * @param callback
+     */
+    public static void deleteAgeCityPost(String type, String connector, String plate, String areaType, int id, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        body.put("id", "" + id);
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("result", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        Log.i("result", "key = " + Constants.BASE_URL + connector + plate);
+
+        OkHttp.asyncPost(Constants.BASE_URL + connector + plate, body, callback);
+    }
+
+
+    /**
+     * 图片上传
+     *
+     * @param mPlateModel
+     * @param mTitle
+     * @param mContext
+     * @param photoAdds
+     * @param callback
+     */
+    public static void uploadWonderPost(PlateModel mPlateModel, String mTitle, String mContext, ArrayList<PhotoAdd> photoAdds, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("type", mPlateModel.getType());
+        body.put("title", mTitle);
+        body.put("context", mContext);
+        body.put("count", photoAdds.size() + "");
+        body.put("plateId", mPlateModel.getId() + "");
+        for (int i = 0; i < photoAdds.size(); i++) {
+            body.put("context" + i, photoAdds.get(i).getPhotoContent());
+        }
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("photo", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "AddPublish", body, photoAdds, callback);
+
+    }
+
+    /**
+     * @param mPlateModel
+     * @param mTitle
+     * @param mContext
+     * @param photoAdds
+     * @param callback
+     */
+    public static void uploadAgeCityPost(PlateModel mPlateModel, String mTitle, String mContext, ArrayList<PhotoAdd> photoAdds, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("type", mPlateModel.getType());
+        body.put("title", mTitle);
+        body.put("context", mContext);
+        body.put("count", photoAdds.size() + "");
+        body.put("plateId", mPlateModel.getId() + "");
+        for (int i = 0; i < photoAdds.size(); i++) {
+            body.put("context" + i, photoAdds.get(i).getPhotoContent());
+        }
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("photo", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "AddStar", body, photoAdds, callback);
+
     }
 
 

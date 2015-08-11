@@ -45,10 +45,12 @@ public class MApplication extends Application {
     private static Context mContext = null;
     private PushAgent mPushAgent;
 
-    public static String token = "083cbf5c89a44c01a2fe92f9b81baaf5";
-    public static String RongToken = "";
+    //public static String token = "083cbf5c89a44c01a2fe92f9b81baaf5";
+    public static String token = "";
+    public static String rongToken = "";
     public static int authority;// 用户权限
     public static int eredar;// 达人权限
+    public static int userStatus;//用户状态
 
     @Override
     public void onCreate() {

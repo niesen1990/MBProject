@@ -16,10 +16,12 @@ import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
  */
 public class PostListAdapter extends ContentAdapterBase<PostModel> {
     private Context mContext;
+    DataController<PostModel> mDataController;
 
 
     public PostListAdapter(Context mContext, DataController<PostModel> mDataController, boolean need) {
         super(mContext, mDataController);
+        this.mDataController = mDataController;
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);
@@ -33,7 +35,7 @@ public class PostListAdapter extends ContentAdapterBase<PostModel> {
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((WonderListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((WonderListViewHolder) holder).onBindViewHolder(mContext, mDataController,mDataController.getData(position), position);
     }
 
 }
