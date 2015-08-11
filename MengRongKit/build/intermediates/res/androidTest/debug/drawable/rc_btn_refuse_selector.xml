@@ -9,4 +9,4 @@
     <!-- Pressed -->
     <item android:drawable="@drawable/rc_call_over_down" android:state_pressed="true"/>
 
-</selector><!-- From: file:/Users/niesen918/AndroidStudioProjects/MBProject/MengRongKit/src/main/res/drawable/rc_btn_refuse_selector.xml --><!-- From: file:/Users/niesen918/AndroidStudioProjects/MBProject/MengRongKit/build/intermediates/bundles/debug/res/drawable/rc_btn_refuse_selector.xml -->
+</selector><!-- From: file:/F:/android-studio-workspace/MBProject/MengRongKit/src/main/res/drawable/rc_btn_refuse_selector.xml --><!-- From: file:/F:/android-studio-workspace/MBProject/MengRongKit/build/intermediates/bundles/debug/res/drawable/rc_btn_refuse_selector.xml -->

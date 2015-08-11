@@ -212,7 +212,7 @@ public class ShareUtils {
         mShakeController.enableShakeSound(true);
     }
 
-    public static void unregisterShakeListener(){
+    public static void unregisterShakeListener(Activity activity){
         mShakeController.unregisterShakeListener(activity);
     }
 

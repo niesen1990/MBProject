@@ -25,14 +25,18 @@ import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by javon on 2015/7/31.
@@ -218,7 +222,6 @@ public class LoginActivity extends MActivity {
         super.onActivityResult(requestCode, resultCode, data);
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {
-            Log.i("third", "third = ssoHandler");
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
     }
