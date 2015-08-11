@@ -40,10 +40,18 @@ public class MasterFragment extends Fragment implements MasterTypeListViewHolder
     @Override
     public void onResume() {
         super.onResume();
+        getRetainInstance();
+        Log.e("master", "master = onresume");
         Fragment fragmentLeft = new MasterTypeListFragment(false, this);
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_left, fragmentLeft).commit();
-        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, new MasterDetailListFragment(false, masterTypeModel)).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.lv_case_left, fragmentLeft).commit();
+//        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
+        getChildFragmentManager().beginTransaction().replace(R.id.lv_case_right, new MasterDetailListFragment()).commit();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.e("master", "master = onpause");
     }
 
     @Override

@@ -45,9 +45,9 @@ public class ExpertFragment extends Fragment implements ExpertTypeListViewHolder
     public void onResume() {
         super.onResume();
         Fragment fragmentLeft = new ExpertTypeListFragment(false, this);
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_left, fragmentLeft).commit();
-        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, new ExpertDetailListFragment(false, masterTypeModel)).commit();
+        getChildFragmentManager().beginTransaction().replace(R.id.lv_case_left, fragmentLeft).commit();
+//        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
+        getChildFragmentManager().beginTransaction().replace(R.id.lv_case_right, new ExpertDetailListFragment()).commit();
     }
 
     @Override

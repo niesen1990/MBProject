@@ -3,6 +3,7 @@ package com.cmbb.smartkids.fragment.expert;
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
+import com.cmbb.smartkids.activity.HomeActivity;
 import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.fragment.master.MasterTypeModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
@@ -23,11 +24,13 @@ public class ExpertDetailListFragment extends CommonFragment<ExpertDetailModel> 
     @SuppressLint("ValidFragment")
     public ExpertDetailListFragment(boolean need, MasterTypeModel mMasterTypeModel) {
         this.need = need;
-        this.mMasterTypeModel = mMasterTypeModel;
+//        this.mMasterTypeModel = mMasterTypeModel;
     }
 
     @Override
     protected DataController<ExpertDetailModel> onGenerateDataController() {
+        if(getActivity() instanceof HomeActivity)
+            mMasterTypeModel = ((HomeActivity)getActivity()).masterTypeModel;
         return new ExpertListDetailProvider(getActivity(), mMasterTypeModel);
     }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.cmbb.smartkids.activity.HomeActivity;
 import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 
@@ -23,12 +24,14 @@ public class MasterDetailListFragment extends CommonFragment<MasterDetailModel> 
     @SuppressLint("ValidFragment")
     public MasterDetailListFragment(boolean need, MasterTypeModel mMasterTypeModel) {
         this.need = need;
-        this.mMasterTypeModel = mMasterTypeModel;
+//        this.mMasterTypeModel = mMasterTypeModel;
         Log.i("master", "master MasterDetailListFragment = " + mMasterTypeModel);
     }
 
     @Override
     protected DataController<MasterDetailModel> onGenerateDataController() {
+        if(getActivity() instanceof HomeActivity)
+            mMasterTypeModel = ((HomeActivity)getActivity()).masterTypeModel;
         return new MasterListDetailProvider(getActivity(), mMasterTypeModel);
     }
 

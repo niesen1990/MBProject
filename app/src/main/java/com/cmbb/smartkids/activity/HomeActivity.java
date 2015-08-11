@@ -37,6 +37,7 @@ import com.cmbb.smartkids.fragment.expert.ExpertFragment;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
 import com.cmbb.smartkids.fragment.master.MasterFragment;
+import com.cmbb.smartkids.fragment.master.MasterTypeModel;
 import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
@@ -56,7 +57,7 @@ public class HomeActivity extends MActivity {
     private static Boolean isQuit = false;// 退出应用标识符
     private Timer timer = new Timer();// 程序退出定时器
     private DrawerLayout mDrawerLayout;
-
+    public MasterTypeModel masterTypeModel;
     NavigationView navigationView;
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -324,6 +325,7 @@ public class HomeActivity extends MActivity {
     private void initData() {
         // 初始化用户信息
         ApiNetwork.getUserInfo(this);
+        masterTypeModel = new MasterTypeModel("推荐", 0, 1);
         homeFragments = new Fragment[1];
         homeFragments[0] = new HomeListFragment(true);
         homeTitles = new String[1];
