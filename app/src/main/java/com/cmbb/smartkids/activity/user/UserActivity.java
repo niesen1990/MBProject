@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -96,6 +97,35 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
         ivLv = (ImageView) findViewById(R.id.iv_lv);
         tvContent = (TextView) findViewById(R.id.tv_content);
         tvContent.setText(mHomeEredarModel.getEredarName() + "达人");
+        if (!TextUtils.isEmpty(mHomeEredarModel.getEredarName())) {
+            tvContent.setText(mHomeEredarModel.getEredarName() + "达人");
+        } else {
+            try {
+                switch (mHomeEredarModel.getAuthority()) {
+                    case 1:
+                        tvContent.setText("系统管理员");
+                        break;
+                    case 2:
+                        tvContent.setText("小编");
+                        break;
+                    case 3:
+                        tvContent.setText("普通用户");
+                        break;
+                    case 4:
+                        tvContent.setText("专家");
+                        break;
+                    case 5:
+                        tvContent.setText("在线小编");
+                        break;
+                    default:
+                        tvContent.setText("普通用户");
+                        break;
+                }
+
+            } catch (Exception e) {
+
+            }
+        }
         rvBac = (RelativeLayout) findViewById(R.id.rv_bac);
         // test
         rvBac.setBackgroundResource(RankTools.getAuthBackground(mHomeEredarModel.getAuthority(), 1));

@@ -1,7 +1,6 @@
 package com.cmbb.smartkids.fragment.guid;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
-import com.cmbb.smartkids.activity.HomeActivity;
+import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MFragment;
 import com.cmbb.smartkids.tools.sp.SPCache;
@@ -45,7 +44,7 @@ public class FragmentGuideThree extends MFragment {
 
                 //标识第一次进入程序
                 SPCache.putBoolean(Constants.SharePreference.IS_FIRST_INTO, false);
-                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

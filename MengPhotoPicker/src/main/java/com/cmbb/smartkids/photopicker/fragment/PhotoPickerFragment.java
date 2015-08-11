@@ -60,7 +60,7 @@ public class PhotoPickerFragment extends Fragment {
         //setRetainInstance(true);
         Log.i("fragment", "fragment on Create");
         mPhotoDirectories = new ArrayList<>();
-        mPhotoGridAdapter = new PhotoGridAdapter(this, mPhotoDirectories);
+        mPhotoGridAdapter = new PhotoGridAdapter(getActivity(), mPhotoDirectories);
         mPopupDirectoryListAdapter = new PopupDirectoryListAdapter(getActivity(), mPhotoDirectories);
         mImageCaptureManager = new ImageCaptureManager(getActivity());
         MediaStoreHelper.getPhotoDirs(getActivity(), new MediaStoreHelper.PhotosResultCallback() {
@@ -88,10 +88,7 @@ public class PhotoPickerFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mPhotoGridAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         final Button btSwitchDirectory = (Button) rootView.findViewById(R.id.directory_button);
-
-
         final ListPopupWindow listPopupWindow = new ListPopupWindow(getActivity());
         listPopupWindow.setWidth(ListPopupWindow.MATCH_PARENT);
         listPopupWindow.setAnchorView(btSwitchDirectory);

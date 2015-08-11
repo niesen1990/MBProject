@@ -1,6 +1,8 @@
 package com.cmbb.smartkids.base;
 
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.tools.ExitBroadcast;
 import com.cmbb.smartkids.tools.TDevice;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.notify.DialogControl;
@@ -42,6 +45,9 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     protected ActionBar actionBar;
     protected PushAgent mPushAgent;
 
+    // EXIT
+    protected BroadcastReceiver existReceiver;
+
     // ContentView
     protected abstract int getLayoutId();
 
@@ -54,6 +60,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.onAppStart();
         initToolbar();
+        initExit();
         init(savedInstanceState);
     }
 
@@ -74,6 +81,13 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    private void initExit() {
+        // 程序退出
+        existReceiver = new ExitBroadcast(this);
+        IntentFilter filter = new IntentFilter(Constants.INTENT_ACTION_EXIT_APP);
+        registerReceiver(existReceiver, filter);
+    }
+
     public ActionBar getCustomBar() {
         return actionBar != null ? actionBar : null;
     }
@@ -83,11 +97,6 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         _isVisible = true;
-        //        if (System.currentTimeMillis() - Application.getLastClearImageCache() > 24 * 3600 * 1000l) {
-        //            ImageLoader.getInstance().clearDiskCache();
-        //            ImageLoader.getInstance().clearMemoryCache();
-        //            Application.setLastClearImageCache(System.currentTimeMillis());
-        //        }
         super.onResume();
         MobclickAgent.onResume(this);
     }
@@ -97,6 +106,12 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         _isVisible = false;
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(existReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -179,7 +194,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
                 }
                 Toast toast = new Toast(this);
                 toast.setView(view);
-                toast.setGravity(Gravity.BOTTOM | gravity, 0, TDevice.dip2px(25, this));
+                toast.setGravity(Gravity.BOTTOM | gravity, 0, TDevice.dip2px(84, this));
                 toast.setDuration(duration);
                 toast.show();
                 lastToast = message;
@@ -233,7 +248,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
                 _waitDialog = DialogHelper.getCancelableWaitDialog(this,
                         getString(resid));
             } else
-                _waitDialog.setMessage(getString(resid)); 
+                _waitDialog.setMessage(getString(resid));
             _waitDialog.setOnCancelListener(listener);
             _waitDialog.show();
             return _waitDialog;

@@ -1,7 +1,10 @@
 package com.cmbb.smartkids.fragment.homeattention.user;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.user.UserActivity;
+import com.cmbb.smartkids.fragment.homeplate.HomeEredarModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
 
@@ -27,10 +32,12 @@ public class UserAttentionListViewHolder extends RecyclerView.ViewHolder {
     private TextView tvConstellation;
     private ImageView ivRanktag;
     private ImageView ivLv;
+    private CardView mCardView;
     private TextView tvContent;
 
     private UserAttentionListViewHolder(View view) {
         super(view);
+        mCardView = (CardView) view.findViewById(R.id.cardview);
         ivHeadAll = (FrameLayout) view.findViewById(R.id.iv_head_all);
         ivHead = (ImageView) view.findViewById(R.id.iv_head);
         ivMaster = (ImageView) view.findViewById(R.id.iv_master);
@@ -50,10 +57,61 @@ public class UserAttentionListViewHolder extends RecyclerView.ViewHolder {
         return new UserAttentionListViewHolder(v);
     }
 
-    public void onBindViewHolder(Context context, final UserAttentionModel entry) {
+    public void onBindViewHolder(final Context context, final UserAttentionModel entry) {
+        mCardView.setTag(entry);
+        mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserAttentionModel userAttentionModel = (UserAttentionModel) v.getTag();
+                HomeEredarModel homeEredarModel = new HomeEredarModel();
+                homeEredarModel.setEredar(userAttentionModel.getEredar());
+                homeEredarModel.setEredarType(userAttentionModel.getEredarType());
+                homeEredarModel.setEredarName(userAttentionModel.getEredarName());
+                homeEredarModel.setEredarRank(userAttentionModel.getEredarRank());
+                homeEredarModel.setNike(userAttentionModel.getNike());
+                homeEredarModel.setUserSmallHeadImg(userAttentionModel.getUserSmallHeadImg());
+                homeEredarModel.setAttention(1);
+                homeEredarModel.setAuthority(userAttentionModel.getAuthority());
+                homeEredarModel.setId(userAttentionModel.getUserId());
+                homeEredarModel.setLoginTimes(userAttentionModel.getLoginTimes());
+                homeEredarModel.setUserStatus(userAttentionModel.getUserStatus());
+                Intent intent = new Intent(context, UserActivity.class);
+                intent.putExtra("user", homeEredarModel);
+                context.startActivity(intent);
+            }
+        });
         GlideTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
-        tvContent.setText(entry.getEredarName() + "达人");
         tvConstellation.setText(entry.getNike());
+
+        if (!TextUtils.isEmpty(entry.getEredarName())) {
+            tvContent.setText(entry.getEredarName() + "达人");
+        } else {
+            try {
+                switch (entry.getAuthority()) {
+                    case 1:
+                        tvContent.setText("系统管理员");
+                        break;
+                    case 2:
+                        tvContent.setText("小编");
+                        break;
+                    case 3:
+                        tvContent.setText("普通用户");
+                        break;
+                    case 4:
+                        tvContent.setText("专家");
+                        break;
+                    case 5:
+                        tvContent.setText("在线小编");
+                        break;
+                    default:
+                        tvContent.setText("普通用户");
+                        break;
+                }
+
+            } catch (Exception e) {
+
+            }
+        }
     }
 
 }

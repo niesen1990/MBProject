@@ -83,4 +83,12 @@ public class Photo implements Parcelable {
             return new Photo[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "id=" + id +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }

@@ -67,7 +67,10 @@ public class HomeListProvider extends DataController<PlateModel> {
             HomePageBaseModel data = gson.fromJson(result, HomePageBaseModel.class);
             baseData = data;
             sendDataToBanner(data);
-            return data.getContext().getPlateList();
+            // 删除我的宝宝
+            List<PlateModel> plateModels = data.getContext().getPlateList();
+            plateModels.remove(0);
+            return plateModels;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -1,6 +1,7 @@
 package com.cmbb.smartkids.fragment.caselist;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.replay.ReplayCaseActivity;
 
 
 /**
@@ -40,6 +42,9 @@ public class CaseDetailListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 CaseDetailListModel entry = (CaseDetailListModel) v.getTag();
+                Intent intent = new Intent(context, ReplayCaseActivity.class);
+                intent.putExtra("model", entry);
+                context.startActivity(intent);
             }
         });
         return new CaseDetailListViewHolder(v);

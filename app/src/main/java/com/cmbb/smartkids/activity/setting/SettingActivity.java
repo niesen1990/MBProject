@@ -8,17 +8,13 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
-import com.cmbb.smartkids.network.OkHttp;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
+import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.tools.sp.SPCache;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SettingActivity extends MActivity {
     private final String TAG = SettingActivity.class.getSimpleName();
@@ -91,24 +87,73 @@ public class SettingActivity extends MActivity {
         }
     }
 
+    /**
+     * 登出
+     */
     private void sendLogoutRequest() {
         showWaitDialog("注销中...");
-        Map<String, String> params = new HashMap<>();
-        //        params.put("token", );
-        OkHttp.asyncPost(Constants.User.LOGINOUT_URL, params, TAG, new Callback() {
+        /*Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        Log.i("logout", "logout = " + MApplication.token);
+        OkHttp.asyncPost(Constants.User.LOGINOUT_URL, body, TAG, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                hideWaitDialog();
-                showToast(R.string.service_error);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideWaitDialog();
+                        showToast(R.string.service_error);
+                    }
+                });
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
-                hideWaitDialog();
-                //响应成功 数据处理
+            public void onResponse(final Response response) throws IOException {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (response.isSuccessful()) {
+                            try {
+                                String result = response.body().string();
+                                Log.i("logout", "logout = " + result);
+                                if (result.contains("1")) {
+                                    //响应成功 数据处理
+                                    MApplication.token = "";
+                                    MApplication.rongToken = "";
+                                    MApplication.userStatus = 0;
+                                    MApplication.eredar = 0;
+                                    MApplication.authority = 0;
+                                    SPCache.clear();
+                                    hideWaitDialog();
+                                    Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                } else {
+                                    hideWaitDialog();
+                                    showToast("注销失败");
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            hideWaitDialog();
+                            showToast("注销失败");
+                        }
+                    }
+                });
             }
-        });
+        });*/
+        //响应成功 数据处理
+        MApplication.token = "";
+        MApplication.rongToken = "";
+        MApplication.userStatus = 0;
+        MApplication.eredar = 0;
+        MApplication.authority = 0;
+        SPCache.clear();
+        // 设置第一次启动标识
+        SPCache.putBoolean(Constants.SharePreference.IS_FIRST_INTO, false);
+        hideWaitDialog();
+        Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
-
-
 }

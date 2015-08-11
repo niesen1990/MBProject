@@ -7,9 +7,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +34,8 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     PostDetail mPostDetail;
     ReplayListFragment mReplayListFragment;
     private CollapsingToolbarLayout collapsingToolbar;
+
+    private FloatingActionButton fabReplay;
 
     private LinearLayout headContainer;
 
@@ -84,6 +88,15 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         mIvRanktag = (ImageView) findViewById(R.id.iv_ranktag);
         mIvRanklev = (ImageView) findViewById(R.id.iv_ranklev);
         mTvHeaderTime = (TextView) findViewById(R.id.tv_header_time);
+        fabReplay = (FloatingActionButton) findViewById(R.id.fab_replay);
+        fabReplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReplayWonderActivity.this, ReplayAddActivity.class);
+                intent.putExtra("model", mPostModel);
+                startActivityForResult(intent, 1);
+            }
+        });
 
     }
 

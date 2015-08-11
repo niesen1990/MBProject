@@ -4,10 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.tools.ImageUtils;
 import com.cmbb.smartkids.tools.log.Log;
 import com.facebook.stetho.okhttp.StethoInterceptor;
-import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
@@ -22,7 +22,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -39,8 +38,8 @@ public class OkHttp {
     // timeout
     static {
         mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-        mOkHttpClient.setWriteTimeout(30, TimeUnit.SECONDS);
-        mOkHttpClient.setReadTimeout(30, TimeUnit.SECONDS);
+        mOkHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
+        mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         //mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(Application.context()), CookiePolicy.ACCEPT_ALL));
         //mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
@@ -150,7 +149,7 @@ public class OkHttp {
         for (String key : body.keySet()) {
             multipartBuilder.addFormDataPart(key, body.get(key));
         }
-//        Date date = new Date();
+        //        Date date = new Date();
         if (file != null && file.exists()) {
             ////            //图片处理
             //        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
@@ -186,56 +185,20 @@ public class OkHttp {
     }
 
     // post with files
-    public static void asyncPost(String url, Map<String, String> body, ArrayList<String> files, Callback callback) {
+    public static void asyncPost(String url, Map<String, String> body, ArrayList<PhotoAdd> files, Callback callback) {
         MultipartBuilder multipartBuilder = new MultipartBuilder();
         multipartBuilder.type(MultipartBuilder.MIXED);
         for (String key : body.keySet()) {
             multipartBuilder.addFormDataPart(key, body.get(key));
         }
+
         if (files != null && files.size() > 0) {
-            //            if (files.size() > 10) {
-            //                for (int i = 0; i < 10; i++) {
-            //                    //图片处理
-            //                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            //                    bitmapOptions.inSampleSize = 8;
-            //                    Bitmap cameraBitmap = BitmapFactory.decodeFile(files.get(i), bitmapOptions);
-            //                    /**
-            //                     * 把图片旋转为正的方向
-            //                     */
-            //                    Bitmap bitmap = ImageTools.rotaingImageView(ImageTools.readPictureDegree(files.get(i)), cameraBitmap);
-            //
-            //
-            //                    FileTools.createDirs("萌宝派");
-            //                    File sendFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(), File.separator + "萌宝派" + File.separator + new File(files.get(i)).getName());
-            //                    boolean b = ImageTools.saveBitmap(bitmap, sendFile.getAbsolutePath());
-            //                    //图片处理
-            //                    if (b) {
-            //                        multipartBuilder.addFormDataPart("image" + i, "image" + i, RequestBody.create(MEDIA_TYPE_PNG, sendFile));
-            //                        Log.i(TAG, "add picture addres = " + files.get(i) + "image" + (i + 1));
-            //                    }
-            //                }
-            //            } else {
             for (int i = 0; i < files.size(); i++) {
-                //                    //图片处理
-                //                    BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                //                    bitmapOptions.inSampleSize = 8;
-                //                    Bitmap cameraBitmap = BitmapFactory.decodeFile(files.get(i), bitmapOptions);
-                //                    /**
-                //                     * 把图片旋转为正的方向
-                //                     */
-                //                    Bitmap bitmap = ImageTools.rotaingImageView(ImageTools.readPictureDegree(files.get(i)), cameraBitmap);
-                //                    FileTools.createDirs("萌宝派");
-                //                    File sendFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(), File.separator + "萌宝派" + File.separator + new File(files.get(i)).getName());
-                //
-                //                    boolean b = ImageTools.saveBitmap(bitmap, sendFile.getAbsolutePath());
-                //图片处理
-                //                    if (b) {
-                multipartBuilder.addFormDataPart("image" + i, "image" + i, RequestBody.create(MEDIA_TYPE_PNG, getSmallBitmap(files.get(i))));
+                multipartBuilder.addFormDataPart("image" + i, "image" + i, RequestBody.create(MEDIA_TYPE_PNG, getSmallBitmap(files.get(i).getPhotoUrl())));
                 Log.i(TAG, "add picture addres = " + files.get(i) + "image" + (i + 1));
-                //                    }
-                //                }
             }
         }
+
         RequestBody formBody = multipartBuilder.build();
         Request request = new Request.Builder()
                 .url(url)
@@ -252,9 +215,12 @@ public class OkHttp {
         options.inSampleSize = calculateInSampleSize(options, 480, 800);
         options.inJustDecodeBounds = false;
         Bitmap bitmap2 = BitmapFactory.decodeFile(filePath, options);
+
         Bitmap bitmap = ImageUtils.rotaingImageView(ImageUtils.readPictureDegree(filePath), bitmap2);
+
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 60, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
         return baos.toByteArray();
     }
 

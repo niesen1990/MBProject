@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.cmbb.smartkids.activity.user.UserGlodActivity">
+
+    <include layout="@layout/custom_toolbar"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tl_main_custom"
+        android:src="@drawable/gold_rules"/>
+
+</RelativeLayout>

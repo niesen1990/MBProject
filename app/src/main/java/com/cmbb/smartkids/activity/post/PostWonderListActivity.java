@@ -171,7 +171,10 @@ public class PostWonderListActivity extends MActivity implements AppBarLayout.On
         fabPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(PostWonderListActivity.this, PostAddWonderActivity.class);
+                intent.putExtra("model", mPlateModel);
+                intent.putExtra("flag", true);
+                startActivityForResult(intent, 1);
             }
         });
     }
@@ -185,12 +188,10 @@ public class PostWonderListActivity extends MActivity implements AppBarLayout.On
 
     @Override
     protected void init(Bundle savedInstanceState) {
-
         mPlateModel = getIntent().getParcelableExtra("model");
         assignViews();
         collapsingToolbar.setTitle(mPlateModel.getTitle());
         collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
-
         mCommonFragment = new WonderPostListFragment(this, false, mPlateModel);
         getSupportFragmentManager().beginTransaction().add(R.id.container, mCommonFragment).commit();
     }
@@ -231,6 +232,14 @@ public class PostWonderListActivity extends MActivity implements AppBarLayout.On
             mCommonFragment.getmSwipeRefresh().setEnabled(true);
         } else {
             mCommonFragment.getmSwipeRefresh().setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new WonderPostListFragment(this, false, mPlateModel)).commit();
         }
     }
 }

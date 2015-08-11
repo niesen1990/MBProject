@@ -33,13 +33,14 @@ import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.active.ActiveFragment;
+import com.cmbb.smartkids.fragment.expert.ExpertFragment;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
+import com.cmbb.smartkids.fragment.master.MasterFragment;
 import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.TDevice;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
@@ -169,6 +170,7 @@ public class HomeActivity extends MActivity {
         headBac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(HomeActivity.this, UserInfoActivity.class);
                 if (null != userInfoDetailModel)
                     intent.putExtra("user", userInfoDetailModel);
@@ -214,6 +216,8 @@ public class HomeActivity extends MActivity {
                 btnActive.setSelected(false);
                 btnMaster.setSelected(false);
                 btnTools.setSelected(false);
+                //设置Title
+                collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
                 // 设置内容
                 viewPager.setAdapter(mHomeFragmentPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
@@ -230,6 +234,8 @@ public class HomeActivity extends MActivity {
                 btnActive.setSelected(true);
                 btnMaster.setSelected(false);
                 btnTools.setSelected(false);
+                //设置Title
+                collapsingToolbarLayout.setTitle("");
                 // 设置内容
                 viewPager.setAdapter(mActiveFragmentPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
@@ -256,6 +262,8 @@ public class HomeActivity extends MActivity {
                 btnActive.setSelected(false);
                 btnMaster.setSelected(true);
                 btnTools.setSelected(false);
+                //设置Title
+                collapsingToolbarLayout.setTitle("");
                 // 设置内容
                 viewPager.setAdapter(mMasterFragmentPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
@@ -273,6 +281,8 @@ public class HomeActivity extends MActivity {
                 btnActive.setSelected(false);
                 btnMaster.setSelected(false);
                 btnTools.setSelected(true);
+                //设置Title
+                collapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
                 // 设置内容
                 viewPager.setAdapter(mToolsFragmentPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
@@ -312,7 +322,6 @@ public class HomeActivity extends MActivity {
     }
 
     private void initData() {
-
         // 初始化用户信息
         ApiNetwork.getUserInfo(this);
         homeFragments = new Fragment[1];
@@ -330,8 +339,8 @@ public class HomeActivity extends MActivity {
         mActiveFragmentPagerAdapter.addFragment(activeFragments, activeTitles);
 
         masterFragments = new Fragment[2];
-        masterFragments[0] = new HomeListFragment();
-        masterFragments[1] = new HomeListFragment();
+        masterFragments[0] = new MasterFragment();
+        masterFragments[1] = new ExpertFragment();
         masterTitles = new String[2];
         masterTitles[0] = "达人";
         masterTitles[1] = "专家";
@@ -342,7 +351,6 @@ public class HomeActivity extends MActivity {
         toolsTitles = new String[1];
         toolsTitles[0] = "";
         mToolsFragmentPagerAdapter.addFragment(toolsFragments, toolsTitles);
-
     }
 
 
@@ -407,7 +415,7 @@ public class HomeActivity extends MActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_search:
-                startActivity(new Intent(this, SearcheActivity.class));
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -429,8 +437,8 @@ public class HomeActivity extends MActivity {
             };
             timer.schedule(task, 2000);
         } else {
-            finish();
-            System.exit(0);
+            Intent intent = new Intent(Constants.INTENT_ACTION_EXIT_APP);
+            sendBroadcast(intent);
         }
     }
 

@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.cmbb.smartkids.fragment.master.MasterFragment">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_title"
+        android:layout_marginTop="0.5dp">
+
+        <FrameLayout
+            android:id="@+id/lv_case_left"
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"/>
+
+        <FrameLayout
+            android:id="@+id/lv_case_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/lv_case_left"
+            android:fitsSystemWindows="true"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

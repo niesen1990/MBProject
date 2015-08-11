@@ -144,6 +144,17 @@ public abstract class DataController<T> implements DataProvider<T> {
     }
 
     /**
+     * 删除单个Item(bug)
+     *
+     * @param position
+     */
+    public void remove(int position) {
+        mRepository.remove(position);
+        Log.i("remove", "remove3 = " + position);
+        dispatchAdapterMessage(AdapterMessageType.CHANGE, position);
+    }
+
+    /**
      * 尾部添加数据
      *
      * @param data T

@@ -116,7 +116,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="注 销"
+            android:text="注  销"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/large_txt"
             android:textStyle="bold"/>

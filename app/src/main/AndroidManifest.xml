@@ -25,6 +25,7 @@
     <!-- 获取logcat日志 -->
 
 
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- baidu -->
     <!-- 这个权限用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -43,6 +44,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+
         <!-- umeng-analytics -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -277,16 +279,16 @@
             android:label="@string/title_activity_user_publish">
         </activity>
         <activity
-            android:name=".activity.user.SettingActivity"
-            android:label="@string/title_activity_setting" >
+            android:name=".activity.setting.SettingActivity"
+            android:label="@string/title_activity_setting">
         </activity>
         <activity
             android:name=".activity.setting.SettingDetailActivity"
             android:label="SettingDetailActivity">
         </activity>
         <activity
-            android:name=".activity.SearcheActivity"
-            android:label="SearcheActivity" >
+            android:name=".activity.SearchActivity"
+            android:label="SearcheActivity">
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
@@ -347,8 +349,17 @@
             android:name=".activity.replay.ReplayWonderActivity"
             android:label="@string/title_activity_replay_wonder">
         </activity>
-        <!--融云-->
-        <!--begin rongcloud-->
+
+        <activity
+            android:name=".activity.replay.ReplayCaseActivity"
+            android:label="@string/title_activity_replay_wonder">
+        </activity>
+        <activity
+            android:name=".activity.replay.ReplayAgeCityActivity"
+            android:label="@string/title_activity_replay_wonder">
+        </activity>
+        <!-- 融云 -->
+        <!-- begin rongcloud -->
         <activity
             android:name="io.rong.voipkit.activity.CallSideActivity"
             android:screenOrientation="portrait">
@@ -363,12 +374,10 @@
                     android:scheme="rong"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name="io.rong.voipkit.activity.CalledSideActivity"
             android:excludeFromRecents="true"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -417,7 +426,6 @@
             android:name="io.rong.imlib.HeartbeatReceiver"
             android:process=":ipc"/>
 
-
         <activity
             android:name="io.rong.imkit.tools.SelectPictureActivity"
             android:screenOrientation="portrait"/>
@@ -433,7 +441,7 @@
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
-            android:process=":ipc"></service>
+            android:process=":ipc"/>
         <service android:name="io.rong.imlib.ReConnectService"/>
 
         <receiver android:name="io.rong.imlib.ipc.PushMessageReceiver">
@@ -447,13 +455,12 @@
             android:name="RONG_CLOUD_APP_KEY"
             android:value="x4vkb1qpvr83k"/>
 
-        <!--开发环境-->
+        <!-- 开发环境 -->
         <activity
             android:name=".rong.RongActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
 
@@ -476,16 +483,40 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
+
                 <data
                     android:host="com.cmbb.smartkids"
                     android:pathPrefix="/friend/"
                     android:scheme="rong"/>
             </intent-filter>
-
-
         </activity>
-        <!--融云-->
+        <!-- 融云 -->
+        <activity
+            android:name=".activity.post.PostAddWonderActivity"
+            android:label="@string/title_activity_post_add_wonder">
+        </activity>
+        <activity
+            android:name=".activity.replay.ReplayAddActivity"
+            android:label="@string/title_activity_replay_add">
+        </activity>
+        <activity
+            android:name=".activity.user.UserLVActivity"
+            android:label="@string/title_activity_user_lv"
+            android:parentActivityName=".activity.user.UserInfoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.user.UserInfoActivity"/>
+        </activity>
+        <activity
+            android:name=".activity.user.UserGlodActivity"
+            android:label="@string/title_activity_user_glod"
+            android:parentActivityName=".activity.user.UserInfoActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.user.UserInfoActivity"/>
+        </activity>
     </application>
 
 </manifest>
