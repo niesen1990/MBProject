@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.tools.log.Log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,8 +31,15 @@ public class MasterFragment extends Fragment implements MasterTypeListViewHolder
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i("master", "master = onViewCreated");
         lvRight = (FrameLayout) view.findViewById(R.id.lv_case_right);
         lvLeft = (FrameLayout) view.findViewById(R.id.lv_case_left);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         Fragment fragmentLeft = new MasterTypeListFragment(false, this);
         getChildFragmentManager().beginTransaction().add(R.id.lv_case_left, fragmentLeft).commit();
         MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);

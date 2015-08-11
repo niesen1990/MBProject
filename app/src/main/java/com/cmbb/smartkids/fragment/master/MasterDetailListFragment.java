@@ -2,6 +2,7 @@ package com.cmbb.smartkids.fragment.master;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
@@ -23,6 +24,7 @@ public class MasterDetailListFragment extends CommonFragment<MasterDetailModel> 
     public MasterDetailListFragment(boolean need, MasterTypeModel mMasterTypeModel) {
         this.need = need;
         this.mMasterTypeModel = mMasterTypeModel;
+        Log.i("master", "master MasterDetailListFragment = " + mMasterTypeModel);
     }
 
     @Override

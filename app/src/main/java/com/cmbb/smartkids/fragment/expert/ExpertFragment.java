@@ -10,7 +10,6 @@ import android.widget.FrameLayout;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.fragment.master.MasterTypeModel;
-import com.cmbb.smartkids.tools.log.Log;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,9 +19,6 @@ public class ExpertFragment extends Fragment implements ExpertTypeListViewHolder
     private FrameLayout lvRight;
     private FrameLayout lvLeft;
 
-    private ExpertDetailListFragment mExpertDetailListFragment;
-    private MasterTypeModel masterTypeModel;
-
     public ExpertFragment() {
 
     }
@@ -30,9 +26,7 @@ public class ExpertFragment extends Fragment implements ExpertTypeListViewHolder
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("master", "master ");
-        masterTypeModel = new MasterTypeModel("推荐", 0, 1);
-        mExpertDetailListFragment = new ExpertDetailListFragment(false, masterTypeModel);
+
     }
 
     @Override
@@ -45,9 +39,15 @@ public class ExpertFragment extends Fragment implements ExpertTypeListViewHolder
         super.onViewCreated(view, savedInstanceState);
         lvRight = (FrameLayout) view.findViewById(R.id.lv_case_right);
         lvLeft = (FrameLayout) view.findViewById(R.id.lv_case_left);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         Fragment fragmentLeft = new ExpertTypeListFragment(false, this);
         getChildFragmentManager().beginTransaction().add(R.id.lv_case_left, fragmentLeft).commit();
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, mExpertDetailListFragment).commit();
+        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
+        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, new ExpertDetailListFragment(false, masterTypeModel)).commit();
     }
 
     @Override
