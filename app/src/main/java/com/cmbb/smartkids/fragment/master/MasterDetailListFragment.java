@@ -40,5 +40,4 @@ public class MasterDetailListFragment extends CommonFragment<MasterDetailModel> 
         return false;
     }
 
-
 }

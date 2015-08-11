@@ -17,17 +17,13 @@ public class MasterFragment extends Fragment implements MasterTypeListViewHolder
 
     private FrameLayout lvRight;
     private FrameLayout lvLeft;
-    private MasterDetailListFragment mMasterDetailListFragment;
-    private MasterTypeModel masterTypeModel;
 
     public MasterFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_master, container, false);
     }
 
@@ -38,9 +34,8 @@ public class MasterFragment extends Fragment implements MasterTypeListViewHolder
         lvLeft = (FrameLayout) view.findViewById(R.id.lv_case_left);
         Fragment fragmentLeft = new MasterTypeListFragment(false, this);
         getChildFragmentManager().beginTransaction().add(R.id.lv_case_left, fragmentLeft).commit();
-        masterTypeModel = new MasterTypeModel("推荐", 0, 1);
-        mMasterDetailListFragment = new MasterDetailListFragment(false, masterTypeModel);
-        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, mMasterDetailListFragment).commit();
+        MasterTypeModel masterTypeModel = new MasterTypeModel("推荐", 0, 1);
+        getChildFragmentManager().beginTransaction().add(R.id.lv_case_right, new MasterDetailListFragment(false, masterTypeModel)).commit();
     }
 
     @Override

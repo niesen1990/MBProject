@@ -322,7 +322,6 @@ public class HomeActivity extends MActivity {
     }
 
     private void initData() {
-
         // 初始化用户信息
         ApiNetwork.getUserInfo(this);
         homeFragments = new Fragment[1];
@@ -352,7 +351,6 @@ public class HomeActivity extends MActivity {
         toolsTitles = new String[1];
         toolsTitles[0] = "";
         mToolsFragmentPagerAdapter.addFragment(toolsFragments, toolsTitles);
-
     }
 
 

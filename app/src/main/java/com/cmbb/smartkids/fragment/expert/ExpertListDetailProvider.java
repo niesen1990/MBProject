@@ -36,6 +36,7 @@ public class ExpertListDetailProvider extends DataController<ExpertDetailModel> 
     @Override
     public void doInitialize(Callback callback) {
         Map<String, String> body = new HashMap<>();
+        Log.i("expert", "expert = " + mMasterTypeModel);
         if (mMasterTypeModel.getRec() == -1) {
             body.put("token", MApplication.token);
             body.put("type", mMasterTypeModel.getEredarType() + "");
