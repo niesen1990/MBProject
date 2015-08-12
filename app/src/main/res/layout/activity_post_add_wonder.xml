@@ -64,9 +64,9 @@
         android:textColor="@android:color/darker_gray"
         android:textColorHint="@color/transparent_black"/>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/btn_rule"
-        style="@style/Base.TextAppearance.AppCompat.Medium"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_content_image"
@@ -76,7 +76,7 @@
         android:drawableLeft="@drawable/rules_blue"
         android:padding="@dimen/activity_vertical_margin_half"
         android:text="《萌宝派发帖规则》"
-        android:textColor="@color/transparent_black"/>
+        android:textColor="@color/transparent_black"/>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_publish"

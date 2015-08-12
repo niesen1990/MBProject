@@ -18,14 +18,17 @@ public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
     boolean need;
     CaseDetailListModel mCaseDetailListModel;
 
+    private ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
+
     LinearLayout mHeadView;
 
     public ReplayCaseListFragment() {
     }
 
     @SuppressLint("ValidFragment")
-    public ReplayCaseListFragment(boolean needHeadView, CaseDetailListModel caseDetailListModel, LinearLayout headView) {
+    public ReplayCaseListFragment(boolean needHeadView, CaseDetailListModel caseDetailListModel, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
         super();
+        this.mOnReplayItemClickListener = onReplayItemClickListener;
         this.need = needHeadView;
         this.mCaseDetailListModel = caseDetailListModel;
         this.mHeadView = headView;
@@ -40,7 +43,7 @@ public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
 
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<ReplayModel> controller) {
-        return new ReplayListAdapter(getActivity(), controller, need, mHeadView);
+        return new ReplayListAdapter(getActivity(), controller, need, mHeadView, mOnReplayItemClickListener);
     }
 
     @Override

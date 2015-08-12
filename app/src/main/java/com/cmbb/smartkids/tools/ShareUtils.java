@@ -1,9 +1,9 @@
 package com.cmbb.smartkids.tools;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.SensorEvent;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.cmbb.smartkids.R;
@@ -44,10 +44,9 @@ import java.util.List;
  * ShareUtils.registerShakeToShare();
  * 授权回调
  * onactivityreslut
- *
+ * <p/>
  * 按钮点击事件调share面板
  * ShareUtils.showShareView();
- *
  */
 public class ShareUtils {
     private static Activity activity;
@@ -103,14 +102,25 @@ public class ShareUtils {
     /**
      * 根据不同的平台设置不同的分享内容</br>
      */
-    public static void setShareContent(String titile, String content, String url, String imageUrl) {
+    public static void setShareContent(String titile, String content, String url, String imgUrl) {
+
+        String realImageUrl;
+        if (TextUtils.isEmpty(imgUrl)) {
+            realImageUrl = R.mipmap.ic_launcher + "";
+        } else {
+            if (url.contains("upload")) {
+                realImageUrl = Constants.BASE_IMAGE_URL_OLD + imgUrl;
+            } else {
+                realImageUrl = Constants.BASE_IMAGE_URL + imgUrl;
+            }
+        }
 
         // 配置SSO
         WeiXinShareContent weixinContent = new WeiXinShareContent();
         weixinContent.setTitle(titile);
         weixinContent.setShareContent(content);
         weixinContent.setTargetUrl(url);
-        weixinContent.setShareImage(new UMImage(activity, imageUrl));
+        weixinContent.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(weixinContent);
 
         // 设置朋友圈分享的内容
@@ -118,7 +128,7 @@ public class ShareUtils {
         circleMedia.setTitle(titile);
         circleMedia.setShareContent(content);
         circleMedia.setTargetUrl(url);
-        circleMedia.setShareImage(new UMImage(activity, imageUrl));
+        circleMedia.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(circleMedia);
 
         // 设置QQ空间分享内容
@@ -126,21 +136,21 @@ public class ShareUtils {
         qzone.setTitle(titile);
         qzone.setShareContent(content);
         qzone.setTargetUrl(url);
-        qzone.setShareImage(new UMImage(activity, imageUrl));
+        qzone.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(qzone);
 
         QQShareContent qqShareContent = new QQShareContent();
         qqShareContent.setTitle(titile);
         qqShareContent.setShareContent(content);
         qqShareContent.setTargetUrl(url);
-        qqShareContent.setShareImage(new UMImage(activity, imageUrl));
+        qqShareContent.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(qqShareContent);
 
         SinaShareContent sinaContent = new SinaShareContent();
         sinaContent.setTitle(titile);
         sinaContent.setShareContent(content);
         sinaContent.setTargetUrl(url);
-        sinaContent.setShareImage(new UMImage(activity, imageUrl));
+        sinaContent.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(sinaContent);
 
     }
@@ -190,7 +200,7 @@ public class ShareUtils {
         });
     }
 
-    public static void registerShakeToShare(){
+    public static void registerShakeToShare() {
         /**
          * 摇一摇截图,直接分享 参数1: 当前所属的Activity 参数2: 截图适配器 参数3: 要用户可选的平台,最多支持五个平台 参数4:
          * 传感器监听器，包括摇一摇完成后的回调函数onActionComplete, 可在此执行类似于暂停游戏、视频等操作;
@@ -199,8 +209,8 @@ public class ShareUtils {
         UMAppAdapter appAdapter = new UMAppAdapter(activity);
         // 配置平台
         List<SHARE_MEDIA> platforms = new ArrayList<SHARE_MEDIA>();
-        platforms.add( SHARE_MEDIA.SINA);
-        platforms.add( SHARE_MEDIA.QQ);
+        platforms.add(SHARE_MEDIA.SINA);
+        platforms.add(SHARE_MEDIA.QQ);
         platforms.add(SHARE_MEDIA.QZONE);
         platforms.add(SHARE_MEDIA.WEIXIN);
         platforms.add(SHARE_MEDIA.WEIXIN_CIRCLE);
@@ -212,7 +222,7 @@ public class ShareUtils {
         mShakeController.enableShakeSound(true);
     }
 
-    public static void unregisterShakeListener(Activity activity){
+    public static void unregisterShakeListener(Activity activity) {
         mShakeController.unregisterShakeListener(activity);
     }
 
@@ -269,7 +279,6 @@ public class ShareUtils {
             }
         }
     };
-
 
 
 }

@@ -23,7 +23,6 @@ import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.fragment.postlist.wonder.CityPostListFragment;
-import com.cmbb.smartkids.fragment.postlist.wonder.WonderPostListFragment;
 import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicCountModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
@@ -174,6 +173,8 @@ public class PostCityListActivity extends MActivity implements AppBarLayout.OnOf
                 Intent intent = new Intent(PostCityListActivity.this, PostAddWonderActivity.class);
                 intent.putExtra("model", mPlateModel);
                 intent.putExtra("flag", false);
+                intent.putExtra("areaType", "LOCAL");
+
                 startActivityForResult(intent, 1);
             }
         });
@@ -240,7 +241,7 @@ public class PostCityListActivity extends MActivity implements AppBarLayout.OnOf
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new WonderPostListFragment(this, false, mPlateModel)).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new CityPostListFragment(this, false, mPlateModel)).commit();
         }
     }
 }

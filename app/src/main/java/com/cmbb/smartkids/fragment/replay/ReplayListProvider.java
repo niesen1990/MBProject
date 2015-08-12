@@ -27,11 +27,12 @@ public class ReplayListProvider extends DataController<ReplayModel> {
 
     PostModel mPostModel;
 
-    private int sort = 2;
+    private int sort = 1;
     private int id = -1;
 
-    public ReplayListProvider(PostModel postModel) {
+    public ReplayListProvider(PostModel postModel, int sort) {
         this.mPostModel = postModel;
+        this.sort = sort;
     }
 
     @Override
@@ -42,11 +43,9 @@ public class ReplayListProvider extends DataController<ReplayModel> {
         body.put("areaType", mPostModel.getAreaType());
         body.put("type", mPostModel.getType());
         body.put("sort", sort + "");
-
         for (Map.Entry<String, String> entry : body.entrySet()) {
             Log.i("map", "key = " + entry.getKey() + " value = " + entry.getValue());
         }
-
         OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindReplys", body, callback);
     }
 
@@ -70,11 +69,8 @@ public class ReplayListProvider extends DataController<ReplayModel> {
         body.put("areaType", mPostModel.getAreaType());
         body.put("type", mPostModel.getType());
         body.put("sort", sort + "");
-        if (-1 != id) {
-            body.put("replyId", id + "");
-            body.put("upDown", 2 + "");
-        }
-
+        body.put("replyId", id + "");
+        body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindReplys", body, callback);
     }
 
@@ -109,5 +105,4 @@ public class ReplayListProvider extends DataController<ReplayModel> {
             Log.e("doSave", "doSave err = " + e.toString());
         }
     }
-
 }

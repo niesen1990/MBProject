@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 
 import com.cmbb.smartkids.base.CommonFragment;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 
 /**
@@ -12,7 +13,7 @@ import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:54
  */
-public class SameCityListFragment extends CommonFragment<SameCityModel> {
+public class SameCityListFragment extends CommonFragment<PostModel> {
     boolean need;
 
 
@@ -25,12 +26,12 @@ public class SameCityListFragment extends CommonFragment<SameCityModel> {
     }
 
     @Override
-    protected DataController<SameCityModel> onGenerateDataController() {
+    protected DataController<PostModel> onGenerateDataController() {
         return new SameCityListProvider();
     }
 
     @Override
-    protected RecyclerView.Adapter onGenerateAdapter(DataController<SameCityModel> controller) {
+    protected RecyclerView.Adapter onGenerateAdapter(DataController<PostModel> controller) {
         return new SameCityListAdapter(getActivity(), controller, need);
     }
 

@@ -1,13 +1,14 @@
-package com.cmbb.smartkids.fragment.homecollection.wonderful;
+package com.cmbb.smartkids.model.replay;
+
+import java.util.ArrayList;
 
 /**
  * Created by N.Sun
  */
-public class WonderCollectionBaseModel {
+public class ReplayMessageBaseModel {
 
-    // Context是包含一个数组
     private String code;
-    private WonderCollectionCountModel context;
+    private ArrayList<ReplayMessageModel> context;
 
     /**
      * @return The code
@@ -26,14 +27,14 @@ public class WonderCollectionBaseModel {
     /**
      * @return The context
      */
-    public WonderCollectionCountModel getContext() {
+    public ArrayList<ReplayMessageModel> getContext() {
         return context;
     }
 
     /**
      * @param context The context
      */
-    public void setContext(WonderCollectionCountModel context) {
+    public void setContext(ArrayList<ReplayMessageModel> context) {
         this.context = context;
     }
 

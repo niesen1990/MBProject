@@ -40,8 +40,10 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
     private final TextView mTvHeaderFloorOther;
     private final TextView mTvContentReplayOther;
 
+    private OnReplayItemClickListener mOnReplayItemClickListener;
 
-    private ReplayListViewHolder(View view) {
+
+    private ReplayListViewHolder(View view, OnReplayItemClickListener onReplayItemClickListener) {
         super(view);
         mCardview = (CardView) view.findViewById(R.id.cardview);
         mRivHead = (ImageView) view.findViewById(R.id.riv_head);
@@ -60,14 +62,22 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         mTvHeaderFloorOther = (TextView) view.findViewById(R.id.tv_header_floor_other);
         mTvContentReplayOther = (TextView) view.findViewById(R.id.tv_content_replay_other);
 
+        this.mOnReplayItemClickListener = onReplayItemClickListener;
     }
 
-    public static ReplayListViewHolder create(final Context context, ViewGroup parent) {
+    public static ReplayListViewHolder create(final Context context, ViewGroup parent, OnReplayItemClickListener onReplayItemClickListener) {
         View v = LayoutInflater.from(context).inflate(R.layout.activity_replay_list_item, parent, false);
-        return new ReplayListViewHolder(v);
+        return new ReplayListViewHolder(v, onReplayItemClickListener);
     }
 
     public void onBindViewHolder(Context context, final ReplayModel entry) {
+        mCardview.setTag(entry);
+        mCardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnReplayItemClickListener.onReplayItemClick(v);
+            }
+        });
         // head text
         mTvNick.setText(entry.getNike());
         if (!TextUtils.isEmpty(entry.getEredarName())) {
@@ -109,7 +119,6 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
             mRivContentReplay.setVisibility(View.GONE);
         } else { // 未删除
             mTvContentReplay.setText(entry.getContext());
-
             if (TextUtils.isEmpty(entry.getBigImg())) {
                 mRivContentReplay.setVisibility(View.GONE);
             } else {
@@ -117,7 +126,6 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                 GlideTool.loadImage(context, entry.getBigImg().split(",")[0], mRivContentReplay, false);
             }
         }
-
         // other
         if (!TextUtils.isEmpty(entry.getOtherNike())) {
             // other 未删除
@@ -136,4 +144,7 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
+    public interface OnReplayItemClickListener {
+        void onReplayItemClick(View view);
+    }
 }

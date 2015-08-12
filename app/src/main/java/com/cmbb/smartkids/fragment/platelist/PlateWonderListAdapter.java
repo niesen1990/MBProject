@@ -20,6 +20,7 @@ public class PlateWonderListAdapter extends ContentAdapterBase<PlateModel> {
 
     public PlateWonderListAdapter(Context mContext, DataController<PlateModel> mDataController, boolean need, boolean isCity) {
         super(mContext, mDataController);
+        moreFlag = true;
         this.mContext = mContext;
         this.isCity = isCity;
         // 设置HeaderView

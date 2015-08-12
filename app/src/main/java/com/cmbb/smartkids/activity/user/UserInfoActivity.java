@@ -163,7 +163,7 @@ public class UserInfoActivity extends MActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user_info, menu);
+        //getMenuInflater().inflate(R.menu.menu_user_info, menu);
         return true;
     }
 

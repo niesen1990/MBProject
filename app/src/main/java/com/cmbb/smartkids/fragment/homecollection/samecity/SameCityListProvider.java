@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.postlist.city.SameCityPublishBaseModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
 import com.google.gson.Gson;
@@ -21,7 +23,7 @@ import java.util.Map;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:56
  */
-public class SameCityListProvider extends DataController<SameCityModel> {
+public class SameCityListProvider extends DataController<PostModel> {
 
 
     @Override
@@ -46,7 +48,7 @@ public class SameCityListProvider extends DataController<SameCityModel> {
     }
 
     @Override
-    public List<SameCityModel> doParser(Response response) {
+    public List<PostModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -54,7 +56,7 @@ public class SameCityListProvider extends DataController<SameCityModel> {
                 return null;
             }
             Gson gson = new Gson();
-            SameCityBaseModel data = gson.fromJson(result, SameCityBaseModel.class);
+            SameCityPublishBaseModel data = gson.fromJson(result, SameCityPublishBaseModel.class);
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +65,7 @@ public class SameCityListProvider extends DataController<SameCityModel> {
     }
 
     @Override
-    public void doSave(List<SameCityModel> data) {
+    public void doSave(List<PostModel> data) {
         try {
 
         } catch (Exception e) {

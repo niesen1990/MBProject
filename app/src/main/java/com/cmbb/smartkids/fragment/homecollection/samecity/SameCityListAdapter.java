@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.postlist.city.SameCityListViewHolder;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
 
@@ -13,11 +15,11 @@ import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:59
  */
-public class SameCityListAdapter extends ContentAdapterBase<SameCityModel> {
+public class SameCityListAdapter extends ContentAdapterBase<PostModel> {
     private Context mContext;
 
 
-    public SameCityListAdapter(Context mContext, DataController<SameCityModel> mDataController, boolean need) {
+    public SameCityListAdapter(Context mContext, DataController<PostModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
         // 设置HeaderView

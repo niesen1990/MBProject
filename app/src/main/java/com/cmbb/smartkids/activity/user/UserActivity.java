@@ -240,7 +240,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user, menu);
+        //getMenuInflater().inflate(R.menu.menu_user, menu);
         return true;
     }
 

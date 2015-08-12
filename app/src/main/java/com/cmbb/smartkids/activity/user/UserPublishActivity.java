@@ -11,6 +11,7 @@ import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.homepublish.sameage.SameAgePublishListFragment;
+import com.cmbb.smartkids.fragment.homepublish.samecity.SameCityPublishListFragment;
 import com.cmbb.smartkids.fragment.homepublish.wonderful.WonderPublicListFragment;
 
 public class UserPublishActivity extends MActivity {
@@ -29,7 +30,7 @@ public class UserPublishActivity extends MActivity {
         mFragments = new Fragment[3];
         mFragments[0] = new WonderPublicListFragment();
         mFragments[1] = new SameAgePublishListFragment();
-        mFragments[2] = new SameAgePublishListFragment();
+        mFragments[2] = new SameCityPublishListFragment();
         mTitles = new String[3];
         mTitles[0] = "话题";
         mTitles[1] = "同龄";
@@ -55,7 +56,7 @@ public class UserPublishActivity extends MActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user_attention, menu);
+        //getMenuInflater().inflate(R.menu.menu_user_attention, menu);
         return true;
     }
 

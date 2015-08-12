@@ -35,7 +35,7 @@ public class PostListAdapter extends ContentAdapterBase<PostModel> {
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((WonderListViewHolder) holder).onBindViewHolder(mContext, mDataController,mDataController.getData(position), position);
+        ((WonderListViewHolder) holder).onBindViewHolder(mContext, mDataController, mDataController.getData(position), position);
     }
 
 }

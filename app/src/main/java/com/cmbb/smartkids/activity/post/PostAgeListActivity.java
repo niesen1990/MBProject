@@ -170,7 +170,12 @@ public class PostAgeListActivity extends MActivity implements AppBarLayout.OnOff
         fabPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(PostAgeListActivity.this, PostAddWonderActivity.class);
+                intent.putExtra("model", mPlateModel);
+                intent.putExtra("flag", false);
+                intent.putExtra("areaType", "AGEBREAKET");
 
+                startActivityForResult(intent, 1);
             }
         });
     }
@@ -229,6 +234,14 @@ public class PostAgeListActivity extends MActivity implements AppBarLayout.OnOff
             mCommonFragment.getmSwipeRefresh().setEnabled(true);
         } else {
             mCommonFragment.getmSwipeRefresh().setEnabled(false);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new AgePostListFragment(this, false, mPlateModel)).commit();
         }
     }
 }

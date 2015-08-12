@@ -83,7 +83,6 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                 }
                 intent.putExtra("model", mPostModel);
                 context.startActivity(intent);
-
             }
         });
 

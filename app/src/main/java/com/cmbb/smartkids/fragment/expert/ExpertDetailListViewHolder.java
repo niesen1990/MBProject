@@ -1,14 +1,17 @@
 package com.cmbb.smartkids.fragment.expert;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.user.UserExpertActivity;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
 
@@ -23,6 +26,8 @@ public class ExpertDetailListViewHolder extends RecyclerView.ViewHolder {
     private final ImageView civHead;
     private final TextView tvAttention;
     private final TextView tvName;
+    private final RelativeLayout rl_root;
+
 
 
     private ExpertDetailListViewHolder(View view) {
@@ -30,6 +35,7 @@ public class ExpertDetailListViewHolder extends RecyclerView.ViewHolder {
         civHead = (ImageView) view.findViewById(R.id.civ_head);
         tvAttention = (TextView) view.findViewById(R.id.tv_attention);
         tvName = (TextView) view.findViewById(R.id.tv_name);
+        rl_root = (RelativeLayout) view.findViewById(R.id.rl_root);
     }
 
     public static ExpertDetailListViewHolder create(final Context context, ViewGroup parent) {
@@ -43,7 +49,17 @@ public class ExpertDetailListViewHolder extends RecyclerView.ViewHolder {
         return new ExpertDetailListViewHolder(v);
     }
 
-    public void onBindViewHolder(Context context, final ExpertDetailModel entry) {
+    public void onBindViewHolder(final Context context, final ExpertDetailModel entry) {
+        rl_root.setTag(entry);
+        rl_root.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExpertDetailModel expertDetailModel = (ExpertDetailModel) v.getTag();
+                Intent intent = new Intent(context, UserExpertActivity.class);
+                intent.putExtra("user", expertDetailModel);
+                context.startActivity(intent);
+            }
+        });
         GlideTool.loadImage(context, entry.getUserSmallHeadImg(), civHead, true);
         if (entry.getAttention() == 1) {
             tvAttention.setBackgroundResource(R.drawable.ic_master_attention);
@@ -51,10 +67,6 @@ public class ExpertDetailListViewHolder extends RecyclerView.ViewHolder {
             tvAttention.setBackgroundResource(R.drawable.ic_master_not_attention);
         }
         tvName.setText(entry.getRealName());
-    }
-
-    public interface OnTypeClickListener {
-        public void onTypeClick(View view);
     }
 
 }

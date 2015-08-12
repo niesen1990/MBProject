@@ -311,6 +311,14 @@
                 android:value="com.cmbb.smartkids.activity.HomeActivity"/>
         </activity>
         <activity
+            android:name=".activity.user.UserExpertActivity"
+            android:label="@string/title_activity_user"
+            android:parentActivityName=".activity.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cmbb.smartkids.activity.HomeActivity"/>
+        </activity>
+        <activity
             android:name=".activity.post.PlateListActivity"
             android:label="@string/title_activity_post_list"
             android:parentActivityName=".activity.HomeActivity">
@@ -499,6 +507,10 @@
         </activity>
         <activity
             android:name=".activity.replay.ReplayAddActivity"
+            android:label="@string/title_activity_replay_add">
+        </activity>
+        <activity
+            android:name=".activity.replay.ReplayAddCaseActivity"
             android:label="@string/title_activity_replay_add">
         </activity>
         <activity

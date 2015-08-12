@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.postlist.city.SameCityListViewHolder;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
 
@@ -27,13 +28,13 @@ public class SameCityPublishListAdapter extends ContentAdapterBase<PostModel> {
 
     @Override
     protected RecyclerView.ViewHolder onCreateCustomContentHolder(ViewGroup parent, int viewType) {
-        return SameCityPublishListViewHolder.create(mContext, parent);
+        return SameCityListViewHolder.create(mContext, parent);
     }
 
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((SameCityPublishListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((SameCityListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
     }
 
 }

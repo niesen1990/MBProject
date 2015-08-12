@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicBaseModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
 import com.google.gson.Gson;
@@ -21,8 +23,9 @@ import java.util.Map;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:56
  */
-public class WonderPublicListProvider extends DataController<WonderPublicModel> {
+public class WonderPublicListProvider extends DataController<PostModel> {
 
+    int id = -1;
 
     @Override
     public void doInitialize(Callback callback) {
@@ -33,6 +36,7 @@ public class WonderPublicListProvider extends DataController<WonderPublicModel> 
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.User.WONDERFULPUBLISH_URL, body, callback);
@@ -42,11 +46,15 @@ public class WonderPublicListProvider extends DataController<WonderPublicModel> 
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        if (-1 != id) {
+            body.put("id", id + "");
+            body.put("upDown", 2 + "");
+        }
         OkHttp.asyncPost(Constants.User.WONDERFULPUBLISH_URL, body, callback);
     }
 
     @Override
-    public List<WonderPublicModel> doParser(Response response) {
+    public List<PostModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -55,6 +63,11 @@ public class WonderPublicListProvider extends DataController<WonderPublicModel> 
             }
             Gson gson = new Gson();
             WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
+            try {
+                id = data.getContext().getHomeSameAgeList().get(data.getContext().getHomeSameAgeList().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +76,7 @@ public class WonderPublicListProvider extends DataController<WonderPublicModel> 
     }
 
     @Override
-    public void doSave(List<WonderPublicModel> data) {
+    public void doSave(List<PostModel> data) {
         try {
 
         } catch (Exception e) {

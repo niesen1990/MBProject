@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.adapter.PhotoAddAdapter;
@@ -23,6 +22,7 @@ import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
 import com.cmbb.smartkids.photopicker.entity.PhotoDirectory;
 import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
+import com.cmbb.smartkids.tools.log.Log;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -38,7 +38,7 @@ public class PostAddWonderActivity extends MActivity {
     private EditText etContentDetail;
     private RecyclerView recyclerviewContent;
     private EditText etContentImage;
-    private TextView btnRule;
+    //private TextView btnRule;
 
     private FloatingActionButton fabPublish;
 
@@ -57,6 +57,7 @@ public class PostAddWonderActivity extends MActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         mPlateModel = getIntent().getParcelableExtra("model");
+        Log.i("platemodel", "platemodel = " + mPlateModel.toString());
         flag = getIntent().getBooleanExtra("flag", false);
         assignViews();
     }
@@ -71,7 +72,7 @@ public class PostAddWonderActivity extends MActivity {
         recyclerviewContent.setAdapter(mPhotoAddAdapter);
 
         etContentImage = (EditText) findViewById(R.id.et_content_image);
-        btnRule = (TextView) findViewById(R.id.btn_rule);
+        //btnRule = (TextView) findViewById(R.id.btn_rule);
 
         fabPublish = (FloatingActionButton) findViewById(R.id.fab_publish);
         fabPublish.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +123,6 @@ public class PostAddWonderActivity extends MActivity {
                 public void onResponse(Response response) throws IOException {
 
                     if (response.isSuccessful()) {
-
                         String result = response.body().string();
                         Gson gson = new Gson();
                         final WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
@@ -144,7 +144,7 @@ public class PostAddWonderActivity extends MActivity {
                 }
             });
         } else {
-            ApiNetwork.uploadAgeCityPost(mPlateModel, mTitle, mContext, mPhotoAddAdapter.getPhotoContent(), new Callback() {
+            ApiNetwork.uploadAgeCityPost(mPlateModel, mTitle, mContext, getIntent().getStringExtra("areaType"), mPhotoAddAdapter.getPhotoContent(), new Callback() {
                 @Override
                 public void onFailure(Request request, IOException e) {
 
@@ -163,6 +163,7 @@ public class PostAddWonderActivity extends MActivity {
                 public void onResponse(Response response) throws IOException {
                     if (response.isSuccessful()) {
                         String result = response.body().string();
+                        Log.i("addPost", "addPost = " + result);
                         Gson gson = new Gson();
                         final WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
                         runOnUiThread(new Runnable() {

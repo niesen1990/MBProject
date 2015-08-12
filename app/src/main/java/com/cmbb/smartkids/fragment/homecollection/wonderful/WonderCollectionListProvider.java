@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicBaseModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
 import com.google.gson.Gson;
@@ -21,7 +23,7 @@ import java.util.Map;
  * 创建人：N.Sun
  * 创建时间：2015/7/1 10:56
  */
-public class WonderCollectionListProvider extends DataController<WonderCollectionModel> {
+public class WonderCollectionListProvider extends DataController<PostModel> {
 
 
     @Override
@@ -46,7 +48,7 @@ public class WonderCollectionListProvider extends DataController<WonderCollectio
     }
 
     @Override
-    public List<WonderCollectionModel> doParser(Response response) {
+    public List<PostModel> doParser(Response response) {
         try {
             String result = response.body().string();
             Log.i("response", "response = " + result);
@@ -54,7 +56,7 @@ public class WonderCollectionListProvider extends DataController<WonderCollectio
                 return null;
             }
             Gson gson = new Gson();
-            WonderCollectionBaseModel data = gson.fromJson(result, WonderCollectionBaseModel.class);
+            WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,7 +65,7 @@ public class WonderCollectionListProvider extends DataController<WonderCollectio
     }
 
     @Override
-    public void doSave(List<WonderCollectionModel> data) {
+    public void doSave(List<PostModel> data) {
         try {
 
         } catch (Exception e) {

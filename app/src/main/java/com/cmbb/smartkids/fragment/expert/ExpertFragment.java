@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.fragment.master.MasterTypeModel;
+import com.cmbb.smartkids.tools.log.Log;
 
 /**
  * A simple {@link Fragment} subclass.

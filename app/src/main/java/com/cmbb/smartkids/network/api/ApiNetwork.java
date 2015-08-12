@@ -557,10 +557,11 @@ public class ApiNetwork {
      * @param photoAdds
      * @param callback
      */
-    public static void uploadAgeCityPost(PlateModel mPlateModel, String mTitle, String mContext, ArrayList<PhotoAdd> photoAdds, Callback callback) {
+    public static void uploadAgeCityPost(PlateModel mPlateModel, String mTitle, String mContext, String areaType, ArrayList<PhotoAdd> photoAdds, Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("type", mPlateModel.getType());
+        body.put("areaType", areaType);
         body.put("title", mTitle);
         body.put("context", mContext);
         body.put("count", photoAdds.size() + "");
@@ -573,6 +574,160 @@ public class ApiNetwork {
         }
         OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "AddStar", body, photoAdds, callback);
 
+    }
+
+    /**
+     * 添加点赞
+     *
+     * @param token
+     * @param relationId
+     * @param areaType
+     * @param type
+     * @param port
+     * @param callback
+     */
+    public static void addSpot(String token, String relationId, String areaType, String type, String port, Callback callback) {
+        if (TextUtils.isEmpty(token)) {
+            Log.e("NETWORK", "token == null");
+            return;
+        }
+        if (TextUtils.isEmpty(relationId)) {
+            Log.e("NETWORK", "relationId == null");
+            return;
+        }
+        if (TextUtils.isEmpty(areaType)) {
+            Log.e("NETWORK", "areaType == null");
+            return;
+        }
+        if (TextUtils.isEmpty(type)) {
+            Log.e("NETWORK", "type == null");
+            return;
+        }
+        if (TextUtils.isEmpty(port)) {
+            Log.e("NETWORK", "port == null");
+            return;
+        }
+        Map<String, String> body = new HashMap<>();
+        body.put("token", token);
+        body.put("relationId", relationId);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        OkHttp.asyncPost(Constants.BASE_URL + port + "AddSpot", body, callback);
+    }
+
+    /**
+     * 取消点赞
+     *
+     * @param token
+     * @param relationId
+     * @param areaType
+     * @param type
+     * @param port
+     * @param callback
+     */
+    public static void cancelSpot(String token, String relationId, String areaType, String type, String port, Callback callback) {
+        if (TextUtils.isEmpty(token)) {
+            Log.e("NETWORK", "token == null");
+            return;
+        }
+        if (TextUtils.isEmpty(relationId)) {
+            Log.e("NETWORK", "relationId == null");
+            return;
+        }
+        if (TextUtils.isEmpty(areaType)) {
+            Log.e("NETWORK", "areaType == null");
+            return;
+        }
+        if (TextUtils.isEmpty(type)) {
+            Log.e("NETWORK", "type == null");
+            return;
+        }
+        if (TextUtils.isEmpty(port)) {
+            Log.e("NETWORK", "port == null");
+            return;
+        }
+        Map<String, String> body = new HashMap<>();
+        body.put("token", token);
+        body.put("relationId", relationId);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        OkHttp.asyncPost(Constants.BASE_URL + port + "DeleteSpot", body, callback);
+    }
+
+
+    /**
+     * @param token
+     * @param postId
+     * @param postType
+     * @param callback
+     */
+    public static void cancelCollection(String token, String postId, String postType, Callback callback) {
+        if (TextUtils.isEmpty(token)) {
+            Log.i("NETWORK", "token == null");
+            return;
+        }
+        if (TextUtils.isEmpty(postId)) {
+            Log.i("NETWORK", "postId == null");
+            return;
+        }
+        if (TextUtils.isEmpty(postType)) {
+            Log.i("NETWORK", "postType == null");
+            return;
+        }
+        Map<String, String> body = new HashMap<>();
+        body.put("token", token);
+        body.put("postId", postId);
+        body.put("postType", postType);
+        OkHttp.asyncPost(Constants.DELETESTOREUP_URL, body, callback);
+    }
+
+
+
+
+    /**
+     * 添加收藏
+     *
+     * @param token
+     * @param postId
+     * @param postAreaType
+     * @param postType
+     * @param callback
+     */
+    public static void addCollection(String token, String postId, String postAreaType, String postType, Callback callback) {
+        if (TextUtils.isEmpty(token)) {
+            Log.i("NETWORK", "token == null");
+            return;
+        }
+        if (TextUtils.isEmpty(postId)) {
+            Log.i("NETWORK", "postId == null");
+            return;
+        }
+        if (TextUtils.isEmpty(postAreaType)) {
+            Log.i("NETWORK", "postAreaType == null");
+            return;
+        }
+        if (TextUtils.isEmpty(postType)) {
+            Log.i("NETWORK", "postType == null");
+            return;
+        }
+        Map<String, String> body = new HashMap<>();
+        body.put("token", token);
+        body.put("postId", postId);
+        body.put("postAreaType", postAreaType);
+        body.put("postType", postType);
+        OkHttp.asyncPost(Constants.ADDSTOREUP_URL, body, callback);
+    }
+
+    // 添加举报
+    public static void addReport(String token, String areaType, String type, String publishRelationId, String replysRelationId, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", token);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        body.put("publishRelationId", publishRelationId);
+        if (!TextUtils.isEmpty(replysRelationId))
+            body.put("replysRelationId", replysRelationId);
+        OkHttp.asyncPost(Constants.ADDREPORT_URL, body, callback);
     }
 
 

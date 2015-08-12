@@ -1,13 +1,11 @@
-package com.cmbb.smartkids.fragment.homepublish.sameage;
 
-/**
- * Created by N.Sun
- */
-public class SameAgePublishBaseModel {
 
-    // Context是包含一个数组
+package com.cmbb.smartkids.model.expert;
+
+public class ExpertSchedulingBaseModel {
+
     private String code;
-    private SameAgePublishCountModel context;
+    private ExpertSchModel context;
 
     /**
      * @return The code
@@ -26,15 +24,22 @@ public class SameAgePublishBaseModel {
     /**
      * @return The context
      */
-    public SameAgePublishCountModel getContext() {
+    public ExpertSchModel getContext() {
         return context;
     }
 
     /**
      * @param context The context
      */
-    public void setContext(SameAgePublishCountModel context) {
+    public void setContext(ExpertSchModel context) {
         this.context = context;
     }
 
+
 }
+
+
+
+
+
+
