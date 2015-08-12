@@ -47,6 +47,8 @@ import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
+import com.umeng.message.PushAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.List;
 import java.util.Timer;
@@ -158,8 +160,19 @@ public class HomeActivity extends MActivity {
         mActiveFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         mMasterFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         mToolsFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        updataApkForUmeng();
         initData();
         initView();
+    }
+
+
+
+    private void updataApkForUmeng() {
+        //在wifi情况下也可以检测更新
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
+        //更新失败提示
+//        UmengUpdateAgent.setUpdateCheckConfig(false);
     }
 
     private void initView() {
