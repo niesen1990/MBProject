@@ -94,7 +94,6 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         assignViews();
     }
 
-
     private void assignViews() {
         appbar = (AppBarLayout) findViewById(R.id.appbar);
         mRivHead = (ImageView) findViewById(R.id.riv_head);
@@ -346,7 +345,7 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
         headContainer.setLayoutParams(params);
         mReplayListFragment = new ReplayListFragment(true, mPostModel, headContainer, sort, this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getWonderReplayDetail(this, mPostModel);
         appbar.addOnOffsetChangedListener(this);
         IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);

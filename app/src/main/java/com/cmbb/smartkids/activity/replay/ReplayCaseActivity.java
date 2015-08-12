@@ -199,7 +199,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         headContainer.setLayoutParams(params);
 
         mReplayListFragment = new ReplayCaseListFragment(true, mCaseDetailListModel, headContainer, this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getCaseReplayDetail(this, mCaseDetailListModel);
         appbar.addOnOffsetChangedListener(this);
         IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);

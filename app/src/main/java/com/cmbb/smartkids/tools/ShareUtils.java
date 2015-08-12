@@ -151,6 +151,10 @@ public class ShareUtils {
         sinaContent.setShareContent(content);
         sinaContent.setTargetUrl(url);
         sinaContent.setShareImage(new UMImage(activity, realImageUrl));
+//        sinaContent.setTitle("SHOW_TIME");
+//        sinaContent.setShareContent("where are you");
+//        sinaContent.setTargetUrl("http://www.baidu.com");
+        sinaContent.setShareImage(new UMImage(activity, realImageUrl));
         mController.setShareMedia(sinaContent);
 
     }

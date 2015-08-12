@@ -344,7 +344,7 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
         headContainer.setLayoutParams(params);
         mReplayListFragment = new ReplayListFragment(true, mPostModel, headContainer, sort, this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getAgeCityReplayDetail(this, mPostModel);
         appbar.addOnOffsetChangedListener(this);
         IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);

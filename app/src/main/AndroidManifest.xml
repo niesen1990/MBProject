@@ -251,6 +251,10 @@
             android:label="GuideActivity"
             android:theme="@style/FullScreen.Theme"/>
         <activity
+            android:name=".activity.ImagePreviewActivity"
+            android:label="ImagePreviewActivity"
+            android:theme="@style/FullScreen.Theme"/>
+        <activity
             android:name=".activity.user.UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:parentActivityName=".activity.HomeActivity">

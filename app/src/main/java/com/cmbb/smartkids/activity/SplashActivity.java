@@ -68,7 +68,7 @@ public class SplashActivity extends MActivity {
             public void run() {
                 if (isFirstInto) {
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
-                    finish();
+                      finish();
                 } else {
                     // 登陆
                     MApplication.token = SPCache.getString(Constants.SharePreference.USER_TOKEN, "");
