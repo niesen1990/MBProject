@@ -295,8 +295,12 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     String[] cache = imgUrls[j].split(",");
                     for (int k = 0; k < cache.length; k++) {
                         if (cache[k].contains("bigImage")) {
-                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+//                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+//                            LinearLayout.LayoutParams ps = new LinearLayout.LayoutParams(-1, TDevice.dip2px(200, this));
+                            ImageView imageView = new ImageView(this);
                             imageView.setLayoutParams(params);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+//                            imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
                             GlideTool.loadImage(this, cache[k], imageView, false);
                             llContainer.addView(imageView);
@@ -312,8 +316,12 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     }
                 }
             } else {
-                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+//                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+//                imageView.setLayoutParams(params);
+//                LinearLayout.LayoutParams ps = new LinearLayout.LayoutParams(-1, TDevice.dip2px(200, this));
+                ImageView imageView = new ImageView(this);
                 imageView.setLayoutParams(params);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
                     GlideTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
@@ -341,9 +349,9 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     @Override
     protected void onResume() {
         super.onResume();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
-        headContainer.setLayoutParams(params);
+//        headContainer.setLayoutParams(params);
         mReplayListFragment = new ReplayListFragment(true, mPostModel, headContainer, sort, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getWonderReplayDetail(this, mPostModel);

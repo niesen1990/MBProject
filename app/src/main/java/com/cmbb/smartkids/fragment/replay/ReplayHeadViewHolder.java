@@ -23,8 +23,9 @@ public class ReplayHeadViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static ReplayHeadViewHolder create(final Context context, ViewGroup parent, LinearLayout headView) {
-        View v = headView;
-        return new ReplayHeadViewHolder(v);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        headView.setLayoutParams(params);
+        return new ReplayHeadViewHolder(headView);
     }
 
     public void onBindViewHolder(Context context) {

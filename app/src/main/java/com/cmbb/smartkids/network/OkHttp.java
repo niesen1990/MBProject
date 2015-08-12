@@ -42,7 +42,7 @@ public class OkHttp {
         mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         //mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(Application.context()), CookiePolicy.ACCEPT_ALL));
-        //mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
+//        mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
     }
 
     /**
