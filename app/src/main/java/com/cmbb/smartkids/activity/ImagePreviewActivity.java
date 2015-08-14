@@ -1,6 +1,8 @@
 package com.cmbb.smartkids.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.adapter.ImagePreviewAdapter;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
 
 import java.io.File;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
  *
  */
 public class ImagePreviewActivity extends MActivity{
+    private final String TAG = ImagePreviewActivity.class.getSimpleName();
     private ViewPager vp;
     private CirclePageIndicator indicator;
     private ImagePreviewAdapter adapter;
@@ -58,7 +62,7 @@ public class ImagePreviewActivity extends MActivity{
         adapter = new ImagePreviewAdapter(this);
         data = new ArrayList<>();
         adapter.setData(data);
-        vp.setOffscreenPageLimit(5);
+        vp.setOffscreenPageLimit(10);
         vp.setAdapter(adapter);
         indicator = (CirclePageIndicator) findViewById(R.id.indicator_image_preview);
         indicator.setFillColor(getResources().getColor(R.color.colorPrimary));
@@ -120,6 +124,8 @@ public class ImagePreviewActivity extends MActivity{
 
     @Override
     public void onClick(View v) {
+        if(index < 0)
+            index = 0;
         ImageView item = (ImageView) vp.getChildAt(index);
         new AsyncTask<ImageView, Void, Void>() {
             @Override
@@ -152,7 +158,7 @@ public class ImagePreviewActivity extends MActivity{
             item.setDrawingCacheEnabled(true);
             Bitmap bmp = Bitmap.createBitmap(item.getDrawingCache());
             item.setDrawingCacheEnabled(false);
-            File appDir = new File(Environment.getExternalStorageDirectory(), "smartkids/image_cache");
+            File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Smartkids");
             if (!appDir.exists()) {
                 appDir.mkdir();
             }
@@ -167,17 +173,16 @@ public class ImagePreviewActivity extends MActivity{
                 handler.sendEmptyMessage(0);
                 e.printStackTrace();
             }
-            // 其次把文件插入到系统图库
-            try {
-                MediaStore.Images.Media.insertImage(getContentResolver(),
-                        file.getAbsolutePath(), fileName, null);
-            } catch (FileNotFoundException e) {
-                handler.sendEmptyMessage(0);
-                e.printStackTrace();
-            }
+            // 最后通知图库更新
+            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
             handler.sendEmptyMessage(1);
         } else {
-            showToast("图片路径出错...");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showToast("图片路径出错...");
+                }
+            });
         }
     }
 
