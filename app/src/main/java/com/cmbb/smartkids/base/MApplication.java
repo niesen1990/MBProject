@@ -21,7 +21,6 @@ import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.log.LogWrapper;
 import com.cmbb.smartkids.tools.sp.SPCache;
 import com.facebook.stetho.Stetho;
-import com.pgyersdk.crash.PgyCrashManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
@@ -108,13 +107,6 @@ public class MApplication extends Application {
         MobclickAgent.setDebugMode(false);
     }
 
-    /**
-     * 蒲公英内测
-     */
-    private void initPgyer() {
-        String appId = "myappid";  //蒲公英注册或上传应用获取的AppId
-        PgyCrashManager.register(this, appId);
-    }
 
     /**
      * 友盟推送

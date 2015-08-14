@@ -163,8 +163,6 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
             return;
         }
 
-        Log.i("MEIZU", "conversations.size() = " + conversations.size());
-
         List<UserAttentionModel> itemsChild = new ArrayList<UserAttentionModel>();
         for (int i = 0; i < conversations.size(); i++) {
             // 判断userInfo是否存在

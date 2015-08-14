@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.baby.MBabyActivity;
 import com.cmbb.smartkids.activity.post.PostAgeListActivity;
 import com.cmbb.smartkids.activity.post.PostCityListActivity;
 import com.cmbb.smartkids.activity.post.PostWonderListActivity;
@@ -47,7 +48,9 @@ public class PlateListViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 PlateModel plateModel = (PlateModel) v.getTag();
                 Intent intent = null;
-                if (plateModel.getConnector().contains("wonder")) {
+                if (plateModel.getConnector().contains("baby")) {
+                    intent = new Intent(context, MBabyActivity.class);
+                } else if (plateModel.getConnector().contains("wonder")) {
                     intent = new Intent(context, PostWonderListActivity.class);
                 } else if (plateModel.getConnector().contains("star") && !isCity) {
                     intent = new Intent(context, PostAgeListActivity.class);

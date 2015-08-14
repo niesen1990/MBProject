@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.baby.MBabyActivity;
 import com.cmbb.smartkids.activity.post.PostWonderListActivity;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.tools.glide.GlideTool;
@@ -46,7 +47,12 @@ public class HomeListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 PlateModel postModel = (PlateModel) v.getTag();
-                Intent intent = new Intent(context, PostWonderListActivity.class);
+                Intent intent = null;
+                if (postModel.getConnector().contains("baby")) {
+                    intent = new Intent(context, MBabyActivity.class);
+                } else if (postModel.getConnector().contains("wonder")) {
+                    intent = new Intent(context, PostWonderListActivity.class);
+                }
                 intent.putExtra("model", postModel);
                 context.startActivity(intent);
             }

@@ -70,7 +70,7 @@ public class HomeListProvider extends DataController<PlateModel> {
             sendDataToBanner(data);
             // 删除我的宝宝
             List<PlateModel> plateModels = data.getContext().getPlateList();
-            plateModels.remove(0);
+            //plateModels.remove(0);
             return plateModels;
         } catch (Exception e) {
             e.printStackTrace();
