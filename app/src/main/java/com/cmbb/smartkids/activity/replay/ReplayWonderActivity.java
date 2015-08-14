@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.ImagePreviewActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
@@ -42,6 +43,7 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener {
 
@@ -270,7 +272,10 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         //--------------------
     }
 
+    ArrayList<String> pagerUrls = new ArrayList<>();
+
     private void setHeadContent(LinearLayout llContainer) {
+        pagerUrls.clear();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
         // 添加内容
@@ -295,16 +300,23 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     String[] cache = imgUrls[j].split(",");
                     for (int k = 0; k < cache.length; k++) {
                         if (cache[k].contains("bigImage")) {
-//                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
-//                            LinearLayout.LayoutParams ps = new LinearLayout.LayoutParams(-1, TDevice.dip2px(200, this));
-                            ImageView imageView = new ImageView(this);
+                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
                             imageView.setLayoutParams(params);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//                            imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
+                            pagerUrls.add(cache[k]);
                             GlideTool.loadImage(this, cache[k], imageView, false);
+                            imageView.setTag(R.id.image, pagerUrls.size() - 1);
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int position = (int) v.getTag(R.id.image);
+                                    Intent intent = new Intent(ReplayWonderActivity.this, ImagePreviewActivity.class);
+                                    intent.putExtra("index", position);
+                                    intent.putExtra("data", pagerUrls);
+                                    startActivity(intent);
+                                }
+                            });
                             llContainer.addView(imageView);
-
                             TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
                             textView.setLayoutParams(params);
                             textView.setTextIsSelectable(true);
@@ -316,14 +328,22 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     }
                 }
             } else {
-//                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
-//                imageView.setLayoutParams(params);
-//                LinearLayout.LayoutParams ps = new LinearLayout.LayoutParams(-1, TDevice.dip2px(200, this));
-                ImageView imageView = new ImageView(this);
+                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
                 imageView.setLayoutParams(params);
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setTag(R.id.image, pagerUrls.size() - 1);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = (int) v.getTag(R.id.image);
+                        Intent intent = new Intent(ReplayWonderActivity.this, ImagePreviewActivity.class);
+                        intent.putExtra("index", position);
+                        intent.putExtra("data", pagerUrls);
+                        startActivity(intent);
+                    }
+                });
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
+                    pagerUrls.add(imgUrl.split(",")[1]);
                     GlideTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
                     llContainer.addView(imageView);
                     TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
@@ -334,6 +354,7 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     llContainer.addView(textView);
                 } else {
                     shareImgUrl = imgUrl.split(",")[0];
+                    pagerUrls.add(imgUrl.split(",")[0]);
                     GlideTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
                     llContainer.addView(imageView);
                 }
@@ -349,9 +370,9 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     @Override
     protected void onResume() {
         super.onResume();
-//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
-//        headContainer.setLayoutParams(params);
+        headContainer.setLayoutParams(params);
         mReplayListFragment = new ReplayListFragment(true, mPostModel, headContainer, sort, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getWonderReplayDetail(this, mPostModel);

@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context=".HomeActivity">
+    <item
+        android:id="@+id/action_add_master"
+        android:title="申请达人"
+        app:showAsAction="always"/>
+</menu>

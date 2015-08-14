@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.READ_LOGS"/>
     <!-- 获取logcat日志 -->
 
-
     <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- baidu -->
     <!-- 这个权限用于进行网络定位 -->
@@ -361,7 +360,6 @@
             android:name=".activity.replay.ReplayWonderActivity"
             android:label="@string/title_activity_replay_wonder">
         </activity>
-
         <activity
             android:name=".activity.replay.ReplayCaseActivity"
             android:label="@string/title_activity_replay_wonder">
@@ -532,6 +530,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cmbb.smartkids.activity.user.UserInfoActivity"/>
+        </activity>
+        <activity
+            android:name=".activity.master.MasterAddActivity"
+            android:label="@string/title_activity_master_add">
         </activity>
     </application>
 

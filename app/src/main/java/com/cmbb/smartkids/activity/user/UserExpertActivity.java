@@ -3,8 +3,6 @@ package com.cmbb.smartkids.activity.user;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -15,15 +13,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
-import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
-import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
-import com.cmbb.smartkids.fragment.expert.ExpertDetailModel;
-import com.cmbb.smartkids.fragment.postlist.age.SameAgePublishListFragment;
-import com.cmbb.smartkids.fragment.postlist.city.SameCityPublishListFragment;
-import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicListFragment;
+import com.cmbb.smartkids.fragment.doctor.DoctorRightModel;
 import com.cmbb.smartkids.model.expert.ExpertSchedulingBaseModel;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.network.api.ApiNetwork;
@@ -41,20 +34,13 @@ import java.util.Map;
 public class UserExpertActivity extends MActivity {
 
     // TabLayout
-    TabLayout tabLayout;
     // content
-    ViewPager viewPager;
     // appbar
     AppBarLayout appbar;
 
-    // home content
-    CommonFragment[] activeFragments;
-    String[] activeTitles;
-
-    HomeFragmentPagerAdapter mHomeFragmentPagerAdapter;
 
     // 用户数据
-    ExpertDetailModel mExpertDetailModel;
+    DoctorRightModel mDoctorRightModel;
 
 
     private ImageView ivUserBac;
@@ -69,6 +55,11 @@ public class UserExpertActivity extends MActivity {
     boolean attention_flag = false;
 
 
+    private TextView expertSpecialty;
+    private TextView expertHospital;
+    private TextView expertContent;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_user_case;
@@ -78,42 +69,32 @@ public class UserExpertActivity extends MActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         appbar = (AppBarLayout) findViewById(R.id.appbar);
-        mExpertDetailModel = getIntent().getParcelableExtra("user");
-        mHomeFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
-        activeFragments = new CommonFragment[3];
-        activeFragments[0] = new WonderPublicListFragment(false, mExpertDetailModel.getUserId());
-        activeFragments[1] = new SameAgePublishListFragment(false, mExpertDetailModel.getUserId());
-        activeFragments[2] = new SameCityPublishListFragment(false, mExpertDetailModel.getUserId());
-        activeTitles = new String[3];
-        activeTitles[0] = "话题";
-        activeTitles[1] = "同龄";
-        activeTitles[2] = "同城";
-        mHomeFragmentPagerAdapter.addFragment(activeFragments, activeTitles);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        if (viewPager != null) {
-            viewPager.setAdapter(mHomeFragmentPagerAdapter);
-            tabLayout.setupWithViewPager(viewPager);
-        }
+        mDoctorRightModel = getIntent().getParcelableExtra("user");
         // user
         ivUserBac = (ImageView) findViewById(R.id.iv_user_bac);
-        GlideTool.loadImage(this, mExpertDetailModel.getUserSmallHeadImg(), ivUserBac, true);
+        GlideTool.loadImage(this, mDoctorRightModel.getUserSmallHeadImg(), ivUserBac, true);
         tvNick = (TextView) findViewById(R.id.tv_nick);
-        tvNick.setText(mExpertDetailModel.getRealName());
+        tvNick.setText(mDoctorRightModel.getRealName());
         ivRanktag = (ImageView) findViewById(R.id.iv_ranktag);
         ivLv = (ImageView) findViewById(R.id.iv_lv);
+        expertSpecialty = (TextView) findViewById(R.id.expert_specialty);
+        expertSpecialty.setText(mDoctorRightModel.getBeGoodAt());
+        expertHospital = (TextView) findViewById(R.id.expert_hospital);
+        expertHospital.setText(mDoctorRightModel.getAddress());
+        expertContent = (TextView) findViewById(R.id.expert_content);
+        expertContent.setText(mDoctorRightModel.getAbstracting());
         btnRoad = (TextView) findViewById(R.id.btn_road);
         btnRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getExpertScheduling(mExpertDetailModel.getUserId());
+                getExpertScheduling(mDoctorRightModel.getUserId());
             }
         });
         rvBac = (RelativeLayout) findViewById(R.id.rv_bac);
         // test
         rvBac.setBackgroundResource(RankTools.getAuthBackground(4, 1));
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        switch (mExpertDetailModel.getAttention()) {
+        switch (mDoctorRightModel.getAttention()) {
             case 1:
                 attention_flag = true;
                 fab.setImageResource(android.R.drawable.ic_menu_delete);
@@ -129,7 +110,7 @@ public class UserExpertActivity extends MActivity {
                 // 取消关注
                 showWaitDialog();
                 if (attention_flag) {
-                    ApiNetwork.CancelUserAttention(MApplication.token, mExpertDetailModel.getUserId() + "", new Callback() {
+                    ApiNetwork.CancelUserAttention(MApplication.token, mDoctorRightModel.getUserId() + "", new Callback() {
                         @Override
                         public void onFailure(Request request, IOException e) {
                             runOnUiThread(new Runnable() {
@@ -163,7 +144,7 @@ public class UserExpertActivity extends MActivity {
                     });
 
                 } else {
-                    ApiNetwork.addUserAttention(MApplication.token, mExpertDetailModel.getUserId() + "", new Callback() {
+                    ApiNetwork.addUserAttention(MApplication.token, mDoctorRightModel.getUserId() + "", new Callback() {
                         @Override
                         public void onFailure(Request request, IOException e) {
                             runOnUiThread(new Runnable() {
@@ -195,7 +176,6 @@ public class UserExpertActivity extends MActivity {
                             });
                         }
                     });
-
                 }
             }
         });

@@ -101,7 +101,7 @@ public class ReplayAddActivity extends MActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_replay_add, menu);
+        //getMenuInflater().inflate(R.menu.menu_replay_add, menu);
         return true;
     }
 

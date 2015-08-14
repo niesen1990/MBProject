@@ -59,7 +59,7 @@ public class MApplication extends Application {
             instance = this;
             mContext = getApplicationContext();
             initLog();
-            initStetho();
+            //initStetho();
             initUmengAnalytics();
             initSharePreference();
             //初始化百度地图
@@ -88,7 +88,6 @@ public class MApplication extends Application {
     }
 
     private void initRong() {
-        Log.i("MEIZU", "init RONG");
         RongIM.init(this);
     }
 
@@ -106,7 +105,7 @@ public class MApplication extends Application {
      * 初始化图片处理Glide
      */
     private void initUmengAnalytics() {
-        MobclickAgent.setDebugMode(true);
+        MobclickAgent.setDebugMode(false);
     }
 
     /**
@@ -176,7 +175,7 @@ public class MApplication extends Application {
         UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-                Toast.makeText(context, "i cclick :" + msg.custom, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "i cclick :" + msg.custom, Toast.LENGTH_LONG).show();
                 handleNotificationClick(msg);
             }
         };
@@ -189,7 +188,7 @@ public class MApplication extends Application {
         String notifyTitle = params.get("title");
         String notifyContent = params.get("content");
         Intent intent = new Intent(getContext(), SettingDetailActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("flags", "notify");
         intent.putExtra("title", "萌宝派");
         intent.putExtra("notify_title", notifyTitle);

@@ -68,7 +68,7 @@ public class PlateListActivity extends MActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_plate_list, menu);
+        //getMenuInflater().inflate(R.menu.menu_plate_list, menu);
 
         return true;
     }

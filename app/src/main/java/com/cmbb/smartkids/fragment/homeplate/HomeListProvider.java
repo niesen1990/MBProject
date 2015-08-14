@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.cmbb.smartkids.base.Constants;
+import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
@@ -37,21 +38,21 @@ public class HomeListProvider extends DataController<PlateModel> {
     @Override
     public void doInitialize(Callback callback) {
         Map<String, String> body = new HashMap<>();
-        body.put("token", "083cbf5c89a44c01a2fe92f9b81baaf5");
+        body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
     }
 
     @Override
     public void doRefresh(Callback callback) {
         Map<String, String> body = new HashMap<>();
-        body.put("token", "083cbf5c89a44c01a2fe92f9b81baaf5");
+        body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
     }
 
     @Override
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
-        body.put("token", "083cbf5c89a44c01a2fe92f9b81baaf5");
+        body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
     }
 

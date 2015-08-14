@@ -86,6 +86,9 @@ public class RegisterActivity extends MActivity {
         params.put("registerPassword", pwd);
         params.put("security", verify);
         params.put("nick", nickName);
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            Log.i("map", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
         OkHttp.asyncPost(Constants.User.REGISTER_URL, params, TAG, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -106,20 +109,26 @@ public class RegisterActivity extends MActivity {
                     Gson gson = new Gson();
                     final LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
                     if (loginBaseModel.getCode().equals("1")) {
-                        hideWaitDialog();
-                        showToast(loginBaseModel.getContext().getPresentation());
-                        MApplication.token = loginBaseModel.getContext().getToken();
-                        MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
-                        MApplication.userStatus = loginBaseModel.getContext().getUserStatus();
-                        // 保存SP
-                        SPCache.putString(Constants.SharePreference.USER_TOKEN, loginBaseModel.getContext().getToken());
-                        SPCache.putString(Constants.SharePreference.RONG_TOKEN, loginBaseModel.getContext().getRongyunToken());
-                        SPCache.putInt(Constants.SharePreference.USER_AUTHORITY, loginBaseModel.getContext().getUserStatus());
-                        ApiNetwork.loginRongYun(MApplication.rongToken);
-                        ApiNetwork.getUserInfoList();
-                        Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
-                        startActivity(intent);
-                        finish();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideWaitDialog();
+                                showToast(loginBaseModel.getContext().getPresentation());
+                                MApplication.token = loginBaseModel.getContext().getToken();
+                                MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
+                                MApplication.userStatus = loginBaseModel.getContext().getUserStatus();
+                                // 保存SP
+                                SPCache.putString(Constants.SharePreference.USER_TOKEN, loginBaseModel.getContext().getToken());
+                                SPCache.putString(Constants.SharePreference.RONG_TOKEN, loginBaseModel.getContext().getRongyunToken());
+                                SPCache.putInt(Constants.SharePreference.USER_AUTHORITY, loginBaseModel.getContext().getUserStatus());
+                                ApiNetwork.loginRongYun(MApplication.rongToken);
+                                ApiNetwork.getUserInfoList();
+                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
                     } else {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -129,6 +138,14 @@ public class RegisterActivity extends MActivity {
                             }
                         });
                     }
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideWaitDialog();
+                            showToast(R.string.service_error);
+                        }
+                    });
                 }
             }
         });

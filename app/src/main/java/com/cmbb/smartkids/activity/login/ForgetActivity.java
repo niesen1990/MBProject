@@ -52,8 +52,8 @@ public class ForgetActivity extends MActivity {
 
     @Override
     public void onClick(View v) {
-        String verify = etVerify.getText().toString();
-        final String pwd = etPwd.getText().toString();
+        String verify = etVerify.getText().toString().trim();
+        final String pwd = etPwd.getText().toString().trim();
         if (TextUtils.isEmpty(verify)) {
             showToast("请输入验证码");
             return;
@@ -69,6 +69,9 @@ public class ForgetActivity extends MActivity {
         Map<String, String> params = new HashMap<>();
         params.put("phone", phone);
         params.put("security", verify);
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            Log.i("map", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
         showWaitDialog("密码修改中...");
         OkHttp.asyncPost(Constants.User.SUBMITPWD_URL, params, TAG, new Callback() {
             @Override
@@ -86,7 +89,7 @@ public class ForgetActivity extends MActivity {
             public void onResponse(Response response) throws IOException {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
-                    Log.i("result", "result = " + result);
+                    Log.i("result", "result1 = " + result);
                     Gson gson = new Gson();
                     final LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
                     if (loginBaseModel.getCode().equals("1")) {
@@ -110,6 +113,9 @@ public class ForgetActivity extends MActivity {
         Map<String, String> params = new HashMap<>();
         params.put("phone", phone);
         params.put("password", pwd);
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            Log.i("map", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
         OkHttp.asyncPost(Constants.User.UPDATEPWD_URL, params, TAG, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -125,7 +131,7 @@ public class ForgetActivity extends MActivity {
             @Override
             public void onResponse(Response response) throws IOException {
                 String result = response.body().string();
-                Log.i("result", "result = " + result);
+                Log.i("result", "result2 = " + result);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

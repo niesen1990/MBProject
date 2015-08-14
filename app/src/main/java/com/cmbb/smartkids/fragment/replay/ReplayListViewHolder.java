@@ -132,10 +132,11 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
             mRlReplayAgain.setVisibility(View.VISIBLE);
             if (1 == entry.getOtherDeleteTag()) {
                 mTvNameOther.setText(entry.getOtherNike() + "");
-                mTvHeaderFloorOther.setText(entry.getOtherNike() + "楼");
+                mTvHeaderFloorOther.setText(entry.getOtherFloor() + "楼");
                 mTvContentReplayOther.setText("此回复已经删除");
             } else {
-                // 删除other
+                mTvNameOther.setText(entry.getOtherNike() + "");
+                mTvHeaderFloorOther.setText(entry.getOtherFloor() + "楼");
                 mTvContentReplayOther.setText(entry.getOtherContext());
                 GlideTool.loadImage(context, entry.getOtherUserSmallHeadImg().split(",")[0], mRivOtherHead, true);
             }

@@ -61,7 +61,7 @@ public class SearchUserListViewHolder extends RecyclerView.ViewHolder {
                 homeEredarModel.setEredarRank(userAttentionModel.getEredarRank());
                 homeEredarModel.setNike(userAttentionModel.getNike());
                 homeEredarModel.setUserSmallHeadImg(userAttentionModel.getUserSmallHeadImg());
-                homeEredarModel.setAttention(1);
+                homeEredarModel.setAttention(userAttentionModel.getAttention());
                 homeEredarModel.setAuthority(userAttentionModel.getAuthority());
                 homeEredarModel.setId(userAttentionModel.getUserId());
                 homeEredarModel.setLoginTimes(userAttentionModel.getLoginTimes());

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.ImagePreviewActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
@@ -37,6 +38,7 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener {
 
@@ -124,7 +126,10 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         //--------------------
     }
 
+    ArrayList<String> pagerUrls = new ArrayList<>();
+
     private void setHeadContent(LinearLayout linearLayout, PostDetail postDetails) {
+        pagerUrls.clear();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
         // 添加内容
@@ -152,7 +157,19 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
                             ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
                             imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
+                            pagerUrls.add(cache[k]);
                             GlideTool.loadImage(this, cache[k], imageView, false);
+                            imageView.setTag(R.id.image, pagerUrls.size() - 1);
+                            imageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    int position = (int) v.getTag(R.id.image);
+                                    Intent intent = new Intent(ReplayCaseActivity.this, ImagePreviewActivity.class);
+                                    intent.putExtra("index", position);
+                                    intent.putExtra("data", pagerUrls);
+                                    startActivity(intent);
+                                }
+                            });
                             linearLayout.addView(imageView);
 
                             TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
@@ -170,6 +187,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
                 imageView.setLayoutParams(params);
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
+                    pagerUrls.add(imgUrl.split(",")[1]);
                     GlideTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
                     linearLayout.addView(imageView);
                     TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
@@ -179,6 +197,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
                     linearLayout.addView(textView);
                 } else {
                     shareImgUrl = imgUrl.split(",")[0];
+                    pagerUrls.add(imgUrl.split(",")[0]);
                     GlideTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
                     linearLayout.addView(imageView);
                 }

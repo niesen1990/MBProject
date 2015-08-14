@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = DBHelper.class.getSimpleName();
 
 
-    public static int DATABASE_VERSION = 27;
+    public static int DATABASE_VERSION = 31;
 
     public DBHelper(Context context) {
         super(context, MBContract.DATABASE_NAME, null, DATABASE_VERSION);

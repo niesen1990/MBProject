@@ -3,6 +3,7 @@ package com.cmbb.smartkids.fragment.postlist.wonder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -152,6 +153,20 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                 return true;
             }
         });
+        // 设置置顶
+        switch (entry.getStick()) {
+            case 0:
+                //取消置顶
+                tvCenterContent01.setCompoundDrawables(null, null, null, null);
+                break;
+            case 1:
+                // 设置置顶
+                Drawable drawable = context.getResources().getDrawable(R.drawable.zhi_ding);
+                /// 这一步必须要做,否则不会显示.
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                tvCenterContent01.setCompoundDrawables(drawable, null, null, null);
+                break;
+        }
         // head text
         tvHeaderUpName.setText(entry.getNike());
         if (!TextUtils.isEmpty(entry.getEredarName())) {
@@ -211,6 +226,8 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                     switch (i) {
                         case 0:
                             psivSmallIcon01.setVisibility(View.VISIBLE);
+                            psivSmallIcon02.setVisibility(View.INVISIBLE);
+                            psivSmallIcon03.setVisibility(View.INVISIBLE);
                             String[] urls1 = imgs[i].split(",");
                             //循环解析是否包含smallImage
                             for (int k = 0; k < urls1.length; k++) {
@@ -227,6 +244,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             break;
                         case 1:
                             psivSmallIcon02.setVisibility(View.VISIBLE);
+                            psivSmallIcon03.setVisibility(View.INVISIBLE);
                             String[] urls2 = imgs[i].split(",");
                             for (int k = 0; k < urls2.length; k++) {
                                 if (urls2[k].contains("smallImage")) {

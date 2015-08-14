@@ -25,6 +25,7 @@ import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicListFragment;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.log.Log;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -128,7 +129,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
         }
         rvBac = (RelativeLayout) findViewById(R.id.rv_bac);
         // test
-        rvBac.setBackgroundResource(RankTools.getAuthBackground(mHomeEredarModel.getAuthority(), 1));
+        rvBac.setBackgroundResource(RankTools.getAuthBackground(mHomeEredarModel.getAuthority(), MApplication.authority));
         try {
             long[] ranks = RankTools.gradeDispose(mHomeEredarModel.getLoginTimes());
             ivLv.setImageResource((int) ranks[2]);
@@ -138,6 +139,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
         }
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        Log.i("attention", "attention = " + mHomeEredarModel.getAttention());
         switch (mHomeEredarModel.getAttention()) {
             case 1:
                 attention_flag = true;
@@ -174,6 +176,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
                                     try {
                                         hideWaitDialog();
                                         if (response.body().string().contains("1")) {
+                                            attention_flag = false;
                                             showToast("取消成功");
                                             fab.setImageResource(android.R.drawable.ic_menu_add);
                                         } else {
@@ -208,6 +211,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
                                     try {
                                         hideWaitDialog();
                                         if (response.body().string().contains("1")) {
+                                            attention_flag = true;
                                             showToast("关注成功");
                                             fab.setImageResource(android.R.drawable.ic_menu_delete);
                                         } else {

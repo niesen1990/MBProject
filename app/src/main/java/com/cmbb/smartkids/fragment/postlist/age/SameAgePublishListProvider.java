@@ -25,6 +25,7 @@ import java.util.Map;
 public class SameAgePublishListProvider extends DataController<PostModel> {
 
     private int userId;
+    int id = -1;
 
     public SameAgePublishListProvider(int userId) {
         this.userId = userId;
@@ -32,6 +33,7 @@ public class SameAgePublishListProvider extends DataController<PostModel> {
 
     @Override
     public void doInitialize(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("userId", userId + "");
@@ -40,6 +42,7 @@ public class SameAgePublishListProvider extends DataController<PostModel> {
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("userId", userId + "");
@@ -51,6 +54,10 @@ public class SameAgePublishListProvider extends DataController<PostModel> {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("userId", userId + "");
+        if (id != -1) {
+            body.put("id", id + "");
+            body.put("upDown", 2 + "");
+        }
         OkHttp.asyncPost(Constants.User.STARPUBLISH_URL, body, callback);
     }
 
@@ -64,6 +71,11 @@ public class SameAgePublishListProvider extends DataController<PostModel> {
             }
             Gson gson = new Gson();
             SameAgePublishBaseModel data = gson.fromJson(result, SameAgePublishBaseModel.class);
+            try {
+                id = data.getContext().getHomeSameAgeList().get(data.getContext().getHomeSameAgeList().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();

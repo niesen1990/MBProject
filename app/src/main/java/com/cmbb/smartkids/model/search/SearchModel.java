@@ -38,6 +38,15 @@ public class SearchModel implements Parcelable {
     private Integer userStatus;
     private Integer validCurrentUser;
     private String weixinImg;
+    private Integer attention;
+
+    public Integer getAttention() {
+        return attention;
+    }
+
+    public void setAttention(Integer attention) {
+        this.attention = attention;
+    }
 
     /**
      * @return The areaId
@@ -512,6 +521,7 @@ public class SearchModel implements Parcelable {
         dest.writeValue(this.userStatus);
         dest.writeValue(this.validCurrentUser);
         dest.writeString(this.weixinImg);
+        dest.writeValue(this.attention);
     }
 
     public SearchModel() {
@@ -549,9 +559,10 @@ public class SearchModel implements Parcelable {
         this.userStatus = (Integer) in.readValue(Integer.class.getClassLoader());
         this.validCurrentUser = (Integer) in.readValue(Integer.class.getClassLoader());
         this.weixinImg = in.readString();
+        this.attention = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<SearchModel> CREATOR = new Parcelable.Creator<SearchModel>() {
+    public static final Creator<SearchModel> CREATOR = new Creator<SearchModel>() {
         public SearchModel createFromParcel(Parcel source) {
             return new SearchModel(source);
         }

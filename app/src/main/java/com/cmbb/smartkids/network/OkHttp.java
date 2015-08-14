@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 
+import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.tools.ImageUtils;
 import com.cmbb.smartkids.tools.log.Log;
 import com.facebook.stetho.okhttp.StethoInterceptor;
+import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Headers;
@@ -21,6 +23,8 @@ import com.squareup.okhttp.Response;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +45,8 @@ public class OkHttp {
         mOkHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
-        //mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(Application.context()), CookiePolicy.ACCEPT_ALL));
-//        mOkHttpClient.setCache(new Cache(Application.context().getExternalCacheDir(), cacheSize));
+        mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(MApplication.getContext()), CookiePolicy.ACCEPT_ALL));
+        mOkHttpClient.setCache(new Cache(MApplication.getContext().getExternalCacheDir(), cacheSize));
     }
 
     /**

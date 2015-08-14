@@ -48,7 +48,7 @@ public class ImagePreviewAdapter extends PagerAdapter {
         ImageView img = new ImageView(container.getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -1);
         img.setLayoutParams(params);
-        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        img.setScaleType(ImageView.ScaleType.FIT_CENTER);
         String imgUrl = data.get(position);
         GlideTool.loadImage(container.getContext(), imgUrl, img, false);
         img.setOnClickListener(new View.OnClickListener() {

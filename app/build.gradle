@@ -8,8 +8,8 @@ android {
         applicationId 'com.cmbb.smartkids'
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 27
-        versionName "2.0.7"
+        versionCode 31
+        versionName "2.0.8"
     }
     buildTypes {
         release {

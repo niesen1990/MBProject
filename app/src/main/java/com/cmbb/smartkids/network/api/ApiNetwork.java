@@ -64,6 +64,7 @@ public class ApiNetwork {
                 try {
                     if (response.isSuccessful()) {
                         String result = response.body().string();
+                        Log.i("userinfo", "userinfo = " + result);
                         Gson gson = new Gson();
                         UserInfoBaseModel userInfoBaseModel = gson.fromJson(result, UserInfoBaseModel.class);
                         if ("1".equals(userInfoBaseModel.getCode())) {
@@ -680,8 +681,6 @@ public class ApiNetwork {
         body.put("postType", postType);
         OkHttp.asyncPost(Constants.DELETESTOREUP_URL, body, callback);
     }
-
-
 
 
     /**

@@ -32,12 +32,12 @@ import com.cmbb.smartkids.adapter.HomeAutoScrollBannerAdapter;
 import com.cmbb.smartkids.adapter.HomeFragmentPagerAdapter;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.active.ActiveFragment;
-import com.cmbb.smartkids.fragment.expert.ExpertFragment;
+import com.cmbb.smartkids.fragment.doctor.DoctorFragment;
+import com.cmbb.smartkids.fragment.eredar.EredarFragment;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.homeplate.HomeListFragment;
-import com.cmbb.smartkids.fragment.master.MasterFragment;
-import com.cmbb.smartkids.fragment.master.MasterTypeModel;
 import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
@@ -47,7 +47,6 @@ import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
-import com.umeng.message.PushAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class HomeActivity extends MActivity {
     private static Boolean isQuit = false;// 退出应用标识符
     private Timer timer = new Timer();// 程序退出定时器
     private DrawerLayout mDrawerLayout;
-    public MasterTypeModel masterTypeModel;
+    //public MasterTypeModel masterTypeModel;
     NavigationView navigationView;
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -140,6 +139,9 @@ public class HomeActivity extends MActivity {
                         tvStatus.setText("已出生");
                         break;
                 }
+                MApplication.userStatus = userInfoDetailModel.getUserStatus();
+                MApplication.authority = userInfoDetailModel.getAuthority();
+                MApplication.eredar = userInfoDetailModel.getEredar();
                 GlideTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
@@ -338,7 +340,7 @@ public class HomeActivity extends MActivity {
     private void initData() {
         // 初始化用户信息
         ApiNetwork.getUserInfo(this);
-        masterTypeModel = new MasterTypeModel("推荐", 0, 1);
+        //masterTypeModel = new MasterTypeModel("推荐", 0, 1);
         homeFragments = new Fragment[1];
         homeFragments[0] = new HomeListFragment(true);
         homeTitles = new String[1];
@@ -354,8 +356,8 @@ public class HomeActivity extends MActivity {
         mActiveFragmentPagerAdapter.addFragment(activeFragments, activeTitles);
 
         masterFragments = new Fragment[2];
-        masterFragments[0] = new MasterFragment();
-        masterFragments[1] = new ExpertFragment();
+        masterFragments[0] = new EredarFragment();
+        masterFragments[1] = new DoctorFragment();
         masterTitles = new String[2];
         masterTitles[0] = "达人";
         masterTitles[1] = "专家";

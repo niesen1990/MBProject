@@ -128,7 +128,7 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
             if (data == null || data.size() == 0) {
                 Toast.makeText(getActivity(), "无数据加载", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getActivity(), "已加载" + data.size() + " 数据", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "已更新" + data.size() + " 数据", Toast.LENGTH_SHORT).show();
             }
         } else {
             e.printStackTrace();

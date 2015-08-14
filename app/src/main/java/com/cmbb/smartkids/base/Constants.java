@@ -18,13 +18,9 @@ public class Constants {
 
     // RongYun
     public static final String RongToken = "rong_token";
-    public static final String RefreshFlag = "com.refresh";
     public static final String NETWORK_FAILURE = "network_failure";
     public static final String NETWORK_FLAG = "network_flag";
-    //public static final String BASE_URL = "http://192.168.100.151:8089/spring";
-    //public static final String BASE_IMAGE_URL = "http://192.168.100.151:8089/image";
     public static final String BASE_URL = "http://mengbaopai.smart-kids.com/iosAndroid";
-    public static final String BASE_URL_TAG = "http://mengbaopai.smart-kids.com";
     public static final String BASE_IMAGE_URL = "http://mengbaopai.smart-kids.com/image";
     public static final String BASE_IMAGE_URL_OLD = "http://mengbaopai.smart-kids.com/smart/";// 判断upload字符串
 
