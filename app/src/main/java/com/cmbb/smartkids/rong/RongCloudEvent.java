@@ -9,11 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.user.UserActivity;
+import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.rong.message.DeAgreedFriendRequestMessage;
 
 import io.rong.imkit.PushNotificationManager;
@@ -41,7 +43,7 @@ import io.rong.notification.PushNotificationMessage;
 /**
  * 融云SDK事件监听处理。
  * 把事件统一处理，开发者可直接复制到自己的项目中去使用。
- * <p>
+ * <p/>
  * 该类包含的监听事件有：
  * 1、消息接收器：OnReceiveMessageListener。
  * 2、发出消息接收器：OnSendMessageListener。
@@ -173,30 +175,25 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
             notification.flags = Notification.FLAG_AUTO_CANCEL;
             notification.defaults = Notification.DEFAULT_SOUND;
         } else {
-
-            notification = new Notification.Builder(RongContext.getInstance())
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(RongContext.getInstance())
                     .setLargeIcon(getAppIcon())
-                    .setSmallIcon(R.drawable.ic_launcher)
-                    .setTicker("自定义 notification")
-                    .setContentTitle("自定义 title")
-                    .setContentText("这是 Content:" + msg.getObjectName())
-                    .setContentIntent(pendingIntent)
-                    .setAutoCancel(true)
-                    .setDefaults(Notification.DEFAULT_ALL).build();
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("萌宝消息")
+                    .setContentText(msg.getObjectName())
+                    .setContentIntent(pendingIntent);
+            mBuilder.setAutoCancel(true);
+            notification = mBuilder.build();
 
         }
-
         NotificationManager nm = (NotificationManager) RongContext.getInstance().getSystemService(RongContext.getInstance().NOTIFICATION_SERVICE);
-
         nm.notify(0, notification);
-
         return true;
     }
 
     private Bitmap getAppIcon() {
         BitmapDrawable bitmapDrawable;
         Bitmap appIcon;
-        bitmapDrawable = (BitmapDrawable) RongContext.getInstance().getApplicationInfo().loadIcon(RongContext.getInstance().getPackageManager());
+        bitmapDrawable = (BitmapDrawable) MApplication.getContext().getApplicationInfo().loadIcon(RongContext.getInstance().getPackageManager());
         appIcon = bitmapDrawable.getBitmap();
         return appIcon;
     }
@@ -220,7 +217,6 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
     public boolean onReceived(Message message, int left) {
 
         MessageContent messageContent = message.getContent();
-
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
             Log.d(TAG, "onReceived-TextMessage:" + textMessage.getContent());

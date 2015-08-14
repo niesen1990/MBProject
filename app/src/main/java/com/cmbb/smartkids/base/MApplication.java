@@ -4,9 +4,10 @@ import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
@@ -30,6 +31,7 @@ import com.umeng.message.entity.UMessage;
 
 import java.util.Map;
 
+import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.ipc.RongExceptionHandler;
 
@@ -136,21 +138,16 @@ public class MApplication extends Application {
             }
 
             @Override
-            public Notification getNotification(Context context,
-                                                UMessage msg) {
+            public Notification getNotification(Context context, UMessage msg) {
                 switch (msg.builder_id) {
                     case 0:
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-                        RemoteViews myNotificationView = new RemoteViews(context.getPackageName(), R.layout.view_umeng_notification);
-                        myNotificationView.setTextViewText(R.id.notification_title, msg.title);
-                        myNotificationView.setTextViewText(R.id.notification_text, msg.text);
-                        myNotificationView.setImageViewResource(R.id.notification_large_icon, R.mipmap.ic_launcher);
-                        myNotificationView.setImageViewResource(R.id.notification_small_icon, R.mipmap.ic_launcher);
-                        builder.setContent(myNotificationView);
-                        builder.setAutoCancel(true);
-                        Notification mNotification = builder.build();
-                        //由于Android v4包的bug，在2.3及以下系统，Builder创建出来的Notification，并没有设置RemoteView，故需要添加此代码
-                        mNotification.contentView = myNotificationView;
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                                .setLargeIcon(getAppIcon())
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle(msg.title)
+                                .setContentText(msg.text);
+                        mBuilder.setAutoCancel(true);
+                        Notification mNotification = mBuilder.build();
                         return mNotification;
                     default:
                         //默认为0，若填写的builder_id并不存在，也使用默认。
@@ -172,6 +169,14 @@ public class MApplication extends Application {
             }
         };
         mPushAgent.setNotificationClickHandler(notificationClickHandler);
+    }
+
+    private Bitmap getAppIcon() {
+        BitmapDrawable bitmapDrawable;
+        Bitmap appIcon;
+        bitmapDrawable = (BitmapDrawable) MApplication.getContext().getApplicationInfo().loadIcon(RongContext.getInstance().getPackageManager());
+        appIcon = bitmapDrawable.getBitmap();
+        return appIcon;
     }
 
 
