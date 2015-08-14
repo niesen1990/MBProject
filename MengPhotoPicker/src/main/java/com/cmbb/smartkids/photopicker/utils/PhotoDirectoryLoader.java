@@ -31,7 +31,7 @@ public class PhotoDirectoryLoader extends CursorLoader {
         setSortOrder(Media.DATE_ADDED + " DESC");
 
         setSelection(MIME_TYPE + "=? or " + MIME_TYPE + "=?");
-        setSelectionArgs(new String[]{"image/jpeg", "image/png"});
+        setSelectionArgs(new String[]{"image/jpg", "image/png"});
     }
 
 
