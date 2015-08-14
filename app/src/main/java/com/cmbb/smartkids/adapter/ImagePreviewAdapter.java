@@ -1,12 +1,18 @@
 package com.cmbb.smartkids.adapter;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.widget.ZoomImageView;
 
 import java.util.ArrayList;
 
@@ -45,15 +51,15 @@ public class ImagePreviewAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(final ViewGroup container, int position) {
-        ImageView img = new ImageView(container.getContext());
+        final ZoomImageView img = new ZoomImageView(container.getContext());
         ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(-1, -1);
         img.setLayoutParams(params);
         img.setScaleType(ImageView.ScaleType.FIT_CENTER);
         String imgUrl = data.get(position);
         GlideTool.loadImage(container.getContext(), imgUrl, img, false);
-        img.setOnClickListener(new View.OnClickListener() {
+        img.setOnPhotoTapListener(new ZoomImageView.OnPhotoTapListener() {
             @Override
-            public void onClick(View v) {
+            public void onPhotoTap(View view, float x, float y) {
                 activity.finish();
             }
         });
@@ -63,7 +69,17 @@ public class ImagePreviewAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-//        container.removeViewAt(position);
+        container.removeView((View) object);
+
+            /*
+             * Recycle the old bitmap to free up memory straight away
+             */
+        try {
+            final ImageView imageView = (ImageView) object;
+            final Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            imageView.setImageBitmap(null);
+            bitmap.recycle();
+        } catch (Exception e) {}
     }
 
 
