@@ -11,13 +11,27 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin_half">
 
+    <FrameLayout
+        android:id="@+id/fl_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:alpha="1"
-        android:src="@drawable/ic_loading"/>
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:alpha="1"
+            android:src="@drawable/ic_loading"/>
+
+        <TextView
+            android:id="@+id/iv_unread"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:textColor="@android:color/white"
+            android:background="@drawable/message_background"
+            android:gravity="center"/>
+    </FrameLayout>
 
 
     <TextView
@@ -25,9 +39,9 @@
         style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/iv_head"
+        android:layout_alignTop="@+id/fl_head"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_toRightOf="@id/iv_head"
+        android:layout_toRightOf="@id/fl_head"
         android:text="【水瓶座】"
         android:textColor="@color/dimgray"/>
 
@@ -36,13 +50,24 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iv_head"
+        android:layout_alignBottom="@+id/fl_head"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:layout_toRightOf="@id/iv_head"
+        android:layout_toRightOf="@id/fl_head"
         android:singleLine="true"
         android:text="DIY达人"
         android:textColor="@color/gold"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fl_head"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:singleLine="true"
+        android:text="time"/>
 
 </RelativeLayout>
 

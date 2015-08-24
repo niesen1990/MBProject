@@ -21,7 +21,7 @@ public class WonderCollectionListAdapter extends ContentAdapterBase<PostModel> {
 
     public WonderCollectionListAdapter(Context mContext, DataController<PostModel> mDataController, boolean need) {
         super(mContext, mDataController);
-        moreFlag = true;
+        moreFlag = false;
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

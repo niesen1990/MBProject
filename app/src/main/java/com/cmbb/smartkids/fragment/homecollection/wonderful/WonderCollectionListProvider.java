@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class WonderCollectionListProvider extends DataController<PostModel> {
 
+    int id = -1;
 
     @Override
     public void doInitialize(Callback callback) {
@@ -35,6 +36,7 @@ public class WonderCollectionListProvider extends DataController<PostModel> {
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.User.FINDMYWONDERFULSTORE_URL, body, callback);
@@ -44,6 +46,8 @@ public class WonderCollectionListProvider extends DataController<PostModel> {
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        body.put("id", id + "");
+        body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.User.FINDMYWONDERFULSTORE_URL, body, callback);
     }
 
@@ -57,6 +61,11 @@ public class WonderCollectionListProvider extends DataController<PostModel> {
             }
             Gson gson = new Gson();
             WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
+            try {
+                id = data.getContext().getHomeSameAgeList().get(data.getContext().getHomeSameAgeList().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();

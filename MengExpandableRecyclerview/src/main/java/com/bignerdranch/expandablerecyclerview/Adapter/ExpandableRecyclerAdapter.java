@@ -339,10 +339,15 @@ public abstract class ExpandableRecyclerAdapter<PVH extends ParentViewHolder, CV
             mStableIdMap.put(parentWrapper.getStableId(), false);
             List<Object> childObjectList = ((ParentObject) parentWrapper.getParentObject()).getChildObjectList();
             if (childObjectList != null) {
-                for (int i = childObjectList.size() - 1; i >= 0; i--) {
-                    mItemList.remove(position + i + 1);
-                    mExpandableRecyclerAdapterHelper.getHelperItemList().remove(position + i + 1);
-                    notifyItemRemoved(position + i + 1);
+                try {
+
+                    for (int i = childObjectList.size() - 1; i >= 0; i--) {
+                        mItemList.remove(position + i + 1);
+                        mExpandableRecyclerAdapterHelper.getHelperItemList().remove(position + i + 1);
+                        notifyItemRemoved(position + i + 1);
+                    }
+                } catch (Exception e) {
+
                 }
             }
         } else {

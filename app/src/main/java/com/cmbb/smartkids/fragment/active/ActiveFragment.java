@@ -2,7 +2,13 @@ package com.cmbb.smartkids.fragment.active;
 
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -43,6 +49,7 @@ import java.util.Map;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +61,8 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
 
     ArrayList<ParentObject> parentObjectList = new ArrayList<>();
 
+    LocalBroadcastManager mLocalBroadcastManager;
+
     public ActiveFragment() {
         // Required empty public constructor
     }
@@ -61,7 +70,13 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(getActivity());
+        mLocalBroadcastManager.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                initConversationList();
+            }
+        }, new IntentFilter("com.cmbb.smartkids.rong.message"));
     }
 
     @Override
@@ -80,26 +95,34 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         initAttentionData();
-        initConversationList();
         initXiaoBianList();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initConversationList();
+    }
+
+    CustomParentObject customParentObject1;
+    CustomParentObject customParentObject2;
+    CustomParentObject customParentObject3;
 
     private void setUpParentData() {
 
         if (parentObjectList.size() > 0) parentObjectList.clear();
-
         //萌宝在线
-        CustomParentObject customParentObject1 = new CustomParentObject();
+        customParentObject1 = new CustomParentObject();
         //customParentObject1.setChildObjectList(mUserAttentionModels);
         customParentObject1.setParentText("萌宝在线");
         parentObjectList.add(customParentObject1);
         //我的联系人
-        CustomParentObject customParentObject2 = new CustomParentObject();
+        customParentObject2 = new CustomParentObject();
         //customParentObject2.setChildObjectList(mUserAttentionModels);
         customParentObject2.setParentText("我的联系人");
         parentObjectList.add(customParentObject2);
         //最近联系人
-        CustomParentObject customParentObject3 = new CustomParentObject();
+        customParentObject3 = new CustomParentObject();
         //customParentObject3.setChildObjectList(mUserAttentionModels);
         customParentObject3.setParentText("最近联系人");
         parentObjectList.add(customParentObject3);
@@ -120,35 +143,47 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
      * 获取联系人列表
      */
     private void initAttentionData() {
-        showWaitDialog();
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.User.FINDATTENTIONUSER_URL, body, new Callback() {
+        OkHttp.asyncPost(Constants.User.FINDATTENTIONUSER_URL, body, "active_contact", new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideWaitDialog();
-                    }
-                });
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                hideWaitDialog();
+
+                            } catch (Exception e1) {
+
+                            }
+                        }
+                    });
+                } catch (Exception e1) {
+
+                }
+
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                String result = response.body().string();
-                Gson gson = new Gson();
-                UserAttentionBaseModel data = gson.fromJson(result, UserAttentionBaseModel.class);
-                final ArrayList<UserAttentionModel> mUserAttentionModels = data.getContext();
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideWaitDialog();
-                        Log.i("MEIZU", " parentObjectList size  " + parentObjectList.size());
-                        ((CustomParentObject) parentObjectList.get(1)).setChildObjectList(mUserAttentionModels);
-                        mActiveExpandableAdapter.setData(parentObjectList);
-                    }
-                });
+                try {
+                    String result = response.body().string();
+                    Gson gson = new Gson();
+                    UserAttentionBaseModel data = gson.fromJson(result, UserAttentionBaseModel.class);
+                    final ArrayList<UserAttentionModel> mUserAttentionModels = data.getContext();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideWaitDialog();
+                            ((CustomParentObject) parentObjectList.get(1)).setChildObjectList(mUserAttentionModels);
+                            mActiveExpandableAdapter.setData(parentObjectList);
+                        }
+                    });
+                } catch (Exception e) {
+
+                }
             }
         });
     }
@@ -191,15 +226,18 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
                     e.printStackTrace();
                 }
             }
-            Log.i("Conversation", "Conversation = " + RongInfoContext.getInstance().getUserInfoById(conversations.get(i).getTargetId()).getPortraitUri());
             itemsChild.add(childItem);
         }
-
-
+        customParentObject3.setUnRead(unReadAll);
         ((CustomParentObject) parentObjectList.get(2)).setChildObjectList(itemsChild);
         ((CustomParentObject) parentObjectList.get(2)).setParentText("最近联系人");
-        Log.i("MEIZU", "CustomParentObject= " + ((CustomParentObject) parentObjectList.get(2)).getChildObjectList().size());
         mActiveExpandableAdapter.setData(parentObjectList);
+
+        // 发送给主页
+        Intent in = new Intent();
+        in.setAction("com.cmbb.smartkids.rong.message_count");
+        in.putExtra("count", unReadAll);
+        mLocalBroadcastManager.sendBroadcast(in);
     }
 
     /**
@@ -216,28 +254,45 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String result = response.body().string();
-                    Log.i("MEIZU", " xiao bian = " + result);
-                    Gson gson = new Gson();
-                    ExpertServeBaseModel expertServeBaseModel = gson.fromJson(result, ExpertServeBaseModel.class);
-                    final List<UserAttentionModel> itemsChild = new ArrayList<UserAttentionModel>();
-                    for (int i = 0; i < expertServeBaseModel.getContext().getServeList().size(); i++) {
-                        UserAttentionModel childItem = new UserAttentionModel();
-                        childItem.setAttentionToken(expertServeBaseModel.getContext().getServeList().get(i).getRongyunServiceId());
-                        childItem.setEredarName(expertServeBaseModel.getContext().getServeList().get(i).getAuthorityName());
-                        childItem.setNike(expertServeBaseModel.getContext().getServeList().get(i).getRealName());
-                        childItem.setUserSmallHeadImg(expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg());
-                        childItem.setIsServer(true);
-                        itemsChild.add(childItem);
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((CustomParentObject) parentObjectList.get(0)).setChildObjectList(itemsChild);
-                            mActiveExpandableAdapter.setData(parentObjectList);
+                try {
+                    if (response.isSuccessful()) {
+                        String result = response.body().string();
+                        Log.i("MEIZU", " xiao bian = " + result);
+                        Gson gson = new Gson();
+                        ExpertServeBaseModel expertServeBaseModel = gson.fromJson(result, ExpertServeBaseModel.class);
+                        final List<UserAttentionModel> itemsChild = new ArrayList<UserAttentionModel>();
+                        for (int i = 0; i < expertServeBaseModel.getContext().getServeList().size(); i++) {
+                            UserAttentionModel childItem = new UserAttentionModel();
+                            childItem.setAttentionToken(expertServeBaseModel.getContext().getServeList().get(i).getRongyunServiceId());
+                            childItem.setEredarName(expertServeBaseModel.getContext().getServeList().get(i).getAuthorityName());
+                            childItem.setNike(expertServeBaseModel.getContext().getServeList().get(i).getRealName());
+                            childItem.setUserSmallHeadImg(expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg());
+                            childItem.setIsServer(true);
+                            itemsChild.add(childItem);
+
+                            ArrayList<UserInfo> userInfos = new ArrayList<UserInfo>();
+                            if (expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg().contains("upload")) {
+                                UserInfo info = new UserInfo(expertServeBaseModel.getContext().getServeList().get(i).getRongyunServiceId(), expertServeBaseModel.getContext().getServeList().get(i).getRealName(),
+                                        expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL_OLD + expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg()));
+                                userInfos.add(info);
+                            } else {
+                                UserInfo info = new UserInfo(expertServeBaseModel.getContext().getServeList().get(i).getRongyunServiceId(), expertServeBaseModel.getContext().getServeList().get(i).getRealName(),
+                                        expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL + expertServeBaseModel.getContext().getServeList().get(i).getUserSmallHeadImg()));
+                                userInfos.add(info);
+                            }
+                            RongInfoContext.getInstance().setUserInfos(userInfos);
                         }
-                    });
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((CustomParentObject) parentObjectList.get(0)).setChildObjectList(itemsChild);
+                                mActiveExpandableAdapter.setData(parentObjectList);
+
+                            }
+                        });
+                    }
+                } catch (Exception e) {
+
                 }
             }
         });

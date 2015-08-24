@@ -27,6 +27,8 @@ public class CustomChildViewHolder extends ChildViewHolder {
     public final ImageView mIvRanktag;
     public final ImageView mIvLv;
     public final TextView mTvContent;
+    public final TextView ivUnread;
+    public final TextView tvTime;
 
     public final RelativeLayout rvRoot;
 
@@ -44,5 +46,7 @@ public class CustomChildViewHolder extends ChildViewHolder {
         mIvLv = (ImageView) itemView.findViewById(R.id.iv_lv);
         mTvContent = (TextView) itemView.findViewById(R.id.tv_content);
         rvRoot = (RelativeLayout) itemView.findViewById(R.id.rv_root);
+        ivUnread = (TextView) itemView.findViewById(R.id.iv_unread);
+        tvTime = (TextView) itemView.findViewById(R.id.tv_time);
     }
 }

@@ -10,11 +10,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
 
 import com.cmbb.smartkids.R;
-import com.cmbb.smartkids.activity.user.UserActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.rong.message.DeAgreedFriendRequestMessage;
 
@@ -66,6 +66,7 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
 
     private Context mContext;
     private Handler mHandler;
+    private LocalBroadcastManager mLocalBroadcastManager;
 
     /**
      * 初始化 RongCloud.
@@ -91,6 +92,7 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
      * @param context 上下文。
      */
     private RongCloudEvent(Context context) {
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(context);
         mContext = context;
         initDefaultListener();
         mHandler = new Handler(this);
@@ -183,9 +185,9 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
                     .setContentIntent(pendingIntent);
             mBuilder.setAutoCancel(true);
             notification = mBuilder.build();
-
         }
         NotificationManager nm = (NotificationManager) RongContext.getInstance().getSystemService(RongContext.getInstance().NOTIFICATION_SERVICE);
+
         nm.notify(0, notification);
         return true;
     }
@@ -215,7 +217,8 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
      */
     @Override
     public boolean onReceived(Message message, int left) {
-
+        Intent intent = new Intent("com.cmbb.smartkids.rong.message");
+        mLocalBroadcastManager.sendBroadcast(intent);
         MessageContent messageContent = message.getContent();
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
@@ -248,7 +251,6 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
         } else {
             Log.d(TAG, "onReceived-其他消息，自己来判断处理");
         }
-
         return false;
 
     }
@@ -369,7 +371,7 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
         /**
          * demo 代码  开发者需替换成自己的代码。
          */
-        if (user != null) {
+        /*if (user != null) {
             if (conversationType.equals(Conversation.ConversationType.PUBLIC_SERVICE) || conversationType.equals(Conversation.ConversationType.APP_PUBLIC_SERVICE)) {
                 RongIM.getInstance().startPublicServiceProfile(mContext, conversationType, user.getUserId());
             } else {
@@ -377,7 +379,7 @@ public final class RongCloudEvent implements RongIMClient.OnReceiveMessageListen
                 //intent.putExtra("user", (HomeEredarModel) (view.getTag()));
                 context.startActivity(in);
             }
-        }
+        }*/
 
         return false;
     }

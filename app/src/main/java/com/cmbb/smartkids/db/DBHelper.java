@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = DBHelper.class.getSimpleName();
 
 
-    public static int DATABASE_VERSION = 31;
+    public static int DATABASE_VERSION = 35;
 
     public DBHelper(Context context) {
         super(context, MBContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,7 +25,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         Log.i(TAG, "DB Create");
         db.execSQL(MBContract.UserAccount.CREATE_TABLE);
-
     }
 
     @Override

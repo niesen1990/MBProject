@@ -95,7 +95,7 @@
                 android:layout_below="@id/tv_content_replay"
                 android:layout_margin="2dp"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ic_loading"
                 android:visibility="gone"/>
 

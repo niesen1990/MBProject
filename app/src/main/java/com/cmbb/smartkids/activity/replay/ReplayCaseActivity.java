@@ -217,7 +217,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
         headContainer.setLayoutParams(params);
 
-        mReplayListFragment = new ReplayCaseListFragment(true, mCaseDetailListModel, headContainer, this);
+        mReplayListFragment = new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headContainer, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getCaseReplayDetail(this, mCaseDetailListModel);
         appbar.addOnOffsetChangedListener(this);
@@ -277,7 +277,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
                 LinearLayout headCache = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
                 headCache.setLayoutParams(paramsCache);
                 setHeadContent(headCache, mPostDetail);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayCaseListFragment(true, mCaseDetailListModel, headCache, this)).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headCache, this)).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);

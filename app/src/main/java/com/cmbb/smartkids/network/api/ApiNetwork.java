@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.HomeActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.caselist.CaseDetailListModel;
@@ -171,6 +172,9 @@ public class ApiNetwork {
         body.put("areaType", mPostModel.getAreaType());
         body.put("type", mPostModel.getType());
         body.put("userId", "" + mPostModel.getUserId());
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("getWonderReplayDetail", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
         OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindWonderfulDetails", body, new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -332,7 +336,7 @@ public class ApiNetwork {
     }
 
 
-    public static void login(String token) {
+    public static void login(String token, final HomeActivity homeActivity) {
         Map<String, String> body = new HashMap<String, String>();
         body.put("token", token);
         OkHttp.asyncPost(Constants.User.LOGINS_URL, body, new Callback() {
@@ -363,6 +367,10 @@ public class ApiNetwork {
                                 @Override
                                 public void onSuccess(String userId) {
                                     Log.i("MEIZU", "---------onSuccess userId----------:" + userId);
+                                    homeActivity.btnActive.setClickable(true);
+                                    homeActivity.btnAdd.setClickable(true);
+                                    homeActivity.btnMaster.setClickable(true);
+                                    homeActivity.btnTools.setClickable(true);
                                     // 获取用户信息
                                     RongCloudEvent.getInstance().setOtherListener();
                                 }
@@ -521,6 +529,47 @@ public class ApiNetwork {
         Log.i("result", "key = " + Constants.BASE_URL + connector + plate);
 
         OkHttp.asyncPost(Constants.BASE_URL + connector + plate, body, callback);
+    }
+
+
+    /**
+     * 删除回复
+     *
+     * @param type
+     * @param connector
+     * @param areaType
+     * @param id
+     * @param callback
+     */
+    public static void deleteReplay(String type, String connector, String areaType, int id, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        body.put("replyId", "" + id);
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("deleteReplay", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        OkHttp.asyncPost(Constants.BASE_URL + connector + "DeleteReplys", body, callback);
+    }
+
+
+    /**
+     * @param areaType
+     * @param type
+     * @param publishRelationId
+     * @param replysRelationId
+     * @param callback
+     */
+    public static void addReport(String areaType, String type, String publishRelationId, String replysRelationId, Callback callback) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("areaType", areaType);
+        body.put("type", type);
+        body.put("publishRelationId", publishRelationId);
+        if (!TextUtils.isEmpty(replysRelationId))
+            body.put("replysRelationId", replysRelationId);
+        OkHttp.asyncPost(Constants.ADDREPORT_URL, body, callback);
     }
 
 
@@ -731,6 +780,22 @@ public class ApiNetwork {
 
 
     /**
+     * 取消请求
+     *
+     * @param no
+     */
+    public static void cancleNetwork(String[] no) {
+        String[] ccs = new String[]{"home_list_provider", "eredar_type", "eredar_right", "doctor_type", "doctor_right", "active_message", "active_contact"};
+
+        for (int i = 0; i < ccs.length; i++) {
+            for (int j = 0; j < no.length; j++) {
+                if (!ccs[i].equals(no[j]))
+                    OkHttp.mOkHttpClient.cancel(ccs[i]);
+            }
+        }
+    }
+
+    /**
      * 发送网络错误
      *
      * @param context Context
@@ -742,6 +807,4 @@ public class ApiNetwork {
         intent.putExtra(Constants.NETWORK_FAILURE, context.getResources().getString(R.string.service_error));
         context.sendBroadcast(intent);
     }
-
-
 }

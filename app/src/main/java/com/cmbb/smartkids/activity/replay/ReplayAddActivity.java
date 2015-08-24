@@ -17,7 +17,7 @@ import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
-import com.cmbb.smartkids.model.replay.ReplayMessageBaseModel;
+import com.cmbb.smartkids.fragment.replay.ReplayBaseModel;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
 import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
@@ -164,15 +164,20 @@ public class ReplayAddActivity extends MActivity {
                 if (response.isSuccessful()) {
                     String result = response.body().string();
                     Gson gson = new Gson();
-                    final ReplayMessageBaseModel replayMessageBaseModel = gson.fromJson(result, ReplayMessageBaseModel.class);
+                    final ReplayBaseModel replayMessageBaseModel = gson.fromJson(result, ReplayBaseModel.class);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             hideWaitDialog();
                             if (replayMessageBaseModel.getCode().equals("1")) {
                                 showToast("回复成功");
+                                for (int i = 0; i < replayMessageBaseModel.getContext().size(); i++) {
+                                    Log.i("replay_result", "replay_result = " + replayMessageBaseModel.getContext().get(i).toString());
+                                }
+                                Intent intent = new Intent();
+                                intent.putParcelableArrayListExtra("data", replayMessageBaseModel.getContext());
+                                setResult(10, intent);
                                 finish();
-
                             } else {
                                 showToast("回复失败");
                             }

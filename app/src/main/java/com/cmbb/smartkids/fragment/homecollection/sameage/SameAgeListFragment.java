@@ -37,7 +37,7 @@ public class SameAgeListFragment extends CommonFragment<PostModel> {
 
     @Override
     protected boolean enableRefresh() {
-        return false;
+        return true;
     }
 
 

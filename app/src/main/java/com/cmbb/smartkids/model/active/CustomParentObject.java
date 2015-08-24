@@ -21,6 +21,7 @@ public class CustomParentObject implements ParentObject<UserAttentionModel> {
 
     private String mParentText;
     private int mParentNumber;
+    private int unRead;
 
 
     public CustomParentObject() {
@@ -40,6 +41,14 @@ public class CustomParentObject implements ParentObject<UserAttentionModel> {
 
     public void setParentNumber(int parentNumber) {
         mParentNumber = parentNumber;
+    }
+
+    public int getUnRead() {
+        return unRead;
+    }
+
+    public void setUnRead(int unRead) {
+        this.unRead = unRead;
     }
 
     /**

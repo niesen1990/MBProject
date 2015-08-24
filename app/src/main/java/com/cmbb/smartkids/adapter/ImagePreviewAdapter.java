@@ -2,10 +2,7 @@ package com.cmbb.smartkids.adapter;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +76,8 @@ public class ImagePreviewAdapter extends PagerAdapter {
             final Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
             imageView.setImageBitmap(null);
             bitmap.recycle();
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
     }
 
 

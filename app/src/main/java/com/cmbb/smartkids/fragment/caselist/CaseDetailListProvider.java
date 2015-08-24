@@ -27,6 +27,7 @@ public class CaseDetailListProvider extends DataController<CaseDetailListModel> 
     private Context mContext;
 
     private CaseTypeModel mCaseTypeModel;
+    int id = -1;
 
     public CaseDetailListProvider(Context context, CaseTypeModel caseTypeModel) {
         mContext = context;
@@ -44,12 +45,22 @@ public class CaseDetailListProvider extends DataController<CaseDetailListModel> 
 
     @Override
     public void doRefresh(Callback callback) {
-        //OkHttp.asyncGet(Constants.Case.FINDCASETYPE_URL, callback);
+        id = -1;
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("caseType", mCaseTypeModel.getType() + "");
+
+        OkHttp.asyncPost(Constants.Case.FINDCASELIST_URL, body, callback);
     }
 
     @Override
     public void doMore(Callback callback) {
-        //OkHttp.asyncGet(Constants.Case.FINDCASETYPE_URL, callback);
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("caseType", mCaseTypeModel.getType() + "");
+        body.put("id", id + "");
+        body.put("upDown", 2 + "");
+        OkHttp.asyncPost(Constants.Case.FINDCASELIST_URL, body, callback);
     }
 
     @Override
@@ -62,6 +73,11 @@ public class CaseDetailListProvider extends DataController<CaseDetailListModel> 
             }
             Gson gson = new Gson();
             CaseDetailListBaseModel data = gson.fromJson(result, CaseDetailListBaseModel.class);
+            try {
+                id = data.getContext().get(data.getContext().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext();
         } catch (Exception e) {
             e.printStackTrace();

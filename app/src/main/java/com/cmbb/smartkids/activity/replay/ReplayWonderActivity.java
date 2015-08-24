@@ -64,6 +64,7 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         public void onReceive(Context context, Intent intent) {
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
                 mPostDetail = intent.getParcelableExtra(Constants.Post.POSTDETAIL_DATA);
+                Log.i("PostDetail", "PostDetail = " + mPostDetail);
                 setHeadViewData(headContainer);
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
@@ -94,6 +95,12 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         mPostModel = getIntent().getParcelableExtra("model");
         mController = ShareUtils.instanceOf(this);
         assignViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
+        headContainer.setLayoutParams(params);
+        mReplayListFragment = new ReplayListFragment(true, mPostDetail, mPostModel, headContainer, sort, this);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
+        ApiNetwork.getWonderReplayDetail(this, mPostModel);
     }
 
     private void assignViews() {
@@ -113,14 +120,17 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 intent.putExtra("model", mPostModel);
                 intent.putExtra("id", -1);
                 intent.putExtra("floor", -1);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 10);
             }
         });
         btnSpot = (TextView) findViewById(R.id.btn_spot);
-
     }
 
     private void setHeadViewData(LinearLayout linearLayout) {
+        if (mPostDetail == null) {
+            showToast("帖子已经删除");
+            return;
+        }
         btnSpot.setText(mPostDetail.getSpotCount() + "");
         if (mPostDetail.getCurrentUserSpot() >= 1) {
             Drawable drawable = getResources().getDrawable(R.drawable.ic_spot_yellow);
@@ -300,7 +310,10 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     String[] cache = imgUrls[j].split(",");
                     for (int k = 0; k < cache.length; k++) {
                         if (cache[k].contains("bigImage")) {
-                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
+                            /*ImageView imageView = new ImageView(this);*/
+                            imageView.setAdjustViewBounds(true);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                             imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
                             pagerUrls.add(cache[k]);
@@ -328,7 +341,10 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     }
                 }
             } else {
-                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_image, null);
+                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
+                /*ImageView imageView = new ImageView(this);*/
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setLayoutParams(params);
                 imageView.setTag(R.id.image, pagerUrls.size() - 1);
                 imageView.setOnClickListener(new View.OnClickListener() {
@@ -370,12 +386,6 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     @Override
     protected void onResume() {
         super.onResume();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
-        headContainer.setLayoutParams(params);
-        mReplayListFragment = new ReplayListFragment(true, mPostModel, headContainer, sort, this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
-        ApiNetwork.getWonderReplayDetail(this, mPostModel);
         appbar.addOnOffsetChangedListener(this);
         IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);
         registerReceiver(postDetailReceiver, intentFilter);
@@ -418,7 +428,11 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 sb.append(mPostModel.getType());
                 sb.append("&areaType=");
                 sb.append(mPostModel.getAreaType());
-                ShareUtils.setShareContent(mPostDetail.getTitle(), mPostDetail.getContext(), sb.toString(), shareImgUrl);
+                if (TextUtils.isEmpty(mPostDetail.getContext())) {
+                    ShareUtils.setShareContent(mPostDetail.getTitle(), mPostModel.getPlateName(), sb.toString(), shareImgUrl);
+                } else {
+                    ShareUtils.setShareContent(mPostDetail.getTitle(), mPostDetail.getContext(), sb.toString(), shareImgUrl);
+                }
                 ShareUtils.showShareView();
                 break;
             case R.id.action_collect:
@@ -433,7 +447,8 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 LinearLayout headCache = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
                 headCache.setLayoutParams(paramsCache);
                 setHeadContent(headCache);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayListFragment(true, mPostModel, headCache, sort, this)).commit();
+
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayListFragment(true, mPostDetail, mPostModel, headCache, sort, this)).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -581,6 +596,11 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 10 && resultCode == 10) {
+            ArrayList<ReplayModel> replayMessageModels = data.getParcelableArrayListExtra("data");
+            mReplayListFragment.mReplayListProvider.initSuccess(replayMessageModels);
+            return;
+        }
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
@@ -594,6 +614,6 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         intent.putExtra("model", mPostModel);
         intent.putExtra("id", replayModel.getId());
         intent.putExtra("floor", replayModel.getFloor());
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 10);
     }
 }

@@ -1,5 +1,6 @@
 package com.cmbb.smartkids.activity.baby;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,15 +14,10 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.fragment.baby.babylist.BabyListFragment;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
-import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
 
 public class MBabyActivity extends MActivity {
 
@@ -48,76 +44,14 @@ public class MBabyActivity extends MActivity {
         title.setText(mPlateModel.getTitle());
         subtitle = (TextView) findViewById(R.id.subtitle);
         subtitle.setText(mPlateModel.getContext());
-        btnAttention = (TextView) findViewById(R.id.btn_attention);
-        btnAttention.setClickable(false);
-        btnAttention.setOnClickListener(new View.OnClickListener() {
+        fabPublish = (FloatingActionButton) findViewById(R.id.fab_publish);
+        fabPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (btnAttention.getText().equals("关注")) {
-                    ApiNetwork.addAttentionPlate(mPlateModel.getId() + "", new Callback() {
-                        @Override
-                        public void onFailure(Request request, IOException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showToast("请检测网络");
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onResponse(Response response) throws IOException {
-                            if (response.isSuccessful()) {
-                                final String result = response.body().string();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (result.contains("1")) {
-                                            btnAttention.setText("取消");
-                                            showToast("关注成功");
-                                        } else {
-                                            showToast("关注失败");
-                                        }
-                                    }
-                                });
-
-                            }
-                        }
-                    });
-                } else {
-                    ApiNetwork.cancelAttentionPlate(mPlateModel.getId() + "", new Callback() {
-                        @Override
-                        public void onFailure(Request request, IOException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showToast("请检测网络");
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onResponse(Response response) throws IOException {
-                            if (response.isSuccessful()) {
-                                final String result = response.body().string();
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (result.contains("1")) {
-                                            btnAttention.setText("关注");
-                                            showToast("取消成功");
-                                        } else {
-                                            showToast("取消失败");
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
+                Intent intent = new Intent(MBabyActivity.this, AddBabyActivity.class);
+                startActivity(intent);
             }
         });
-        fabPublish = (FloatingActionButton) findViewById(R.id.fab_publish);
     }
 
     @Override
@@ -130,6 +64,14 @@ public class MBabyActivity extends MActivity {
     protected void init(Bundle savedInstanceState) {
         mPlateModel = getIntent().getParcelableExtra("model");
         assignViews();
+        collapsingToolbar.setTitle(mPlateModel.getTitle());
+        collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new BabyListFragment()).commit();
     }
 
     @Override

@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public class CaseListProvider extends DataController<CaseModel> {
 
+    int id = -1;
 
     @Override
     public void doInitialize(Callback callback) {
@@ -33,6 +34,7 @@ public class CaseListProvider extends DataController<CaseModel> {
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.User.FINDBYMYOTHERCASESTORE_URL, body, callback);
@@ -42,6 +44,8 @@ public class CaseListProvider extends DataController<CaseModel> {
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        body.put("id", id + "");
+        body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.User.FINDBYMYOTHERCASESTORE_URL, body, callback);
     }
 
@@ -55,6 +59,11 @@ public class CaseListProvider extends DataController<CaseModel> {
             }
             Gson gson = new Gson();
             CaseBaseModel data = gson.fromJson(result, CaseBaseModel.class);
+            try {
+                id = data.getContext().getHomeSameAgeList().get(data.getContext().getHomeSameAgeList().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext().getHomeSameAgeList();
         } catch (Exception e) {
             e.printStackTrace();

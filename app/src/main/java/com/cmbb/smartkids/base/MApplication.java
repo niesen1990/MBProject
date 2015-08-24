@@ -61,7 +61,7 @@ public class MApplication extends Application {
             mContext = getApplicationContext();
             initLog();
             //initStetho();
-            initUmengAnalytics();
+
             initSharePreference();
             //初始化百度地图
             // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
@@ -84,6 +84,7 @@ public class MApplication extends Application {
                     e.printStackTrace();
                 }
             }
+            initUmengAnalytics();
         }
 
     }
@@ -102,11 +103,9 @@ public class MApplication extends Application {
                 .build());
     }
 
-    /**
-     * 初始化图片处理Glide
-     */
     private void initUmengAnalytics() {
-        MobclickAgent.setDebugMode(false);
+        MobclickAgent.setDebugMode(true);
+        MobclickAgent.setCatchUncaughtExceptions(true);
     }
 
 

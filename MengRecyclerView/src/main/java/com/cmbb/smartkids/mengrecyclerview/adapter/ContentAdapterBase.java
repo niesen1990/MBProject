@@ -123,7 +123,6 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
                     mDataController.more();
                 }
             }
-
         } else {
             onBindCustomViewHolder(holder, position);
         }

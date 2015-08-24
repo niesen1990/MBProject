@@ -205,7 +205,7 @@ public class PostWonderListActivity extends MActivity implements AppBarLayout.On
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);
+        IntentFilter intentFilter = new IntentFilter(Constants.Post.PLATE_DATA_INTENT);
         registerReceiver(attentionReceiver, intentFilter);
         appbar.addOnOffsetChangedListener(this);
     }

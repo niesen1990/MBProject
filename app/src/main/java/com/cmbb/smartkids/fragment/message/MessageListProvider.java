@@ -35,21 +35,21 @@ public class MessageListProvider extends DataController<MessageModel> {
     public void doInitialize(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, "active_message", callback);
     }
 
     @Override
     public void doRefresh(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, "active_message", callback);
     }
 
     @Override
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.FINDMESSAGE_URL, body, "active_message", callback);
     }
 
     @Override

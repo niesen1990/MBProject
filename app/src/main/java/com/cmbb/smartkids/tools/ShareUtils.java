@@ -114,6 +114,9 @@ public class ShareUtils {
                 realImageUrl = Constants.BASE_IMAGE_URL + imgUrl;
             }
         }
+        if (TextUtils.isEmpty(content)) {
+            content = "";
+        }
 
         // 配置SSO
         WeiXinShareContent weixinContent = new WeiXinShareContent();

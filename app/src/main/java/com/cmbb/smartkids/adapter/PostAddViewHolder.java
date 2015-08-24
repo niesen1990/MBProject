@@ -12,8 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.post.PostAddWonderActivity;
 import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.log.Log;
 
 import java.util.ArrayList;
 
@@ -46,10 +48,11 @@ public class PostAddViewHolder extends RecyclerView.ViewHolder {
         return new PostAddViewHolder(v);
     }
 
-    public void onBindViewHolder(final Context context, final ArrayList<PhotoAdd> photoContents, final int position) {
+    public void onBindViewHolder(final Context context, final PhotoAddAdapter photoAddAdapter, final ArrayList<PhotoAdd> photoContents, final int position) {
         flRoot.setTag(position);
         GlideTool.loadImage(context, photoContents.get(position).getPhotoUrl(), ivAddPic, false);
         etContentPic.setTag(position);
+        etContentPic.setText(photoContents.get((int) etContentPic.getTag()).getPhotoContent());
         etContentPic.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -58,13 +61,23 @@ public class PostAddViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 //将editText中改变的值设置的HashMap中
-                photoContents.get(position).setPhotoContent(s.toString());
+                photoContents.get((int) etContentPic.getTag()).setPhotoContent(s.toString());
+            }
+        });
+        ivAddDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoContents.remove(position);
+                ((PostAddWonderActivity) context).count++;
+                photoAddAdapter.notifyDataSetChanged();
+                for (int i = 0; i < photoContents.size(); i++) {
+                    Log.i("photo", "photo = " + photoContents.get(i).getPhotoContent());
+                }
             }
         });
     }

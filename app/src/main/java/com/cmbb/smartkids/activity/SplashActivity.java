@@ -9,7 +9,6 @@ import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
-import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.sp.SPCache;
 import com.umeng.message.IUmengRegisterCallback;
@@ -81,8 +80,6 @@ public class SplashActivity extends MActivity {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
                     } else {
-                        ApiNetwork.login(MApplication.token);
-                        ApiNetwork.getUserInfoList();
                         startActivity(new Intent(SplashActivity.this, HomeActivity.class));
                     }
                     finish();

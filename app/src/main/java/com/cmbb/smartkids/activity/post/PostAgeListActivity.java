@@ -26,6 +26,7 @@ import com.cmbb.smartkids.fragment.postlist.wonder.AgePostListFragment;
 import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicCountModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -57,6 +58,7 @@ public class PostAgeListActivity extends MActivity implements AppBarLayout.OnOff
         public void onReceive(Context context, Intent intent) {
             WonderPublicCountModel wonderPublicCountModel = intent.getParcelableExtra(Constants.Post.PLATE_DATA);
             btnAttention.setClickable(true);
+            Log.i("attention", "attention = " + wonderPublicCountModel.getAttention());
             if (wonderPublicCountModel.getAttention().equals("1")) {
                 btnAttention.setText("取消");
             } else {
@@ -174,7 +176,6 @@ public class PostAgeListActivity extends MActivity implements AppBarLayout.OnOff
                 intent.putExtra("model", mPlateModel);
                 intent.putExtra("flag", false);
                 intent.putExtra("areaType", "AGEBREAKET");
-
                 startActivityForResult(intent, 1);
             }
         });
@@ -207,7 +208,7 @@ public class PostAgeListActivity extends MActivity implements AppBarLayout.OnOff
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(Constants.Post.POSTDETAIL_DATA_INTENT);
+        IntentFilter intentFilter = new IntentFilter(Constants.Post.PLATE_DATA_INTENT);
         registerReceiver(attentionReceiver, intentFilter);
         appbar.addOnOffsetChangedListener(this);
     }

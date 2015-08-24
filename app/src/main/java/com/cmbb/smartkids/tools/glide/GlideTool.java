@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.widget.CircleImage.CircleImageTransform;
@@ -23,6 +24,7 @@ public class GlideTool {
      * @param circle  是否裁圆
      */
     public static void loadImage(Context context, String url, ImageView view, boolean circle) {
+        Glide.get(context).setMemoryCategory(MemoryCategory.LOW);
         if (url.contains("storage")) {
             if (circle) {
                 Glide.with(context).load(url).transform(new CircleImageTransform(context)).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);

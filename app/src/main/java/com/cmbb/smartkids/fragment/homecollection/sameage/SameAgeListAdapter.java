@@ -21,6 +21,8 @@ public class SameAgeListAdapter extends ContentAdapterBase<PostModel> {
 
     public SameAgeListAdapter(Context mContext, DataController<PostModel> mDataController, boolean need) {
         super(mContext, mDataController);
+        moreFlag = false;
+
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

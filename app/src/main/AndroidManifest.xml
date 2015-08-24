@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cmbb.smartkids" >
+<manifest
+    package="com.cmbb.smartkids"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- umeng-analytics -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- umeng-analytics -->
     <!-- umeng 推送 -->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!-- umeng 推送 -->
     <!-- pgyer -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- 读写sdcard，storage等等 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <!-- 允许程序录制音频 -->
-    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.READ_LOGS"/>
     <!-- 获取logcat日志 -->
 
-    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
     <!-- baidu -->
     <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- 这个权限用于访问GPS定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <!-- SD卡读取权限，用户写入离线定位数据 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <!-- baidu -->
     <!-- pgyer -->
@@ -41,89 +42,102 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
 
         <!-- umeng-analytics -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5538a77367e58e41e0000c09" />
+            android:value="5538a77367e58e41e0000c09"/>
+
+        <meta-data
+            android:name="com.cmbb.smartkids.tools.glide.MGlideModule"
+            android:value="GlideModule"/>
+        <!--gmail-->
+        <!--<meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55d53102e0f55a778000720b"/>-->
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="86d804b234623b949528183d9ae65ede" />
+            android:value="86d804b234623b949528183d9ae65ede"/>
+        <!--gmail-->
+        <!--<meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="8c9ce6bdfae21520fc542ceb5ecbee9a"/>-->
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}" />
+            android:value="${UMENG_CHANNEL_VALUE}"/>
         <!-- umeng-analytics -->
         <!-- umeng-update -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
+            android:process=":DownloadingService">
         </service>
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
         <!-- umeng-update -->
         <!-- Baidu Location -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="yad43op0GDKnFliKgy5S1QX2" />
+            android:value="yad43op0GDKnFliKgy5S1QX2"/>
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote" />
+            android:process=":remote"/>
         <!-- Baidu Location -->
 
 
         <!-- 友盟推送manifest必备 -->
         <receiver
             android:name="com.umeng.message.NotificationProxyBroadcastReceiver"
-            android:exported="false" >
+            android:exported="false">
         </receiver>
         <receiver
             android:name="com.umeng.message.SystemReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
 
-                <data android:scheme="package" />
+                <data android:scheme="package"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.MessageReceiver"
             android:exported="false"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.RECEIVE" />
+                <action android:name="org.agoo.android.intent.action.RECEIVE"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.ElectionReceiver"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4" />
+                <action android:name="org.agoo.android.intent.action.ELECTION_RESULT_V4"/>
 
-                <category android:name="umeng" />
+                <category android:name="umeng"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="com.umeng.message.RegistrationReceiver"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.cmbb.smartkids.intent.action.COMMAND" />
+                <action android:name="com.cmbb.smartkids.intent.action.COMMAND"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="com.umeng.message.UmengMessageBootReceiver" >
+        <receiver android:name="com.umeng.message.UmengMessageBootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
 
@@ -131,51 +145,51 @@
             android:name="com.umeng.message.UmengService"
             android:exported="true"
             android:label="PushService"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
-                <action android:name="com.cmbb.smartkids.intent.action.START" />
+                <action android:name="com.cmbb.smartkids.intent.action.START"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.cmbb.smartkids.intent.action.COCKROACH" />
+                <action android:name="com.cmbb.smartkids.intent.action.COCKROACH"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
+                <action android:name="org.agoo.android.intent.action.PING_V4"/>
 
-                <category android:name="umeng" />
+                <category android:name="umeng"/>
             </intent-filter>
         </service>
         <service
             android:name="com.umeng.message.UmengIntentService"
-            android:process=":push" />
+            android:process=":push"/>
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
             android:exported="true"
-            android:process=":push" >
+            android:process=":push">
             <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
+                <action android:name="org.android.agoo.client.MessageReceiverService"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="org.android.agoo.client.ElectionReceiverService" />
+                <action android:name="org.android.agoo.client.ElectionReceiverService"/>
             </intent-filter>
         </service>
         <service
             android:name="com.umeng.message.UmengMessageCallbackHandlerService"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.umeng.messge.registercallback.action" />
+                <action android:name="com.umeng.messge.registercallback.action"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.unregistercallback.action" />
+                <action android:name="com.umeng.message.unregistercallback.action"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.message.handler.action" />
+                <action android:name="com.umeng.message.message.handler.action"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="com.umeng.message.autoupdate.handler.action" />
+                <action android:name="com.umeng.message.autoupdate.handler.action"/>
             </intent-filter>
         </service>
         <!-- V1.3.0添加的service，负责下载通知的资源 -->
-        <service android:name="com.umeng.message.UmengDownloadResourceService" />
+        <service android:name="com.umeng.message.UmengDownloadResourceService"/>
         <!-- 友盟推送manifest必备 -->
 
 
@@ -187,26 +201,26 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
 
         <!-- 腾讯SSO授权的Activity注册 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
-                <data android:scheme="tencent1104000906" />
+                <data android:scheme="tencent1104000906"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <!-- 微信回调activity -->
         <activity
@@ -214,329 +228,309 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <!-- *************************    分享相关的注册 END **************************** -->
 
 
         <!-- MengPhotoPicker -->
         <activity
             android:name=".photopicker.PhotoPickerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-        <activity android:name=".photopicker.PhotoPagerActivity" />
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".photopicker.PhotoPagerActivity"/>
         <!-- MengPhotoPicker -->
         <provider
             android:name=".provider.ProviderUserAccount"
             android:authorities="com.cmbb.smartkids.useraccount"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"/>
 
         <activity
             android:name=".activity.HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home">
         </activity>
         <activity
             android:name=".activity.SplashActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/FullScreen.Theme" >
+            android:theme="@style/FullScreen.Theme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.GuideActivity"
             android:label="GuideActivity"
-            android:theme="@style/FullScreen.Theme" />
+            android:theme="@style/FullScreen.Theme"/>
         <activity
             android:name=".activity.ImagePreviewActivity"
             android:label="ImagePreviewActivity"
-            android:theme="@style/FullScreen.Theme" />
+            android:theme="@style/FullScreen.Theme"/>
         <activity
             android:name=".activity.user.UserInfoActivity"
-            android:label="@string/title_activity_user_info"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_user_info">
         </activity>
         <activity
             android:name=".activity.user.UserAttentionActivity"
-            android:label="@string/title_activity_user_attention"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_user_attention">
         </activity>
         <activity
             android:name=".activity.user.UserCollectionActivity"
-            android:label="@string/title_activity_user_collection"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_user_collection">
         </activity>
         <activity
             android:name=".activity.user.UserPublishActivity"
-            android:label="@string/title_activity_user_publish" >
+            android:label="@string/title_activity_user_publish">
         </activity>
         <activity
             android:name=".activity.setting.SettingActivity"
-            android:label="@string/title_activity_setting" >
+            android:label="@string/title_activity_setting">
         </activity>
         <activity
             android:name=".activity.setting.SettingDetailActivity"
-            android:label="SettingDetailActivity" >
+            android:label="SettingDetailActivity">
         </activity>
         <activity
             android:name=".activity.SearchActivity"
-            android:label="SearcheActivity" >
+            android:label="SearcheActivity">
         </activity>
         <activity
             android:name=".activity.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"/>
         <activity
             android:name=".activity.login.PhoneVerifyActivity"
-            android:label="PhoneVerifyActivity" />
+            android:label="PhoneVerifyActivity"/>
         <activity
             android:name=".activity.login.ForgetActivity"
-            android:label="@string/title_activity_forget" />
+            android:label="@string/title_activity_forget"/>
         <activity
             android:name=".activity.login.RegisterActivity"
-            android:label="@string/title_activity_register" />
+            android:label="@string/title_activity_register"/>
         <activity
             android:name=".activity.user.UserActivity"
-            android:label="@string/title_activity_user"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_user">
         </activity>
         <activity
             android:name=".activity.user.UserExpertActivity"
-            android:label="@string/title_activity_user"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_user">
         </activity>
         <activity
             android:name=".activity.post.PlateListActivity"
-            android:label="@string/title_activity_post_list"
-            android:parentActivityName=".activity.HomeActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.HomeActivity" />
+            android:label="@string/title_activity_post_list">
         </activity>
         <activity
             android:name=".activity.post.PostWonderListActivity"
-            android:label="@string/title_activity_post_list" >
+            android:label="@string/title_activity_post_list">
         </activity>
         <activity
             android:name=".activity.post.PostAgeListActivity"
-            android:label="@string/title_activity_post_list" >
+            android:label="@string/title_activity_post_list">
         </activity>
         <activity
             android:name=".activity.post.PostCityListActivity"
-            android:label="@string/title_activity_post_list" >
+            android:label="@string/title_activity_post_list">
         </activity>
         <activity
             android:name=".activity.tools.ToolsCaseActivity"
-            android:label="急症室" />
+            android:label="急症室"/>
         <activity
             android:name=".activity.tools.ToolsMapActivity"
-            android:label="导航帮助" />
+            android:label="导航帮助"/>
         <activity
             android:name=".activity.tools.ToolsSuggestionsActivity"
-            android:label="育儿建议" />
+            android:label="育儿建议"/>
         <activity
             android:name=".activity.tools.ToolsSugDetailActivity"
-            android:label="建议详情" />
+            android:label="建议详情"/>
         <activity
             android:name=".activity.tools.ToolsVaccinationActivity"
-            android:label="疫苗接种" />
+            android:label="疫苗接种"/>
         <activity
             android:name=".activity.replay.ReplayWonderActivity"
-            android:label="@string/title_activity_replay_wonder" >
+            android:label="@string/title_activity_replay_wonder">
         </activity>
         <activity
             android:name=".activity.replay.ReplayCaseActivity"
-            android:label="@string/title_activity_replay_wonder" >
+            android:label="@string/title_activity_replay_wonder">
         </activity>
         <activity
             android:name=".activity.replay.ReplayAgeCityActivity"
-            android:label="@string/title_activity_replay_wonder" >
+            android:label="@string/title_activity_replay_wonder">
         </activity>
         <!-- 融云 -->
         <!-- begin rongcloud -->
         <activity
             android:name="io.rong.voipkit.activity.CallSideActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <data
                     android:host="io.rong.app"
                     android:pathPrefix="/VoIPCall"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
         </activity>
         <activity
             android:name="io.rong.voipkit.activity.CalledSideActivity"
             android:excludeFromRecents="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <data
                     android:host="io.rong.app"
                     android:pathPrefix="/VoIPAccept"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
         </activity>
 
         <service
             android:name="io.rong.push.PushService"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <action android:name="io.rong.push" />
+                <action android:name="io.rong.push"/>
             </intent-filter>
         </service>
         <service
             android:name="io.rong.push.CommandService"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
-                <action android:name="io.rong.command" />
+                <action android:name="io.rong.command"/>
             </intent-filter>
         </service>
 
         <receiver
             android:name="io.rong.push.PushReceiver"
-            android:process="io.rong.push" >
+            android:process="io.rong.push">
             <intent-filter>
-                <action android:name="io.rong.imlib.action.push.heartbeat" />
+                <action android:name="io.rong.imlib.action.push.heartbeat"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
         <receiver
             android:name="io.rong.imlib.HeartbeatReceiver"
-            android:process=":ipc" />
+            android:process=":ipc"/>
 
         <activity
             android:name="io.rong.imkit.tools.SelectPictureActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="io.rong.imkit.tools.PreviewPictureActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="io.rong.imkit.tools.RongWebviewActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="io.rong.imkit.widget.provider.TakingPicturesActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="io.rong.imlib.ipc.RongService"
-            android:process=":ipc" />
-        <service android:name="io.rong.imlib.ReConnectService" />
+            android:process=":ipc"/>
+        <service android:name="io.rong.imlib.ReConnectService"/>
 
-        <receiver android:name="io.rong.imlib.ipc.PushMessageReceiver" >
+        <receiver android:name="io.rong.imlib.ipc.PushMessageReceiver">
             <intent-filter>
-                <action android:name="io.rong.push.message" />
+                <action android:name="io.rong.push.message"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="io.rong.imlib.ConnectChangeReceiver" />
+        <receiver android:name="io.rong.imlib.ConnectChangeReceiver"/>
 
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="x4vkb1qpvr83k" />
+            android:value="x4vkb1qpvr83k"/>
 
         <!-- 开发环境 -->
         <activity
             android:name=".rong.RongActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <data
                     android:host="com.cmbb.smartkids"
                     android:pathPrefix="/conversation/"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <data
                     android:host="com.cmbb.smartkids"
                     android:pathPrefix="/conversationlist"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
 
                 <data
                     android:host="com.cmbb.smartkids"
                     android:pathPrefix="/friend/"
-                    android:scheme="rong" />
+                    android:scheme="rong"/>
             </intent-filter>
         </activity>
         <!-- 融云 -->
         <activity
             android:name=".activity.post.PostAddWonderActivity"
-            android:label="@string/title_activity_post_add_wonder" >
+            android:label="@string/title_activity_post_add_wonder">
         </activity>
         <activity
             android:name=".activity.replay.ReplayAddActivity"
-            android:label="@string/title_activity_replay_add" >
+            android:label="@string/title_activity_replay_add">
         </activity>
         <activity
             android:name=".activity.replay.ReplayAddCaseActivity"
-            android:label="@string/title_activity_replay_add" >
+            android:label="@string/title_activity_replay_add">
         </activity>
         <activity
             android:name=".activity.user.UserLVActivity"
-            android:label="@string/title_activity_user_lv"
-            android:parentActivityName=".activity.user.UserInfoActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.user.UserInfoActivity" />
+            android:label="@string/title_activity_user_lv">
         </activity>
         <activity
             android:name=".activity.user.UserGlodActivity"
-            android:label="@string/title_activity_user_glod"
-            android:parentActivityName=".activity.user.UserInfoActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cmbb.smartkids.activity.user.UserInfoActivity" />
+            android:label="@string/title_activity_user_glod">
         </activity>
         <activity
             android:name=".activity.master.MasterAddActivity"
-            android:label="@string/title_activity_master_add" >
+            android:label="@string/title_activity_master_add">
         </activity>
         <activity
             android:name=".activity.baby.MBabyActivity"
-            android:label="@string/title_activity_mbaby" >
+            android:label="@string/title_activity_mbaby">
+        </activity>
+        <activity
+            android:name=".activity.baby.AddBabyActivity"
+            android:label="@string/title_activity_add_baby">
+        </activity>
+        <activity
+            android:name=".activity.baby.MBabyDailyActivity"
+            android:label="@string/title_activity_mbaby_daily">
+        </activity>
+        <activity
+            android:name=".activity.baby.AddDailyActivity"
+            android:label="@string/title_activity_add_daily">
         </activity>
     </application>
 

@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.cmbb.smartkids.activity.baby.MBabyDailyActivity">
+    <item android:id="@+id/action_add_daily"
+          android:title="@string/action_daily"
+          app:showAsAction="always"/>
+</menu>

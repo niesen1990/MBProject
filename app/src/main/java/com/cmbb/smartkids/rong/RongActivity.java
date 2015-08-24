@@ -169,6 +169,12 @@ public class RongActivity extends MActivity implements Handler.Callback {
      * @param intent
      */
     private void enterFragment(Intent intent) {
+        try {
+            getSupportActionBar().setTitle(RongInfoContext.getInstance().getUserNameByUserId(targetId));
+
+        } catch (Exception e) {
+
+        }
         String tag = null;
         if (intent != null) {
             Fragment fragment = null;
@@ -236,7 +242,7 @@ public class RongActivity extends MActivity implements Handler.Callback {
                 getSupportActionBar().setTitle(RongInfoContext.getInstance().getUserNameByUserId(targetId));
             } else if (mConversationType.toString().equals("GROUP")) {
                 if (RongInfoContext.getInstance() != null) {
-                    //getSupportActionBar().setTitle(RongInfoContext.getInstance().getGroupNameById(targetId));
+                    getSupportActionBar().setTitle(RongInfoContext.getInstance().getUserNameByUserId(targetId));
                 }
             } else if (mConversationType.toString().equals("DISCUSSION")) {
                 if (targetId != null) {
@@ -372,7 +378,6 @@ public class RongActivity extends MActivity implements Handler.Callback {
                         startActivity(intent);
                         //当你刚刚创建完讨论组以后获得的是 targetIds
                     } else if (!TextUtils.isEmpty(targetIds)) {
-
                         UriFragment fragment = (UriFragment) getSupportFragmentManager().getFragments().get(0);
                         fragment.getUri();
                         //得到讨论组的 targetId

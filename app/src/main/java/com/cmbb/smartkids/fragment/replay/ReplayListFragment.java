@@ -18,7 +18,8 @@ import com.cmbb.smartkids.tools.log.Log;
 public class ReplayListFragment extends CommonFragment<ReplayModel> {
     boolean need;
     PostModel mPostModel;
-
+    PostDetail mPostDetail;
+    public ReplayListProvider mReplayListProvider;
     int sort;
 
     ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
@@ -29,26 +30,26 @@ public class ReplayListFragment extends CommonFragment<ReplayModel> {
     }
 
     @SuppressLint("ValidFragment")
-    public ReplayListFragment(boolean needHeadView, PostModel postModel, LinearLayout headView, int sort, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
+    public ReplayListFragment(boolean needHeadView, PostDetail postDetail, PostModel postModel, LinearLayout headView, int sort, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
         super();
+        this.mPostDetail = postDetail;
         this.sort = sort;
         this.mOnReplayItemClickListener = onReplayItemClickListener;
         this.need = needHeadView;
         this.mPostModel = postModel;
         this.mHeadView = headView;
-
     }
 
     @Override
     protected DataController<ReplayModel> onGenerateDataController() {
-        return new ReplayListProvider(mPostModel, sort);
-
+        mReplayListProvider = new ReplayListProvider(mPostModel, sort);
+        return mReplayListProvider;
     }
 
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<ReplayModel> controller) {
         Log.i("adapter", " generate");
-        return new ReplayListAdapter(getActivity(), controller, need, mHeadView, mOnReplayItemClickListener);
+        return new ReplayListAdapter(getActivity(), mPostModel, controller, need, mHeadView, mOnReplayItemClickListener);
     }
 
     @Override

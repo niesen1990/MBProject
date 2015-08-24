@@ -1,9 +1,12 @@
 package com.cmbb.smartkids.fragment.replay;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.ImagePreviewActivity;
+import com.cmbb.smartkids.base.MActivity;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
+import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
+import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
+import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 
 /**
@@ -70,12 +85,108 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         return new ReplayListViewHolder(v, onReplayItemClickListener);
     }
 
-    public void onBindViewHolder(Context context, final ReplayModel entry) {
+    public void onBindViewHolder(final Context context, final PostModel postDetail, final DataController<ReplayModel> mDataController, final ReplayModel entry, final int position) {
         mCardview.setTag(entry);
         mCardview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mOnReplayItemClickListener.onReplayItemClick(v);
+            }
+        });
+        // 未完成
+        mCardview.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                BottomSheet bottomSheet = new BottomSheet.Builder(context).title("操作").sheet(R.menu.menu_replay_de_report).listener(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final ReplayModel replayModel = (ReplayModel) mCardview.getTag();
+                        Log.i("ReplayListViewHolder", "ReplayListViewHolder = " + which);
+                        switch (which) {
+                            case R.id.action_delete:
+                                if (1 == replayModel.getIsCurrentUser()) {
+                                    ApiNetwork.deleteReplay(postDetail.getType(), postDetail.getPortConnector(), postDetail.getAreaType(), replayModel.getId(), new Callback() {
+                                        @Override
+                                        public void onFailure(Request request, IOException e) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(Response response) throws IOException {
+                                            if (response.isSuccessful()) {
+                                                String result = response.body().string();
+                                                Log.i("result", " result = " + result);
+                                                if (result.contains("1")) {
+                                                    Log.i("remove", "remove2 = " + position);
+                                                    mDataController.remove(position);
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                } else {
+                                    ((MActivity) context).showToast("此贴非本人发布，不可删除");
+                                }
+
+                                break;
+                            case R.id.action_report:
+                                //举报
+                                ApiNetwork.addReport(postDetail.getAreaType(), postDetail.getType(), postDetail.getId() + "", replayModel.getId() + "", new Callback() {
+                                    @Override
+                                    public void onFailure(Request request, IOException e) {
+                                        try {
+                                            ((MActivity) context).runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        ((MActivity) context).showToast("举报失败");
+
+                                                    } catch (Exception e1) {
+
+                                                    }
+                                                }
+                                            });
+                                        } catch (Exception e1) {
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onResponse(Response response) throws IOException {
+                                        try {
+                                            if (response.isSuccessful()) {
+                                                String result = response.body().string();
+                                                Log.i("result", " result = " + result);
+                                                if (result.contains("1")) {
+                                                    try {
+                                                        ((MActivity) context).runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                try {
+                                                                    ((MActivity) context).showToast("举报成功");
+                                                                } catch (Exception e) {
+
+                                                                }
+                                                            }
+                                                        });
+                                                    } catch (Exception e) {
+
+                                                    }
+
+                                                }
+                                            }
+                                        } catch (Exception e) {
+
+                                        }
+                                    }
+                                });
+                                break;
+                        }
+                    }
+                }).build();
+                bottomSheet.show();
+                v.setSelected(true);
+                return true;
             }
         });
         // head text
@@ -122,6 +233,19 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
             if (TextUtils.isEmpty(entry.getBigImg())) {
                 mRivContentReplay.setVisibility(View.GONE);
             } else {
+                mRivContentReplay.setTag(R.id.riv_content_replay, entry.getBigImg());
+                mRivContentReplay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String imageUrl = (String) v.getTag(R.id.riv_content_replay);
+                        ArrayList<String> pagerUrls = new ArrayList<String>();
+                        pagerUrls.add(imageUrl);
+                        Intent intent = new Intent(context, ImagePreviewActivity.class);
+                        intent.putExtra("index", 0);
+                        intent.putExtra("data", pagerUrls);
+                        context.startActivity(intent);
+                    }
+                });
                 mRivContentReplay.setVisibility(View.VISIBLE);
                 GlideTool.loadImage(context, entry.getBigImg().split(",")[0], mRivContentReplay, false);
             }

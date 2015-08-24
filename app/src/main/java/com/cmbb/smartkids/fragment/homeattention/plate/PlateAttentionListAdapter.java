@@ -19,7 +19,8 @@ public class PlateAttentionListAdapter extends ContentAdapterBase<PlateAttention
 
     public PlateAttentionListAdapter(Context mContext, DataController<PlateAttentionModel> mDataController, boolean need) {
         super(mContext, mDataController);
-        moreFlag = true;
+        moreFlag = false;
+
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

@@ -1,6 +1,7 @@
 package com.cmbb.smartkids.fragment.message;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
+import com.cmbb.smartkids.activity.replay.ReplayAgeCityActivity;
+import com.cmbb.smartkids.activity.replay.ReplayWonderActivity;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 
@@ -49,12 +53,47 @@ public class MessageListViewHolder extends RecyclerView.ViewHolder {
         mTvHeaderDownText01 = (TextView) view.findViewById(R.id.tv_header_down_text01);
     }
 
-    public static MessageListViewHolder create(final Context context, ViewGroup parent) {
-        View v = LayoutInflater.from(context).inflate(R.layout.activity_active_message_list_item, parent, false);
+    public static MessageListViewHolder create(final Context mContext, ViewGroup parent) {
+        View v = LayoutInflater.from(mContext).inflate(R.layout.activity_active_message_list_item, parent, false);
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MessageModel entry = (MessageModel) v.getTag();
+                if (entry.getPortName().contains("wonder")) {
+                    PostModel postModel = new PostModel();
+                    postModel.setEredarName(entry.getEredarName());
+                    postModel.setEredar(entry.getEredar());
+                    postModel.setUserSmallHeadImg(entry.getUserSmallHeadImg());
+                    postModel.setNike(entry.getNike());
+                    postModel.setAreaId(entry.getId());
+                    postModel.setAreaType(entry.getAreaType());
+                    postModel.setType(entry.getPlateType());
+                    postModel.setId(entry.getId());
+                    postModel.setUserId(entry.getUserId());
+                    postModel.setPortConnector(entry.getPortName());
+                    postModel.setLoginTimes(entry.getLoginTimes());
+                    postModel.setAuthority(entry.getAuthority());
+                    Intent intent = new Intent(mContext, ReplayWonderActivity.class);
+                    intent.putExtra("model", postModel);
+                    mContext.startActivity(intent);
+                } else {
+                    PostModel postModel = new PostModel();
+                    postModel.setEredarName(entry.getEredarName());
+                    postModel.setEredar(entry.getEredar());
+                    postModel.setUserSmallHeadImg(entry.getUserSmallHeadImg());
+                    postModel.setNike(entry.getNike());
+                    postModel.setAreaId(entry.getId());
+                    postModel.setAreaType(entry.getAreaType());
+                    postModel.setType(entry.getPlateType());
+                    postModel.setId(entry.getId());
+                    postModel.setUserId(entry.getUserId());
+                    postModel.setPortConnector(entry.getPortName());
+                    postModel.setLoginTimes(entry.getLoginTimes());
+                    postModel.setAuthority(entry.getAuthority());
+                    Intent intent = new Intent(mContext, ReplayAgeCityActivity.class);
+                    intent.putExtra("model", postModel);
+                    mContext.startActivity(intent);
+                }
             }
         });
         return new MessageListViewHolder(v);

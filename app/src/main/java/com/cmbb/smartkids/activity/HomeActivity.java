@@ -11,6 +11,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -44,6 +45,7 @@ import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.glide.GlideTool;
 import com.cmbb.smartkids.tools.log.Log;
+import com.cmbb.smartkids.tools.sp.SPCache;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
@@ -71,11 +73,12 @@ public class HomeActivity extends MActivity {
     RelativeLayout rlTab;
 
     //底部
-    TextView btnAdd;
-    TextView btnHome;
-    TextView btnActive;
-    TextView btnMaster;
-    TextView btnTools;
+    public ImageView btnAdd;
+    public ImageView ivUnread;
+    public TextView btnHome;
+    public TextView btnActive;
+    public TextView btnMaster;
+    public TextView btnTools;
 
     // content
     ViewPager viewPager;
@@ -110,8 +113,6 @@ public class HomeActivity extends MActivity {
     UserInfoDetailModel userInfoDetailModel;
 
     // Banner Receiver
-
-
     HomeAutoScrollBannerAdapter homeAutoScrollBannerAdapter;
     BroadcastReceiver bannerReceiver = new BroadcastReceiver() {
         @Override
@@ -149,6 +150,9 @@ public class HomeActivity extends MActivity {
         }
     };
 
+    private LocalBroadcastManager mLocalBroadcastManager;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_home;
@@ -157,24 +161,48 @@ public class HomeActivity extends MActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+        mLocalBroadcastManager.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Handle the received local broadcast
+                // 处理Message
+                Log.i("HomeActivity", "message = ");
+                ivUnread.setVisibility(View.VISIBLE);
+            }
+        }, new IntentFilter("com.cmbb.smartkids.rong.message"));
+        mLocalBroadcastManager.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Handle the received local broadcast
+                // 处理Message
+                int count = intent.getIntExtra("count", 0);
+                if (count > 0) {
+                    ivUnread.setVisibility(View.VISIBLE);
+                } else {
+                    ivUnread.setVisibility(View.GONE);
+                }
+                SPCache.putInt("rong_message_count", count);
+            }
+        }, new IntentFilter("com.cmbb.smartkids.rong.message_count"));
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_menu);
         mHomeFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         mActiveFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         mMasterFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
         mToolsFragmentPagerAdapter = new HomeFragmentPagerAdapter(getSupportFragmentManager());
+        // Umeng更新
         updataApkForUmeng();
         initData();
         initView();
     }
 
 
-
+    /**
+     * 检测更新
+     */
     private void updataApkForUmeng() {
-        //在wifi情况下也可以检测更新
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
-        //更新失败提示
-//        UmengUpdateAgent.setUpdateCheckConfig(false);
     }
 
     private void initView() {
@@ -206,7 +234,8 @@ public class HomeActivity extends MActivity {
         collapsingToolbarLayout.setExpandedTitleColor(android.R.color.transparent);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         rlTab = (RelativeLayout) findViewById(R.id.rl_tab);
-        btnAdd = (TextView) findViewById(R.id.btn_add);
+        btnAdd = (ImageView) findViewById(R.id.btn_add);
+        ivUnread = (ImageView) findViewById(R.id.iv_unread);
         btnHome = (TextView) findViewById(R.id.btn_home);
 
         // content
@@ -217,13 +246,11 @@ public class HomeActivity extends MActivity {
         }
         //初始化btnHome
         btnHome.setSelected(true);
-        btnActive = (TextView) findViewById(R.id.btn_active);
-        btnMaster = (TextView) findViewById(R.id.btn_master);
-        btnTools = (TextView) findViewById(R.id.btn_tools);
 
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ApiNetwork.cancleNetwork(new String[]{"home_list_provider"});
                 rlTab.setVisibility(View.GONE);
                 expandToolbar();
                 coordinatorlayout.setAllowForScrool(true);
@@ -242,6 +269,7 @@ public class HomeActivity extends MActivity {
         btnActive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ApiNetwork.cancleNetwork(new String[]{"active_message", "active_contact"});
                 rlTab.setVisibility(View.VISIBLE);
                 collapseToolbar();
                 coordinatorlayout.setAllowForScrool(false);
@@ -270,6 +298,7 @@ public class HomeActivity extends MActivity {
         btnMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ApiNetwork.cancleNetwork(new String[]{"eredar_type", "eredar_right", "doctor_type", "doctor_right"});
                 rlTab.setVisibility(View.VISIBLE);
                 collapseToolbar();
                 coordinatorlayout.setAllowForScrool(false);
@@ -338,9 +367,16 @@ public class HomeActivity extends MActivity {
     }
 
     private void initData() {
+        btnActive = (TextView) findViewById(R.id.btn_active);
+        btnMaster = (TextView) findViewById(R.id.btn_master);
+        btnTools = (TextView) findViewById(R.id.btn_tools);
+        btnTools.setClickable(false);
+        btnMaster.setClickable(false);
+        btnActive.setClickable(false);
         // 初始化用户信息
+        ApiNetwork.login(MApplication.token, this);
+        ApiNetwork.getUserInfoList();
         ApiNetwork.getUserInfo(this);
-        //masterTypeModel = new MasterTypeModel("推荐", 0, 1);
         homeFragments = new Fragment[1];
         homeFragments[0] = new HomeListFragment(true);
         homeTitles = new String[1];
@@ -374,6 +410,13 @@ public class HomeActivity extends MActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        int message_count = SPCache.getInt("rong_message_count", 0);
+        if (message_count == 0) {
+            ivUnread.setVisibility(View.INVISIBLE);
+        } else {
+            ivUnread.setVisibility(View.VISIBLE);
+        }
+
         IntentFilter intentFilter = new IntentFilter(Constants.Home.BANNER_DATA_INTENT);
         registerReceiver(bannerReceiver, intentFilter);
 
@@ -481,5 +524,4 @@ public class HomeActivity extends MActivity {
             behavior.onNestedFling(coordinatorlayout, appBarLayout, null, 0, -10000, false);
         }
     }
-
 }

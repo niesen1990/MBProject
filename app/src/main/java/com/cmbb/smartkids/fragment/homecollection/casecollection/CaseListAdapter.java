@@ -19,6 +19,8 @@ public class CaseListAdapter extends ContentAdapterBase<CaseModel> {
 
     public CaseListAdapter(Context mContext, DataController<CaseModel> mDataController, boolean need) {
         super(mContext, mDataController);
+        moreFlag = false;
+
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

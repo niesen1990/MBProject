@@ -1,14 +1,11 @@
-package com.cmbb.smartkids.model.replay;
-
-import java.util.ArrayList;
+package com.cmbb.smartkids.fragment.baby.babylist;
 
 /**
  * Created by N.Sun
  */
-public class ReplayMessageBaseModel {
-
+public class BabyListBaseModel {
     private String code;
-    private ArrayList<ReplayMessageModel> context;
+    private BabyListCountModel context;
 
     /**
      * @return The code
@@ -27,15 +24,16 @@ public class ReplayMessageBaseModel {
     /**
      * @return The context
      */
-    public ArrayList<ReplayMessageModel> getContext() {
+    public BabyListCountModel getContext() {
         return context;
     }
 
     /**
      * @param context The context
      */
-    public void setContext(ArrayList<ReplayMessageModel> context) {
+    public void setContext(BabyListCountModel context) {
         this.context = context;
     }
+
 
 }

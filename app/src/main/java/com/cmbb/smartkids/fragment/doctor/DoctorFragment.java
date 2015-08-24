@@ -63,47 +63,59 @@ public class DoctorFragment extends MFragment implements EredarLeftViewHolder.On
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("type", 2 + "");
-        OkHttp.asyncPost(Constants.Master.EREDARFINDTYPE_URL, body, new Callback() {
+        OkHttp.asyncPost(Constants.Master.EREDARFINDTYPE_URL, body, "doctor_type", new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingBar.hide();
-                        showToast(getString(R.string.meng_list_network_err));
-                    }
-                });
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                loadingBar.hide();
+                                showToast(getString(R.string.meng_list_network_err));
+                            } catch (Exception e1) {
+
+                            }
+                        }
+                    });
+                } catch (Exception e1) {
+
+                }
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingBar.hide();
-                    }
-                });
-                if (response.isSuccessful()) {
-                    try {
-                        String result = response.body().string();
-                        if (TextUtils.isEmpty(result)) {
-                            return;
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadingBar.hide();
                         }
-                        Gson gson = new Gson();
-                        EredarLeftBaseModel data = gson.fromJson(result, EredarLeftBaseModel.class);
-                        final ArrayList<EredarTypeModel> masterTypeModels = new ArrayList<>();
-                        masterTypeModels.add(new EredarTypeModel(0, "推荐", 1));
-                        masterTypeModels.add(new EredarTypeModel(0, "关注", 0));
-                        masterTypeModels.addAll(data.getContext());
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mEredarLeftAdapter.updateData(masterTypeModels);
+                    });
+                    if (response.isSuccessful()) {
+                        try {
+                            String result = response.body().string();
+                            if (TextUtils.isEmpty(result)) {
+                                return;
                             }
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                            Gson gson = new Gson();
+                            EredarLeftBaseModel data = gson.fromJson(result, EredarLeftBaseModel.class);
+                            final ArrayList<EredarTypeModel> masterTypeModels = new ArrayList<>();
+                            masterTypeModels.add(new EredarTypeModel(0, "推荐", 1));
+                            masterTypeModels.add(new EredarTypeModel(0, "关注", 0));
+                            masterTypeModels.addAll(data.getContext());
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mEredarLeftAdapter.updateData(masterTypeModels);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
+                } catch (Exception e) {
+
                 }
             }
         });
@@ -113,40 +125,52 @@ public class DoctorFragment extends MFragment implements EredarLeftViewHolder.On
         bodyRight.put("token", MApplication.token);
         bodyRight.put("recommend", 1 + "");
         body.put("city", 0 + "");
-        OkHttp.asyncPost(Constants.Master.FINDATTENTIONEXPERT_URL, body, new Callback() {
+        OkHttp.asyncPost(Constants.Master.FINDATTENTIONEXPERT_URL, body, "doctor_right", new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingBar.hide();
-                        showToast(getString(R.string.meng_list_network_err));
-                    }
-                });
+                try {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                loadingBar.hide();
+                                showToast(getString(R.string.meng_list_network_err));
+                            } catch (Exception e1) {
+
+                            }
+                        }
+                    });
+                } catch (Exception e1) {
+
+                }
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        loadingBar.hide();
-                    }
-                });
-
-                if (response.isSuccessful()) {
-                    String result = response.body().string();
-                    if (TextUtils.isEmpty(result)) {
-                        return;
-                    }
-                    Gson gson = new Gson();
-                    final DoctorRightBaseModel data = gson.fromJson(result, DoctorRightBaseModel.class);
+                try {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mDoctorRightAdapter.updateData(data.getContext());
+                            loadingBar.hide();
                         }
                     });
+
+                    if (response.isSuccessful()) {
+                        String result = response.body().string();
+                        if (TextUtils.isEmpty(result)) {
+                            return;
+                        }
+                        Gson gson = new Gson();
+                        final DoctorRightBaseModel data = gson.fromJson(result, DoctorRightBaseModel.class);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDoctorRightAdapter.updateData(data.getContext());
+                            }
+                        });
+                    }
+                } catch (Exception e1) {
+
                 }
             }
         });
@@ -156,7 +180,6 @@ public class DoctorFragment extends MFragment implements EredarLeftViewHolder.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_eredar, container, false);
     }
-
 
 
     @Override

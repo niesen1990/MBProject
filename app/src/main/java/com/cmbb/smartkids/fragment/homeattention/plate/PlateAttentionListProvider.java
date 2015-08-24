@@ -25,6 +25,7 @@ import java.util.Map;
 public class PlateAttentionListProvider extends DataController<PlateAttentionModel> {
 
     private Context mContext;
+    int id = -1;
 
     public PlateAttentionListProvider(Context context) {
         mContext = context;
@@ -40,6 +41,7 @@ public class PlateAttentionListProvider extends DataController<PlateAttentionMod
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.Home.FINDHOMEPAGEATTENTIONPLATE_URL, body, callback);
@@ -49,6 +51,8 @@ public class PlateAttentionListProvider extends DataController<PlateAttentionMod
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        body.put("id", id + "");
+        body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.Home.FINDHOMEPAGEATTENTIONPLATE_URL, body, callback);
     }
 
@@ -62,6 +66,11 @@ public class PlateAttentionListProvider extends DataController<PlateAttentionMod
             }
             Gson gson = new Gson();
             PlateAttentionBaseModel data = gson.fromJson(result, PlateAttentionBaseModel.class);
+            try {
+                id = data.getContext().get(data.getContext().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return data.getContext();
         } catch (Exception e) {
             e.printStackTrace();

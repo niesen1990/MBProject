@@ -33,7 +33,7 @@ public class PhotoAddAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (null == photoUrls || photoUrls.size() == 0) {
             return;
         } else {
-            photoContent.clear();
+            //photoContent.clear();
             for (int i = 0; i < photoUrls.size(); i++) {
                 photoContent.add(new PhotoAdd(photoUrls.get(i), ""));
             }
@@ -53,7 +53,7 @@ public class PhotoAddAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((PostAddViewHolder) holder).onBindViewHolder(mContext, photoContent, position);
+        ((PostAddViewHolder) holder).onBindViewHolder(mContext, this, photoContent, position);
     }
 
     @Override

@@ -113,6 +113,13 @@ public class ActiveExpandableAdapter extends ExpandableRecyclerAdapter<CustomPar
     public void onBindParentViewHolder(CustomParentViewHolder parentViewHolder, int position, Object parentObject) {
         CustomParentObject customParentObject = (CustomParentObject) parentObject;
         parentViewHolder.dataText.setText(customParentObject.getParentText());
+        if (customParentObject.getUnRead() == 0) {
+            parentViewHolder.tvUnread.setText("");
+            parentViewHolder.tvUnread.setVisibility(View.INVISIBLE);
+        } else {
+            parentViewHolder.tvUnread.setText(customParentObject.getUnRead() + "");
+            parentViewHolder.tvUnread.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -133,6 +140,19 @@ public class ActiveExpandableAdapter extends ExpandableRecyclerAdapter<CustomPar
             childViewHolder.mTvContent.setText(userAttentionModel.getContentLast());
         }
         childViewHolder.mTvConstellation.setText(userAttentionModel.getNike());
+        if (userAttentionModel.getUnRead() > 0) {
+            childViewHolder.ivUnread.setText(userAttentionModel.getUnRead() + "");
+            childViewHolder.ivUnread.setVisibility(View.VISIBLE);
+        } else {
+            childViewHolder.ivUnread.setVisibility(View.INVISIBLE);
+        }
+
+        if (TextUtils.isEmpty(userAttentionModel.getTime())) {
+            childViewHolder.tvTime.setVisibility(View.INVISIBLE);
+        } else {
+            childViewHolder.tvTime.setVisibility(View.VISIBLE);
+            childViewHolder.tvTime.setText(userAttentionModel.getTime());
+        }
 
         childViewHolder.rvRoot.setTag(userAttentionModel);
         childViewHolder.rvRoot.setOnClickListener(new View.OnClickListener() {

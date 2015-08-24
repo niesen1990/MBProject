@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
 
@@ -17,12 +18,16 @@ import com.cmbb.smartkids.mengrecyclerview.adapter.ContentAdapterBase;
 public class ReplayListAdapter extends ContentAdapterBase<ReplayModel> {
     private Context mContext;
     private LinearLayout mHeadView;
+    private PostModel mPostModel;
+    DataController<ReplayModel> mDataController;
 
     private ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
 
 
-    public ReplayListAdapter(Context mContext, DataController<ReplayModel> mDataController, boolean need, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
+    public ReplayListAdapter(Context mContext, PostModel postDetail, DataController<ReplayModel> mDataController, boolean need, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
         super(mContext, mDataController);
+        this.mPostModel = postDetail;
+        this.mDataController = mDataController;
         this.mOnReplayItemClickListener = onReplayItemClickListener;
         this.mContext = mContext;
         this.mHeadView = headView;
@@ -38,7 +43,7 @@ public class ReplayListAdapter extends ContentAdapterBase<ReplayModel> {
 
     @Override
     protected void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ((ReplayListViewHolder) holder).onBindViewHolder(mContext, mDataController.getData(position));
+        ((ReplayListViewHolder) holder).onBindViewHolder(mContext, mPostModel, mDataController, mDataController.getData(position), position);
     }
 
     // 创建HeaderView

@@ -48,6 +48,7 @@ public class PostAddWonderActivity extends MActivity {
 
     private PhotoAddAdapter mPhotoAddAdapter;
     private ArrayList<PhotoAdd> photoUrls = new ArrayList<>();
+    public int count = 10;
 
     @Override
     protected int getLayoutId() {
@@ -196,9 +197,13 @@ public class PostAddWonderActivity extends MActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_addpic) {
-            PhotoPickerIntent intent = new PhotoPickerIntent(this);
-            intent.setPhotoCount(10);
-            startActivityForResult(intent, REQUEST_CODE);
+            if (count == 0) {
+                showToast("10张图片已经选满");
+            } else {
+                PhotoPickerIntent intent = new PhotoPickerIntent(this);
+                intent.setPhotoCount(count);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -214,6 +219,7 @@ public class PostAddWonderActivity extends MActivity {
             if (data != null) {
                 PhotoDirectory photoDirectory = new PhotoDirectory();
                 ArrayList<String> urls = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                count = count - urls.size();
                 mPhotoAddAdapter.setPhotoUrls(urls);
                 mPhotoAddAdapter.notifyDataSetChanged();
             }

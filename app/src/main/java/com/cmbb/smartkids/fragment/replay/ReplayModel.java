@@ -610,4 +610,44 @@ public class ReplayModel implements Parcelable {
             return new ReplayModel[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "ReplayModel{" +
+                "authority=" + authority +
+                ", bigImg='" + bigImg + '\'' +
+                ", bigImgHeight=" + bigImgHeight +
+                ", bigImgWidth=" + bigImgWidth +
+                ", context='" + context + '\'' +
+                ", date='" + date + '\'' +
+                ", deleteTag=" + deleteTag +
+                ", floor=" + floor +
+                ", id=" + id +
+                ", isCurrentUser=" + isCurrentUser +
+                ", nike='" + nike + '\'' +
+                ", loginTimes=" + loginTimes +
+                ", otherContext='" + otherContext + '\'' +
+                ", otherDeleteTag=" + otherDeleteTag +
+                ", otherFloor=" + otherFloor +
+                ", otherNike='" + otherNike + '\'' +
+                ", otherUserId=" + otherUserId +
+                ", otherUserSmallHeadImg='" + otherUserSmallHeadImg + '\'' +
+                ", otherUserSmallImgHeight=" + otherUserSmallImgHeight +
+                ", otherUserSmallImgWidth=" + otherUserSmallImgWidth +
+                ", replys=" + replys +
+                ", replysParentId=" + replysParentId +
+                ", smallImg='" + smallImg + '\'' +
+                ", smallImgHeight=" + smallImgHeight +
+                ", smallImgWidth=" + smallImgWidth +
+                ", userId=" + userId +
+                ", userSmallHeadImg='" + userSmallHeadImg + '\'' +
+                ", userSmallImgHeight=" + userSmallImgHeight +
+                ", userSmallImgWidth=" + userSmallImgWidth +
+                ", weixinImg='" + weixinImg + '\'' +
+                ", eredar=" + eredar +
+                ", eredarName='" + eredarName + '\'' +
+                ", eredarRank=" + eredarRank +
+                ", eredarType=" + eredarType +
+                '}';
+    }
 }

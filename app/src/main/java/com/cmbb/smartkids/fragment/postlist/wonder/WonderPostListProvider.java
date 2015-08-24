@@ -93,7 +93,7 @@ public class WonderPostListProvider extends DataController<PostModel> {
             } catch (Exception e) {
 
             }
-            Intent intent = new Intent(Constants.Post.POSTDETAIL_DATA_INTENT);
+            Intent intent = new Intent(Constants.Post.PLATE_DATA_INTENT);
             intent.putExtra(Constants.Post.PLATE_DATA, data.getContext());
             mContext.sendBroadcast(intent);
             return data.getContext().getHomeSameAgeList();

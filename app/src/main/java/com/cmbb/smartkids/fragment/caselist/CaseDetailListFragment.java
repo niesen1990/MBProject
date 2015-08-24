@@ -38,7 +38,7 @@ public class CaseDetailListFragment extends CommonFragment<CaseDetailListModel> 
 
     @Override
     protected boolean enableRefresh() {
-        return false;
+        return true;
     }
 
 

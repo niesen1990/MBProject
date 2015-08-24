@@ -21,6 +21,7 @@ public class SameCityListAdapter extends ContentAdapterBase<PostModel> {
 
     public SameCityListAdapter(Context mContext, DataController<PostModel> mDataController, boolean need) {
         super(mContext, mDataController);
+        moreFlag = false;
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

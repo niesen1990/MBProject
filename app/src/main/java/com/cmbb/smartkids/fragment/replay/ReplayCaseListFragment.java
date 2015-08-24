@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.cmbb.smartkids.base.CommonFragment;
 import com.cmbb.smartkids.fragment.caselist.CaseDetailListModel;
+import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 
 /**
@@ -17,6 +18,7 @@ import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
     boolean need;
     CaseDetailListModel mCaseDetailListModel;
+    PostDetail mPostDetail;
 
     private ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
 
@@ -26,8 +28,9 @@ public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
     }
 
     @SuppressLint("ValidFragment")
-    public ReplayCaseListFragment(boolean needHeadView, CaseDetailListModel caseDetailListModel, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
+    public ReplayCaseListFragment(boolean needHeadView, PostDetail postDetail, CaseDetailListModel caseDetailListModel, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
         super();
+        this.mPostDetail = postDetail;
         this.mOnReplayItemClickListener = onReplayItemClickListener;
         this.need = needHeadView;
         this.mCaseDetailListModel = caseDetailListModel;
@@ -43,7 +46,16 @@ public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
 
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<ReplayModel> controller) {
-        return new ReplayListAdapter(getActivity(), controller, need, mHeadView, mOnReplayItemClickListener);
+        PostModel postModel = new PostModel();
+        postModel.setUserSmallHeadImg(mCaseDetailListModel.getUserSmallHeadImg());
+        postModel.setNike(mCaseDetailListModel.getNike());
+        postModel.setAreaId(mCaseDetailListModel.getId());
+        postModel.setType(mCaseDetailListModel.getType() + "");
+        postModel.setId(mCaseDetailListModel.getId());
+        postModel.setUserId(mCaseDetailListModel.getUserId());
+        postModel.setStore(mCaseDetailListModel.getStore());
+        postModel.setAuthority(mCaseDetailListModel.getAuthority());
+        return new ReplayListAdapter(getActivity(), postModel, controller, need, mHeadView, mOnReplayItemClickListener);
     }
 
     @Override

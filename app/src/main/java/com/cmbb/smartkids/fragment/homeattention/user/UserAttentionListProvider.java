@@ -25,6 +25,7 @@ import java.util.Map;
 public class UserAttentionListProvider extends DataController<UserAttentionModel> {
 
     private Context mContext;
+    int id = -1;
 
 
     public UserAttentionListProvider(Context context) {
@@ -41,6 +42,7 @@ public class UserAttentionListProvider extends DataController<UserAttentionModel
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         OkHttp.asyncPost(Constants.User.FINDATTENTIONUSER_URL, body, callback);
@@ -50,6 +52,8 @@ public class UserAttentionListProvider extends DataController<UserAttentionModel
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
+        body.put("userId", id + "");
+        body.put("upDown", 2 + "");
         for (String key : body.keySet()) {
             Log.i("domore", key + " = " + body.get(key));
         }
@@ -66,6 +70,11 @@ public class UserAttentionListProvider extends DataController<UserAttentionModel
             }
             Gson gson = new Gson();
             UserAttentionBaseModel data = gson.fromJson(result, UserAttentionBaseModel.class);
+            try {
+                id = data.getContext().get(data.getContext().size() - 1).getUserId();
+            } catch (Exception e) {
+
+            }
             return data.getContext();
         } catch (Exception e) {
             e.printStackTrace();

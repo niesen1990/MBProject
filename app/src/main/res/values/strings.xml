@@ -59,4 +59,9 @@
 *线下活动由于地域与时间关系不硬性规定参与，请视自身条件尽量到场。
 </string>
     <string name="title_activity_mbaby">MBabyActivity</string>
+    <string name="action_report">举报</string>
+    <string name="title_activity_add_baby">添加宝宝</string>
+    <string name="title_activity_mbaby_daily">成长日志</string>
+    <string name="action_daily">添加日志</string>
+    <string name="title_activity_add_daily">添加日志</string>
 </resources>

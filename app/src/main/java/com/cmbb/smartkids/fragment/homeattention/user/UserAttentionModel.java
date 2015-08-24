@@ -31,7 +31,7 @@ public class UserAttentionModel implements Parcelable {
     private Integer userStatus;
     private String userWeiXinHeadImg;
     // rong yun
-    private  Integer unRead;
+    private  Integer unRead = 0;
     private String time;
     private String contentLast;
 

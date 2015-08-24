@@ -39,21 +39,21 @@ public class HomeListProvider extends DataController<PlateModel> {
     public void doInitialize(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, "home_list_provider", callback);
     }
 
     @Override
     public void doRefresh(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, "home_list_provider", callback);
     }
 
     @Override
     public void doMore(Callback callback) {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
-        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, callback);
+        OkHttp.asyncPost(Constants.Home.FINDHOMEPAGE_URL, body, "home_list_provider", callback);
     }
 
     @Override
@@ -68,9 +68,7 @@ public class HomeListProvider extends DataController<PlateModel> {
             HomePageBaseModel data = gson.fromJson(result, HomePageBaseModel.class);
             baseData = data;
             sendDataToBanner(data);
-            // 删除我的宝宝
             List<PlateModel> plateModels = data.getContext().getPlateList();
-            //plateModels.remove(0);
             return plateModels;
         } catch (Exception e) {
             e.printStackTrace();
