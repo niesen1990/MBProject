@@ -203,7 +203,7 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                         mTvHeaderType.setText("小编");
                         break;
                     case 3:
-                        mTvHeaderType.setText("普通用户");
+                        mTvHeaderType.setText("萌宝用户");
                         break;
                     case 4:
                         mTvHeaderType.setText("专家");
@@ -211,8 +211,14 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                     case 5:
                         mTvHeaderType.setText("在线小编");
                         break;
+                    case 6:
+                        mTvHeaderType.setText("萌主");
+                        break;
+                    case 7:
+                        mTvHeaderType.setText("实习萌主");
+                        break;
                     default:
-                        mTvHeaderType.setText("普通用户");
+                        mTvHeaderType.setText("萌宝用户");
                         break;
                 }
 

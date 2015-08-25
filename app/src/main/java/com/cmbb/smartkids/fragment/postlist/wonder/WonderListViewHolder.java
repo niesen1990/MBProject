@@ -175,22 +175,28 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
             try {
                 switch (entry.getAuthority()) {
                     case 1:
-                        tvMaster.setText(" 系统管理员");
+                        tvMaster.setText("系统管理员");
                         break;
                     case 2:
-                        tvMaster.setText(" 小编");
+                        tvMaster.setText("小编");
                         break;
                     case 3:
-                        tvMaster.setText(" 普通用户");
+                        tvMaster.setText("萌宝用户");
                         break;
                     case 4:
-                        tvMaster.setText(" 专家");
+                        tvMaster.setText("专家");
                         break;
                     case 5:
-                        tvMaster.setText(" 在线小编");
+                        tvMaster.setText("在线小编");
+                        break;
+                    case 6:
+                        tvMaster.setText("萌主");
+                        break;
+                    case 7:
+                        tvMaster.setText("实习萌主");
                         break;
                     default:
-                        tvMaster.setText(" 普通用户");
+                        tvMaster.setText("萌宝用户");
                         break;
                 }
 

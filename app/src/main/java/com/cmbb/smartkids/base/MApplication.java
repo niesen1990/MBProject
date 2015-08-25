@@ -60,7 +60,7 @@ public class MApplication extends Application {
             instance = this;
             mContext = getApplicationContext();
             initLog();
-            //initStetho();
+            initStetho();
 
             initSharePreference();
             //初始化百度地图

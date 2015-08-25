@@ -110,7 +110,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
                         tvContent.setText("小编");
                         break;
                     case 3:
-                        tvContent.setText("普通用户");
+                        tvContent.setText("萌宝用户");
                         break;
                     case 4:
                         tvContent.setText("专家");
@@ -118,8 +118,14 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
                     case 5:
                         tvContent.setText("在线小编");
                         break;
+                    case 6:
+                        tvContent.setText("萌主");
+                        break;
+                    case 7:
+                        tvContent.setText("实习萌主");
+                        break;
                     default:
-                        tvContent.setText("普通用户");
+                        tvContent.setText("萌宝用户");
                         break;
                 }
 

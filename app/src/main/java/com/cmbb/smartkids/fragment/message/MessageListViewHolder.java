@@ -116,7 +116,7 @@ public class MessageListViewHolder extends RecyclerView.ViewHolder {
                         mTvMaster.setText("小编");
                         break;
                     case 3:
-                        mTvMaster.setText("普通用户");
+                        mTvMaster.setText("萌宝用户");
                         break;
                     case 4:
                         mTvMaster.setText("专家");
@@ -124,8 +124,14 @@ public class MessageListViewHolder extends RecyclerView.ViewHolder {
                     case 5:
                         mTvMaster.setText("在线小编");
                         break;
+                    case 6:
+                        mTvMaster.setText("萌主");
+                        break;
+                    case 7:
+                        mTvMaster.setText("实习萌主");
+                        break;
                     default:
-                        mTvMaster.setText("普通用户");
+                        mTvMaster.setText("萌宝用户");
                         break;
                 }
 

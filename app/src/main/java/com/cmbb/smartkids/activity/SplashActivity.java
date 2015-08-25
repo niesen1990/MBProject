@@ -11,6 +11,7 @@ import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.sp.SPCache;
+import com.cmbb.smartkids.widget.shimmer.ShimmerFrameLayout;
 import com.umeng.message.IUmengRegisterCallback;
 
 import java.util.Timer;
@@ -23,6 +24,8 @@ public class SplashActivity extends MActivity {
 
     private final static String TAG = SplashActivity.class.getSimpleName();
 
+    ShimmerFrameLayout mShimmerViewContainer;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_splash;
@@ -30,6 +33,8 @@ public class SplashActivity extends MActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+        mShimmerViewContainer = (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
+
         mPushAgent.enable(mRegisterCallback);
         initTask();
     }
@@ -38,7 +43,7 @@ public class SplashActivity extends MActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        //mShimmerViewContainer.startShimmerAnimation();
     }
 
     @Override
@@ -54,7 +59,6 @@ public class SplashActivity extends MActivity {
         @Override
         public void onRegistered(String registrationId) {
             Log.e("mRegisterCallback", "token:" + mPushAgent.getRegistrationId());
-
         }
     };
 
@@ -67,7 +71,7 @@ public class SplashActivity extends MActivity {
             public void run() {
                 if (isFirstInto) {
                     startActivity(new Intent(SplashActivity.this, GuideActivity.class));
-                      finish();
+                    finish();
                 } else {
                     // 登陆
                     MApplication.token = SPCache.getString(Constants.SharePreference.USER_TOKEN, "");
