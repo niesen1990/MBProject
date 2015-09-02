@@ -43,7 +43,7 @@ import com.cmbb.smartkids.fragment.message.MessageListFragment;
 import com.cmbb.smartkids.fragment.tools.FragmentHomeTools;
 import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.sp.SPCache;
 import com.cmbb.smartkids.widget.autoscroll.AutoScrollViewPager;
@@ -143,7 +143,7 @@ public class HomeActivity extends MActivity {
                 MApplication.userStatus = userInfoDetailModel.getUserStatus();
                 MApplication.authority = userInfoDetailModel.getAuthority();
                 MApplication.eredar = userInfoDetailModel.getEredar();
-                GlideTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
+                PicassoTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
             }
@@ -198,9 +198,10 @@ public class HomeActivity extends MActivity {
 
 
     /**
-     * 检测更新
+     * 检测Umeng更新
      */
     private void updataApkForUmeng() {
+        //关闭wifi
         UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
     }

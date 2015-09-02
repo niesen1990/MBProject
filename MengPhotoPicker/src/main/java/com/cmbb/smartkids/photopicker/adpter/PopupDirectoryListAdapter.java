@@ -8,9 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.photopicker.R;
 import com.cmbb.smartkids.photopicker.entity.PhotoDirectory;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,10 +83,12 @@ public class PopupDirectoryListAdapter extends BaseAdapter {
         }
 
         public void bindData(PhotoDirectory directory) {
-            Glide.with(context)
+            /*Glide.with(context)
                     .load(directory.getCoverPath())
                     .thumbnail(0.1f)
-                    .into(ivCover);
+                    .into(ivCover);*/
+
+            Picasso.with(context).load(directory.getCoverPath()).into(ivCover);
             tvName.setText(directory.getName());
         }
     }

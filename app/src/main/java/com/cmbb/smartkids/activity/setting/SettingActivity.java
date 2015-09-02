@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.login.LoginActivity;
 import com.cmbb.smartkids.base.Constants;
@@ -55,10 +54,10 @@ public class SettingActivity extends MActivity {
                 dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        File cacheFile = Glide.getPhotoCacheDir(SettingActivity.this);
+                        /*File cacheFile = Glide.getPhotoCacheDir(SettingActivity.this);
                         if (cacheFile != null) {
                             cacheFile.delete();
-                        }
+                        }*/
                     }
                 });
                 dialog.setNegativeButton("取消", null);

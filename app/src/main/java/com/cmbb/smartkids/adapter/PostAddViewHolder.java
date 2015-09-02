@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.post.PostAddWonderActivity;
 import com.cmbb.smartkids.model.photo.PhotoAdd;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class PostAddViewHolder extends RecyclerView.ViewHolder {
 
     public void onBindViewHolder(final Context context, final PhotoAddAdapter photoAddAdapter, final ArrayList<PhotoAdd> photoContents, final int position) {
         flRoot.setTag(position);
-        GlideTool.loadImage(context, photoContents.get(position).getPhotoUrl(), ivAddPic, false);
+        PicassoTool.loadImage(context, photoContents.get(position).getPhotoUrl(), ivAddPic, false);
         etContentPic.setTag(position);
         etContentPic.setText(photoContents.get((int) etContentPic.getTag()).getPhotoContent());
         etContentPic.addTextChangedListener(new TextWatcher() {

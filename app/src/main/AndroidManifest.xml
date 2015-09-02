@@ -52,9 +52,6 @@
             android:name="UMENG_APPKEY"
             android:value="5538a77367e58e41e0000c09"/>
 
-        <!--<meta-data
-            android:name="com.cmbb.smartkids.tools.glide.MGlideModule"
-            android:value="GlideModule"/>-->
         <!--gmail-->
         <!--<meta-data
             android:name="UMENG_APPKEY"

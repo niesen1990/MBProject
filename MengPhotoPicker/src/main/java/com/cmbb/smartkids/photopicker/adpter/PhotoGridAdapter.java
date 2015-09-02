@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.photopicker.R;
 import com.cmbb.smartkids.photopicker.entity.Photo;
 import com.cmbb.smartkids.photopicker.entity.PhotoDirectory;
 import com.cmbb.smartkids.photopicker.event.OnItemCheckListener;
 import com.cmbb.smartkids.photopicker.event.OnPhotoClickListener;
 import com.cmbb.smartkids.photopicker.utils.MediaStoreHelper;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -88,11 +88,15 @@ public class PhotoGridAdapter extends SelectableAdapter<PhotoGridAdapter.PhotoVi
                 photo = photos.get(position);
             }
 
-            Glide.with(mContext)
+            /*Glide.with(mContext)
                     .load(new File(photo.getPath()))
                     .centerCrop()
                     .thumbnail(0.1f)
                     .placeholder(R.drawable.ic_photo_black_48dp)
+                    .error(R.drawable.ic_broken_image_black_48dp)
+                    .into(holder.ivPhoto);*/
+
+            Picasso.with(mContext).load(new File(photo.getPath())).fit().placeholder(R.drawable.ic_photo_black_48dp)
                     .error(R.drawable.ic_broken_image_black_48dp)
                     .into(holder.ivPhoto);
 

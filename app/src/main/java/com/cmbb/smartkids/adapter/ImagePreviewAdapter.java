@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.widget.ZoomImageView;
 
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class ImagePreviewAdapter extends PagerAdapter {
         img.setLayoutParams(params);
         img.setScaleType(ImageView.ScaleType.FIT_CENTER);
         String imgUrl = data.get(position);
-        GlideTool.loadImage(container.getContext(), imgUrl, img, false);
+        PicassoTool.loadImage(container.getContext(), imgUrl, img, false);
         img.setOnPhotoTapListener(new ZoomImageView.OnPhotoTapListener() {
             @Override
             public void onPhotoTap(View view, float x, float y) {

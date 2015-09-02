@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 
 /**
@@ -63,17 +63,17 @@ public class BabyDailyViewHolder extends RecyclerView.ViewHolder {
                     case 0:
                         riv01.setVisibility(View.VISIBLE);
                         String[] urls1 = imgUrls[i].split(",");
-                        GlideTool.loadImage(context, urls1[1], riv01, false);
+                        PicassoTool.loadImage(context, urls1[1], riv01, false);
                         break;
                     case 1:
                         riv02.setVisibility(View.VISIBLE);
                         String[] urls2 = imgUrls[i].split(",");
-                        GlideTool.loadImage(context, urls2[1], riv02, false);
+                        PicassoTool.loadImage(context, urls2[1], riv02, false);
                         break;
                     case 2:
                         riv03.setVisibility(View.VISIBLE);
                         String[] urls3 = imgUrls[i].split(",");
-                        GlideTool.loadImage(context, urls3[1], riv03, false);
+                        PicassoTool.loadImage(context, urls3[1], riv03, false);
                         break;
                 }
             }

@@ -25,7 +25,7 @@ import com.cmbb.smartkids.model.userinfo.UserInfoDetailModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
 import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 
 import java.io.File;
@@ -144,7 +144,7 @@ public class UserInfoActivity extends MActivity {
         spinnerStatus.setSelection(userInfoDetailModel.getUserStatus() - 1, true);
         tvGold.setText(userInfoDetailModel.getGold() + "");
         etNick.setText(userInfoDetailModel.getNike());
-        GlideTool.loadImage(this, userInfoDetailModel.getUserSmallHeadImg(), civHead, true);
+        PicassoTool.loadImage(this, userInfoDetailModel.getUserSmallHeadImg(), civHead, true);
     }
 
 
@@ -207,7 +207,7 @@ public class UserInfoActivity extends MActivity {
                 imgs = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 Log.i("image", "image = " + imgs.get(0));
                 if (imgs.size() == 0) return;
-                GlideTool.loadImage(this, imgs.get(0), civHead, true);
+                PicassoTool.loadImage(this, imgs.get(0), civHead, true);
             }
         }
     }

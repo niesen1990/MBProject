@@ -21,7 +21,7 @@ import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.OkHttp;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -135,7 +135,7 @@ public class BabyListViewHolder extends RecyclerView.ViewHolder {
                 return false;
             }
         });
-        GlideTool.loadImage(context, entry.getBabySmallHeadImg(), civHead, true);
+        PicassoTool.loadImage(context, entry.getBabySmallHeadImg(), civHead, true);
         tvNick.setText(entry.getBabyNick());
         tvBirthday.setText(entry.getBrithday());
         tvDailyValue.setText(entry.getGrowingCount() + "");

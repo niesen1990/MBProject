@@ -64,7 +64,7 @@ public class CaseListViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBindViewHolder(Context context, final CaseModel entry) {
-        //GlideTool.loadImage(context, entry.getSmallImg(), ivHead, false);
+        //PicassoTool.loadImage(context, entry.getSmallImg(), ivHead, false);
     }
 
 }

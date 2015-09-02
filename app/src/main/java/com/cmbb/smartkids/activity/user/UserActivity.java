@@ -24,7 +24,7 @@ import com.cmbb.smartkids.fragment.postlist.city.SameCityPublishListFragment;
 import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicListFragment;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.RankTools;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -91,7 +91,7 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
         }
         // user
         ivUserBac = (ImageView) findViewById(R.id.iv_user_bac);
-        GlideTool.loadImage(this, mHomeEredarModel.getUserSmallHeadImg(), ivUserBac, true);
+        PicassoTool.loadImage(this, mHomeEredarModel.getUserSmallHeadImg(), ivUserBac, true);
         tvNick = (TextView) findViewById(R.id.tv_nick);
         tvNick.setText(mHomeEredarModel.getNike());
         ivRanktag = (ImageView) findViewById(R.id.iv_ranktag);

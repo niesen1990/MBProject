@@ -16,7 +16,7 @@ import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.fragment.baby.babylist.BabyListFragment;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 
 public class MBabyActivity extends MActivity {
@@ -39,7 +39,7 @@ public class MBabyActivity extends MActivity {
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         autoRl = (RelativeLayout) findViewById(R.id.auto_rl);
         ivHeadBac = (ImageView) findViewById(R.id.iv_head_bac);
-        GlideTool.loadImage(this, mPlateModel.getSmallImg(), ivHeadBac, true);
+        PicassoTool.loadImage(this, mPlateModel.getSmallImg(), ivHeadBac, true);
         title = (TextView) findViewById(R.id.title);
         title.setText(mPlateModel.getTitle());
         subtitle = (TextView) findViewById(R.id.subtitle);

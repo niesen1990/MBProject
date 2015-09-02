@@ -23,7 +23,7 @@ import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -218,7 +218,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
         // 显示头像
         String img_head = entry.getUserSmallHeadImg();
         if (!TextUtils.isEmpty(img_head)) {
-            GlideTool.loadImage(context, img_head, rivHead, true);
+            PicassoTool.loadImage(context, img_head, rivHead, true);
         } else {
             rivHead.setImageResource(R.drawable.ic_loading);
         }
@@ -239,7 +239,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             for (int k = 0; k < urls1.length; k++) {
                                 if (urls1[k].contains("smallImage")) {
                                     psivSmallIcon01.setVisibility(View.VISIBLE);
-                                    GlideTool.loadImage(context, urls1[k], psivSmallIcon01, false);
+                                    PicassoTool.loadImage(context, urls1[k], psivSmallIcon01, false);
                                 } else {
                                     if (imgs[i].contains("smallImage")) {
                                     } else {
@@ -255,7 +255,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             for (int k = 0; k < urls2.length; k++) {
                                 if (urls2[k].contains("smallImage")) {
                                     psivSmallIcon02.setVisibility(View.VISIBLE);
-                                    GlideTool.loadImage(context, urls2[k], psivSmallIcon02, false);
+                                    PicassoTool.loadImage(context, urls2[k], psivSmallIcon02, false);
                                 } else {
                                     if (imgs[i].contains("smallImage")) {
                                     } else {
@@ -270,7 +270,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             for (int k = 0; k < urls3.length; k++) {
                                 if (urls3[k].contains("smallImage")) {
                                     psivSmallIcon03.setVisibility(View.VISIBLE);
-                                    GlideTool.loadImage(context, urls3[k], psivSmallIcon03, false);
+                                    PicassoTool.loadImage(context, urls3[k], psivSmallIcon03, false);
                                 } else {
                                     if (imgs[i].contains("smallImage")) {
                                     } else {
@@ -297,7 +297,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                 for (int i = 0; i < urls1.length; i++) {
                     if (urls1[i].contains("smallImage")) {
                         psivSmallIcon01.setVisibility(View.VISIBLE);
-                        GlideTool.loadImage(context, urls1[i], psivSmallIcon01, false);
+                        PicassoTool.loadImage(context, urls1[i], psivSmallIcon01, false);
                     } else {
                         if (img_all.contains("smallImage")) {
                         } else {

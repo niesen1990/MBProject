@@ -12,7 +12,7 @@ import com.cmbb.smartkids.activity.replay.ReplayAgeCityActivity;
 import com.cmbb.smartkids.activity.replay.ReplayWonderActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeBannerModel;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.widget.autoscroll.RecyclingPagerAdapter;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class HomeAutoScrollBannerAdapter extends RecyclingPagerAdapter {
             view.setTag(holder);
         }
         holder.iv.setTag(R.id.img, data.get(position));
-        GlideTool.loadImage(mContext, data.get(position).getBigImg(), holder.iv, false);
+        PicassoTool.loadImage(mContext, data.get(position).getBigImg(), holder.iv, false);
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

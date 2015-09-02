@@ -34,7 +34,7 @@ import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.ShareUtils;
 import com.cmbb.smartkids.tools.TDevice;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -240,7 +240,7 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
         collapsingToolbar.setTitle(mPostDetail.getTitle());
         collapsingToolbar.setExpandedTitleColor(android.R.color.transparent);
         // 设置标题
-        GlideTool.loadImage(this, mPostModel.getUserSmallHeadImg(), mRivHead, true);
+        PicassoTool.loadImage(this, mPostModel.getUserSmallHeadImg(), mRivHead, true);
         mTvNick.setText(mPostModel.getNike());
         mTvHeaderTime.setText(mPostDetail.getDate());
         mTvHeaderMessage.setText(mPostDetail.getRelpys() + "");
@@ -320,7 +320,9 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                             imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
                             pagerUrls.add(cache[k]);
-                            GlideTool.loadImage(this, cache[k], imageView, false);
+                            //PicassoTool.loadImage(this, cache[k], imageView, false);
+                            PicassoTool.loadImageWithSize(this, cache[k], imageView, (int) Double.parseDouble(cache[k + 1]), (int) Double.parseDouble(cache[k + 2]), false);
+
                             imageView.setTag(R.id.image, pagerUrls.size() - 1);
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -362,7 +364,9 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
                     pagerUrls.add(imgUrl.split(",")[1]);
-                    GlideTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
+                    //PicassoTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
+                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[1], imageView, (int) Double.parseDouble(imgUrl.split(",")[2]), (int) Double.parseDouble(imgUrl.split(",")[3]), false);
+
                     linearLayout.addView(imageView);
                     TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
                     textView.setLayoutParams(params);
@@ -373,7 +377,9 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                 } else {
                     shareImgUrl = imgUrl.split(",")[0];
                     pagerUrls.add(imgUrl.split(",")[0]);
-                    GlideTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
+                    //PicassoTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
+                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[0], imageView, (int) Double.parseDouble(imgUrl.split(",")[1]), (int) Double.parseDouble(imgUrl.split(",")[2]), false);
+
                     linearLayout.addView(imageView);
                 }
             }
