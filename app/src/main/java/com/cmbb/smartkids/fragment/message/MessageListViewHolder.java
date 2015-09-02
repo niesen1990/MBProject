@@ -16,7 +16,7 @@ import com.cmbb.smartkids.activity.replay.ReplayAgeCityActivity;
 import com.cmbb.smartkids.activity.replay.ReplayWonderActivity;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.tools.RankTools;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 
 /**
@@ -143,7 +143,7 @@ public class MessageListViewHolder extends RecyclerView.ViewHolder {
         // 设置我的主题
         mTvCenterContent02.setText("回复我的主题：" + entry.getTitle());
         // 加载头像
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), mRivHead, true);
+        PicassoTool.loadImage(context, entry.getUserSmallHeadImg(), mRivHead, true);
         long[] ranks = RankTools.gradeDispose(entry.getLoginTimes());
         mIvHeaderUpIcon1.setImageResource((int) ranks[1]);
         mIvHeaderUpIcon2.setImageResource((int) ranks[2]);

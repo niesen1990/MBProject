@@ -14,7 +14,7 @@ import com.cmbb.smartkids.activity.baby.MBabyActivity;
 import com.cmbb.smartkids.activity.post.PostAgeListActivity;
 import com.cmbb.smartkids.activity.post.PostCityListActivity;
 import com.cmbb.smartkids.activity.post.PostWonderListActivity;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 
 /**
@@ -69,7 +69,7 @@ public class PlateListViewHolder extends RecyclerView.ViewHolder {
         tvConstellation.setText("【" + entry.getTitle() + "】");
         tvPost.setText(entry.getCount() + "");
         tvContent.setText(entry.getContext());
-        GlideTool.loadImage(context, entry.getSmallImg(), ivHead, true);
+        PicassoTool.loadImage(context, entry.getSmallImg(), ivHead, true);
     }
 
 }

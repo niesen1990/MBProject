@@ -14,7 +14,7 @@ import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.user.UserActivity;
 import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class HomeListHeadViewHolder extends RecyclerView.ViewHolder {
             tvName.setText(listEredar.get(i).getNike());*/
                 TextView tvMaster = (TextView) view.findViewById(R.id.tv_master);
                 tvMaster.setText(listEredar.get(i).getEredarName() + "达人");
-                GlideTool.loadImage(context, listEredar.get(i).getUserSmallHeadImg(), (ImageView) view.findViewById(R.id.civ_head), true);
+                PicassoTool.loadImage(context, listEredar.get(i).getUserSmallHeadImg(), (ImageView) view.findViewById(R.id.civ_head), true);
                 view.setLayoutParams(params);
                 view.setTag(listEredar.get(i));
                 view.setOnClickListener(new View.OnClickListener() {

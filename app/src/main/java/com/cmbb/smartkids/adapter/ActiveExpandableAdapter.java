@@ -14,7 +14,7 @@ import com.cmbb.smartkids.fragment.active.CustomParentViewHolder;
 import com.cmbb.smartkids.fragment.homeattention.user.UserAttentionModel;
 import com.cmbb.smartkids.model.active.CustomParentObject;
 import com.cmbb.smartkids.rong.RongInfoContext;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 
 import java.util.List;
@@ -132,7 +132,7 @@ public class ActiveExpandableAdapter extends ExpandableRecyclerAdapter<CustomPar
     @Override
     public void onBindChildViewHolder(CustomChildViewHolder childViewHolder, int position, Object childObject) {
         UserAttentionModel userAttentionModel = (UserAttentionModel) childObject;
-        GlideTool.loadImage(mContext, userAttentionModel.getUserSmallHeadImg(), childViewHolder.mIvHead, true);
+        PicassoTool.loadImage(mContext, userAttentionModel.getUserSmallHeadImg(), childViewHolder.mIvHead, true);
 
         if (!TextUtils.isEmpty(userAttentionModel.getEredarName())) {
             childViewHolder.mTvContent.setText(userAttentionModel.getEredarName() + "达人");

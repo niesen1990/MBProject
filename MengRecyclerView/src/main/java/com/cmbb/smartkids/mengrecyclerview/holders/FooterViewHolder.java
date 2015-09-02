@@ -29,6 +29,5 @@ public class FooterViewHolder extends RecyclerView.ViewHolder {
             progressBar.setVisibility(View.VISIBLE);
             progressBar.show();
         }
-
     }
 }

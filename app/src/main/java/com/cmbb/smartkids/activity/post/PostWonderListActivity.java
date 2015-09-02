@@ -25,7 +25,7 @@ import com.cmbb.smartkids.fragment.platelist.PlateModel;
 import com.cmbb.smartkids.fragment.postlist.wonder.WonderPostListFragment;
 import com.cmbb.smartkids.fragment.postlist.wonder.WonderPublicCountModel;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -143,7 +143,7 @@ public class PostWonderListActivity extends MActivity implements AppBarLayout.On
         tlMainCustom = (Toolbar) findViewById(R.id.tl_main_custom);
         container = (FrameLayout) findViewById(R.id.container);
 
-        GlideTool.loadImage(this, mPlateModel.getSmallImg(), ivHeadBac, true);
+        PicassoTool.loadImage(this, mPlateModel.getSmallImg(), ivHeadBac, true);
         title.setText(mPlateModel.getTitle());
         subtitle.setText(mPlateModel.getContext());
 

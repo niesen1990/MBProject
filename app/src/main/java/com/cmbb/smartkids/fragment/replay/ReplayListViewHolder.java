@@ -21,7 +21,7 @@ import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.mengbottomsheets.BottomSheet;
 import com.cmbb.smartkids.mengrecyclerview.actions.DataController;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -76,7 +76,6 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         mTvNameOther = (TextView) view.findViewById(R.id.tv_name_other);
         mTvHeaderFloorOther = (TextView) view.findViewById(R.id.tv_header_floor_other);
         mTvContentReplayOther = (TextView) view.findViewById(R.id.tv_content_replay_other);
-
         this.mOnReplayItemClickListener = onReplayItemClickListener;
     }
 
@@ -127,7 +126,6 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                                 } else {
                                     ((MActivity) context).showToast("此贴非本人发布，不可删除");
                                 }
-
                                 break;
                             case R.id.action_report:
                                 //举报
@@ -229,7 +227,7 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         mTvContentReplay.setText(entry.getContext());
         mTvHeaderFloor.setText(entry.getFloor() + "楼");
         mTvHeaderTime.setText(entry.getDate());
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), mRivHead, true);
+        PicassoTool.loadImage(context, entry.getUserSmallHeadImg(), mRivHead, true);
         // 删除UI
         if (1 == entry.getDeleteTag()) {
             mTvContentReplay.setText("此回复已经删除");
@@ -253,7 +251,11 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                     }
                 });
                 mRivContentReplay.setVisibility(View.VISIBLE);
-                GlideTool.loadImage(context, entry.getBigImg().split(",")[0], mRivContentReplay, false);
+                Log.e("replay_image", "replay_image = " + entry.getBigImg());
+                Log.e("replay_image", "replay_image = " + entry.getBigImgWidth());
+                Log.e("replay_image", "replay_image = " + entry.getBigImgHeight());
+                //PicassoTool.loadImageWithSize(context, entry.getBigImg(), mRivContentReplay, entry.getBigImgWidth(), entry.getBigImgHeight(), false);
+                PicassoTool.loadImage(context, entry.getBigImg(), mRivContentReplay, false);
             }
         }
         // other
@@ -268,7 +270,8 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
                 mTvNameOther.setText(entry.getOtherNike() + "");
                 mTvHeaderFloorOther.setText(entry.getOtherFloor() + "楼");
                 mTvContentReplayOther.setText(entry.getOtherContext());
-                GlideTool.loadImage(context, entry.getOtherUserSmallHeadImg().split(",")[0], mRivOtherHead, true);
+                //PicassoTool.loadImageWithSize(context, entry.getBigImg(), mRivContentReplay, entry.getBigImgWidth(), entry.getBigImgHeight(), false);
+                //PicassoTool.loadImage(context, entry.getOtherUserSmallHeadImg(), mRivOtherHead, true);
             }
         } else {
             mRlReplayAgain.setVisibility(View.GONE);

@@ -21,7 +21,7 @@ import com.cmbb.smartkids.fragment.replay.ReplayBaseModel;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
 import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
@@ -125,7 +125,7 @@ public class ReplayAddActivity extends MActivity {
                 imgs = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
                 if (imgs.size() == 0) return;
                 send_image = new File(imgs.get(0));
-                GlideTool.loadImage(this, imgs.get(0), ivAddPic, false);
+                PicassoTool.loadImage(this, imgs.get(0), ivAddPic, false);
             }
         }
     }

@@ -21,7 +21,7 @@ import com.cmbb.smartkids.model.expert.ExpertSchedulingBaseModel;
 import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.network.api.ApiNetwork;
 import com.cmbb.smartkids.tools.RankTools;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -72,7 +72,7 @@ public class UserExpertActivity extends MActivity {
         mDoctorRightModel = getIntent().getParcelableExtra("user");
         // user
         ivUserBac = (ImageView) findViewById(R.id.iv_user_bac);
-        GlideTool.loadImage(this, mDoctorRightModel.getUserSmallHeadImg(), ivUserBac, true);
+        PicassoTool.loadImage(this, mDoctorRightModel.getUserSmallHeadImg(), ivUserBac, true);
         tvNick = (TextView) findViewById(R.id.tv_nick);
         tvNick.setText(mDoctorRightModel.getRealName());
         ivRanktag = (ImageView) findViewById(R.id.iv_ranktag);

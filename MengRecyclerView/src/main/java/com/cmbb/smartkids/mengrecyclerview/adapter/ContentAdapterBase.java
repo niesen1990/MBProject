@@ -100,6 +100,7 @@ public abstract class ContentAdapterBase<T> extends RecyclerView.Adapter<Recycle
         } else {
             return onCreateCustomContentHolder(parent, viewType);
         }
+
     }
 
     @Override

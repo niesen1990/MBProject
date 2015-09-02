@@ -15,7 +15,7 @@ import com.cmbb.smartkids.activity.user.UserExpertActivity;
 import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.network.api.ApiNetwork;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -67,7 +67,7 @@ public class DoctorRightViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(intent);
             }
         });
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), civHead, true);
+        PicassoTool.loadImage(context, entry.getUserSmallHeadImg(), civHead, true);
         if (entry.getAttention() == 1) {
             tvAttention.setBackgroundResource(R.drawable.ic_master_attention);
         } else if (entry.getAttention() == 0) {

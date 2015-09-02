@@ -15,7 +15,7 @@ import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.user.UserActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeEredarModel;
 import com.cmbb.smartkids.model.search.SearchModel;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 
 /**
@@ -71,7 +71,7 @@ public class SearchUserListViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(intent);
             }
         });
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
+        PicassoTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
 
         if (!TextUtils.isEmpty(entry.getEredarName())) {
             tvContent.setText(entry.getEredarName() + "达人");

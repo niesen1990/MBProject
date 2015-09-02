@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.activity.user.UserActivity;
 import com.cmbb.smartkids.fragment.homeplate.HomeEredarModel;
-import com.cmbb.smartkids.tools.glide.GlideTool;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
 
 
 /**
@@ -80,7 +80,7 @@ public class UserAttentionListViewHolder extends RecyclerView.ViewHolder {
                 context.startActivity(intent);
             }
         });
-        GlideTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
+        PicassoTool.loadImage(context, entry.getUserSmallHeadImg(), ivHead, true);
         tvConstellation.setText(entry.getNike());
 
         if (!TextUtils.isEmpty(entry.getEredarName())) {
