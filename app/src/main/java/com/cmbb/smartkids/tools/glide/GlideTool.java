@@ -1,6 +1,7 @@
 package com.cmbb.smartkids.tools.glide;
 
 import android.content.Context;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -25,7 +26,7 @@ public class GlideTool {
      */
     public static void loadImage(Context context, String url, ImageView view, boolean circle) {
         Glide.get(context).setMemoryCategory(MemoryCategory.LOW);
-        if (url.contains("storage")) {
+        if (url.contains("storage") || url.contains("sdcard")){
             if (circle) {
                 Glide.with(context).load(url).transform(new CircleImageTransform(context)).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);
             } else {

@@ -353,7 +353,6 @@ public class ApiNetwork {
                     if (TextUtils.isEmpty(result)) {
                         return;
                     }
-
                     LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
                     SPCache.putString(Constants.RongToken, loginBaseModel.getContext().getRongyunToken());
                     MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();

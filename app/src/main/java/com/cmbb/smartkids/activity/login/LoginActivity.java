@@ -279,33 +279,44 @@ public class LoginActivity extends MActivity {
             @Override
             public void run() {
                 hideWaitDialog();
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    try {
-                        String result = response.body().string();
-                        LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
-                        if ("1".equals(loginBaseModel.getCode())) {
-                            showToast(loginBaseModel.getContext().getPresentation());
-                            MApplication.token = loginBaseModel.getContext().getToken();
-                            MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
-                            MApplication.userStatus = loginBaseModel.getContext().getUserStatus();
-                            // 保存SP
-                            SPCache.putString(Constants.SharePreference.USER_TOKEN, loginBaseModel.getContext().getToken());
-                            SPCache.putString(Constants.SharePreference.RONG_TOKEN, loginBaseModel.getContext().getRongyunToken());
-                            SPCache.putInt(Constants.SharePreference.USER_AUTHORITY, loginBaseModel.getContext().getUserStatus());
-                            ApiNetwork.loginRongYun(MApplication.rongToken);
-                            ApiNetwork.getUserInfoList();
-                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
-                        } else {
-                            showToast(loginBaseModel.getContext().getPresentation());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
         });
+        if (response.isSuccessful()) {
+            Gson gson = new Gson();
+            try {
+                String result = response.body().string();
+                final LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
+                if ("1".equals(loginBaseModel.getCode())) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(loginBaseModel.getContext().getPresentation());
+                        }
+                    });
+                    MApplication.token = loginBaseModel.getContext().getToken();
+                    MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
+                    MApplication.userStatus = loginBaseModel.getContext().getUserStatus();
+                    // 保存SP
+                    SPCache.putString(Constants.SharePreference.USER_TOKEN, loginBaseModel.getContext().getToken());
+                    SPCache.putString(Constants.SharePreference.RONG_TOKEN, loginBaseModel.getContext().getRongyunToken());
+                    SPCache.putInt(Constants.SharePreference.USER_AUTHORITY, loginBaseModel.getContext().getUserStatus());
+                    ApiNetwork.loginRongYun(MApplication.rongToken);
+                    ApiNetwork.getUserInfoList();
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(loginBaseModel.getContext().getPresentation());
+                        }
+                    });
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

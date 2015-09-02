@@ -44,7 +44,7 @@ public class OkHttp {
         mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
         mOkHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
-        mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
+//        mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(MApplication.getContext()), CookiePolicy.ACCEPT_ALL));
         mOkHttpClient.setCache(new Cache(MApplication.getContext().getExternalCacheDir(), cacheSize));
     }

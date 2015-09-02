@@ -8,7 +8,6 @@ public class PostModel implements Parcelable {
     private int areaId;
     private String areaName;
     private String areaType;
-    private String portConnector;
     private int attent;
     private int authority;
     private String bigImg;
@@ -19,6 +18,7 @@ public class PostModel implements Parcelable {
     private int loginTimes;
     private String nike;
     private String plateName;
+    private String portConnector;
     private int relpys;
     private String smallImg;
     private int smallImgHeight;

@@ -125,6 +125,7 @@ public class PostAddWonderActivity extends MActivity {
 
                     if (response.isSuccessful()) {
                         String result = response.body().string();
+                        Log.e("wonder11111", result);
                         Gson gson = new Gson();
                         final WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
                         runOnUiThread(new Runnable() {
