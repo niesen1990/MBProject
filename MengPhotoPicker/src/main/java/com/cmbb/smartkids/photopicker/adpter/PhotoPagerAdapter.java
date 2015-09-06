@@ -57,7 +57,7 @@ public class PhotoPagerAdapter extends PagerAdapter {
                 .error(R.drawable.ic_broken_image_black_48dp)
                 .into(imageView);*/
 
-        Picasso.with(mContext).load(uri).fit().placeholder(R.drawable.ic_photo_black_48dp)
+        Picasso.with(mContext).load(uri).fit().placeholder(R.drawable.ic_broken_image_black_48dp)
                 .error(R.drawable.ic_broken_image_black_48dp)
                 .into(imageView);
 

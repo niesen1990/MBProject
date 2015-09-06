@@ -212,7 +212,7 @@ public class OkHttp {
     }
 
     // 根据路径获得图片并压缩，返回bitmap用于显示
-    public static byte[] getSmallBitmap(String filePath) {
+    public static synchronized byte[] getSmallBitmap(String filePath) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
@@ -224,8 +224,10 @@ public class OkHttp {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-
-        return baos.toByteArray();
+        byte[] temp = baos.toByteArray();
+        if(baos != null)try{baos.flush();}catch (Exception e){e.printStackTrace();}
+        if(baos != null)try{baos.close();}catch (Exception e){e.printStackTrace();}
+        return temp;
     }
 
     //计算图片的缩放值

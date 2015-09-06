@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.base.Constants;
 import com.cmbb.smartkids.tools.TDevice;
-import com.cmbb.smartkids.widget.circleimage.CircleTransform;
+import com.cmbb.smartkids.widget.CircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
