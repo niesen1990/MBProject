@@ -98,6 +98,10 @@ public abstract class DataController<T> implements DataProvider<T> {
         return mRepository.size();
     }
 
+    public void setIsEnd(boolean isEnd) {
+        this.isEnd = isEnd;
+    }
+
     public int getRequestOffset() {
         return mNextTimeOffset;
     }
@@ -116,7 +120,7 @@ public abstract class DataController<T> implements DataProvider<T> {
         mPageSize = pageSize;
     }
 
-    public List<T> getData() throws Exception {
+    public List<T> getData() {
         return mRepository;
     }
 

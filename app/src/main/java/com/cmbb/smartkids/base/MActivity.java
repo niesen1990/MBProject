@@ -284,8 +284,7 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
         if (bitmapDrawable != null) {
             view.setImageBitmap(null);
             // 如果图片还未回收，先强制回收该图片
-            if (bitmapDrawable.getBitmap() != null
-                    && !bitmapDrawable.getBitmap().isRecycled()) {
+            if (bitmapDrawable.getBitmap() != null && !bitmapDrawable.getBitmap().isRecycled()) {
                 //                Log.i(TAG, "图片回收");
                 bitmapDrawable.getBitmap().recycle();
             }

@@ -33,7 +33,6 @@ import java.util.Map;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.ipc.RongExceptionHandler;
 
 /**
  * 项目名称：MBProject
@@ -59,10 +58,18 @@ public class MApplication extends Application {
 
             instance = this;
             mContext = getApplicationContext();
-            initLog();
-//            initStetho();
-
+            Log.i("application", "application = ");
+            if (TDevice.getCurProcessName(getApplicationContext()) == null || TDevice.getCurProcessName(getApplicationContext()).equals(""))
+                return;
             initSharePreference();
+            token = SPCache.getString(Constants.SharePreference.USER_TOKEN, "");
+            rongToken = SPCache.getString(Constants.SharePreference.RONG_TOKEN, "");
+            eredar = SPCache.getInt(Constants.SharePreference.USER_EREDAR, 0);
+            userStatus = SPCache.getInt(Constants.SharePreference.USER_USERSTATUS, 0);
+            authority = SPCache.getInt(Constants.SharePreference.USER_AUTHORITY, 0);
+
+            initLog();
+            //initStetho();
             //初始化百度地图
             // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
             SDKInitializer.initialize(this);
@@ -71,22 +78,20 @@ public class MApplication extends Application {
             // 初始化融云
             initRong();
 
-            /* 必须在使用 RongIM 的进程注册回调、注册自定义消息等 */
+        /* 必须在使用 RongIM 的进程注册回调、注册自定义消息等 */
             if ("com.cmbb.smartkids".equals(TDevice.getCurProcessName(getApplicationContext()))) {
                 RongCloudEvent.init(this);
                 RongInfoContext.init(this);
-                Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+                //Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
                 try {
                     RongIM.registerMessageType(DeAgreedFriendRequestMessage.class);
                     RongIM.registerMessageTemplate(new DeContactNotificationMessageProvider());
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             initUmengAnalytics();
         }
-
     }
 
     private void initRong() {
@@ -144,7 +149,9 @@ public class MApplication extends Application {
                                 .setLargeIcon(getAppIcon())
                                 .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentTitle(msg.title)
+                                .setCategory(msg.text)
                                 .setContentText(msg.text);
+
                         mBuilder.setAutoCancel(true);
                         Notification mNotification = mBuilder.build();
                         return mNotification;

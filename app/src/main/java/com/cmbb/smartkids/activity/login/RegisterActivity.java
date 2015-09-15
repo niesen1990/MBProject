@@ -133,8 +133,12 @@ public class RegisterActivity extends MActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                hideWaitDialog();
-                                showToast(loginBaseModel.getContext().getPresentation());
+                                try {
+                                    hideWaitDialog();
+                                    showToast(loginBaseModel.getContext().getPresentation());
+                                } catch (NullPointerException e) {
+
+                                }
                             }
                         });
                     }

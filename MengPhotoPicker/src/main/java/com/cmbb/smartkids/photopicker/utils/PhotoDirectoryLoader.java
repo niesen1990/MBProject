@@ -30,14 +30,12 @@ public class PhotoDirectoryLoader extends CursorLoader {
         setUri(Media.EXTERNAL_CONTENT_URI);
         setSortOrder(Media.DATE_ADDED + " DESC");
 
-        setSelection(MIME_TYPE + "=? or " + MIME_TYPE + "=? or " + MIME_TYPE + "=?");
-        setSelectionArgs(new String[]{"image/jpg", "image/jpeg", "image/png"});
+        setSelection(MIME_TYPE + "=? or " + MIME_TYPE + "=? or " + MIME_TYPE + "=? or " + MIME_TYPE + "=?");
+        setSelectionArgs(new String[]{"image/jpg", "image/jpeg", "image/png", "image/PNG"});
     }
 
 
     private PhotoDirectoryLoader(Context context, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         super(context, uri, projection, selection, selectionArgs, sortOrder);
     }
-
-
 }

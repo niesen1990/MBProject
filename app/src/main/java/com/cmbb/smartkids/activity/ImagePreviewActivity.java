@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,11 +15,9 @@ import android.widget.ImageView;
 import com.cmbb.smartkids.R;
 import com.cmbb.smartkids.adapter.ImagePreviewAdapter;
 import com.cmbb.smartkids.base.MActivity;
-import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.widget.indicator.CirclePageIndicator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,14 +27,12 @@ import java.util.ArrayList;
  * 类描述：
  * 创建人：javon
  * 创建时间：2015/8/11 18:56
- *
+ * <p/>
  * 用法intent传参
  * index  位置
  * data  数据源
- *
- *
  */
-public class ImagePreviewActivity extends MActivity{
+public class ImagePreviewActivity extends MActivity {
     private final String TAG = ImagePreviewActivity.class.getSimpleName();
     private ViewPager vp;
     private CirclePageIndicator indicator;
@@ -71,22 +66,22 @@ public class ImagePreviewActivity extends MActivity{
         indicator.setSnap(true);
         indicator.setViewPager(vp);
     }
+
     private void initData() {
         Bundle bundle = null;
-        if(getIntent() != null && (bundle = getIntent().getExtras()) != null){
+        if (getIntent() != null && (bundle = getIntent().getExtras()) != null) {
             index = bundle.getInt("index", 0);
             data = bundle.getStringArrayList("data");
-            if(data != null && data.size() > 0){
+            if (data != null && data.size() > 0) {
                 adapter.setData(this.data);
                 indicator.setCurrentItem(index);
             }
-        }else {
+        } else {
             showToast("数据出错啦...");
         }
-
     }
 
-    private void addListener(){
+    private void addListener() {
         findViewById(R.id.fab_image_preview).setOnClickListener(this);
         indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -107,10 +102,10 @@ public class ImagePreviewActivity extends MActivity{
 
     }
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 0:
                     showToast("图片保存出错啦...");
                     break;
@@ -124,7 +119,7 @@ public class ImagePreviewActivity extends MActivity{
 
     @Override
     public void onClick(View v) {
-        if(index < 0)
+        if (index < 0)
             index = 0;
         ImageView item = (ImageView) vp.getChildAt(index);
         new AsyncTask<ImageView, Void, Void>() {
@@ -149,8 +144,7 @@ public class ImagePreviewActivity extends MActivity{
     }
 
     /**
-     * @param item
-     * 保存图片到本地相册
+     * @param item 保存图片到本地相册
      */
     private void saveImage(ImageView item) {
         // 首先保存图片

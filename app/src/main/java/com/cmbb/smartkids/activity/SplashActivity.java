@@ -34,7 +34,6 @@ public class SplashActivity extends MActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         mShimmerViewContainer = (ShimmerFrameLayout) findViewById(R.id.shimmer_view_container);
-
         mPushAgent.enable(mRegisterCallback);
         initTask();
     }

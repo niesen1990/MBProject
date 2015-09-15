@@ -56,21 +56,6 @@
                     android:textColor="@color/hotpink"/>
 
 
-                <!--<TextView
-                    android:id="@+id/btn_attention"
-                    style="@android:style/TextAppearance.DeviceDefault.Medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp "
-                    android:layout_alignBottom="@+id/iv_head_bac"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_vertical_margin"
-                    android:layout_marginTop="@dimen/activity_vertical_margin_half"
-                    android:gravity="bottom"
-                    android:text="关注"
-                    android:textColor="?attr/colorPrimary"
-                    android:textStyle="bold"/>-->
-
                 <TextView
                     android:id="@+id/subtitle"
                     style="@android:style/TextAppearance.DeviceDefault.Small"
@@ -81,12 +66,6 @@
                     android:padding="1dp"
                     android:text="Sub Title"
                     android:textColor="@android:color/darker_gray"/>
-
-                <!--<TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="1.0dp"
-                    android:layout_alignParentBottom="true"
-                    android:background="?attr/colorPrimary"/>-->
             </RelativeLayout>
 
 

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,25 +28,33 @@ import com.cmbb.smartkids.base.MActivity;
 import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.fragment.postlist.PostModel;
 import com.cmbb.smartkids.fragment.replay.PostDetail;
+import com.cmbb.smartkids.fragment.replay.ReplayBaseModel;
 import com.cmbb.smartkids.fragment.replay.ReplayListFragment;
 import com.cmbb.smartkids.fragment.replay.ReplayListViewHolder;
 import com.cmbb.smartkids.fragment.replay.ReplayModel;
+import com.cmbb.smartkids.network.OkHttp;
 import com.cmbb.smartkids.network.api.ApiNetwork;
+import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
+import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.ShareUtils;
 import com.cmbb.smartkids.tools.TDevice;
-import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
+import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener {
+public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener, ReplayListViewHolder.OnReplayClickListener {
 
     PostModel mPostModel;
     PostDetail mPostDetail = new PostDetail();
@@ -58,6 +67,7 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
     private FloatingActionButton fabReplay;
 
     private LinearLayout headContainer;
+
 
     BroadcastReceiver postDetailReceiver = new BroadcastReceiver() {
         @Override
@@ -83,6 +93,11 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
 
     private TextView btnSpot;
 
+    // 底部发送
+    private EditText etSendContent;
+    private ImageView ivAdd;
+    private TextView btnSend;
+
 
     @Override
     protected int getLayoutId() {
@@ -98,12 +113,25 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
         headContainer.setLayoutParams(params);
-        mReplayListFragment = new ReplayListFragment(true, mPostDetail, mPostModel, headContainer, sort, this);
+        mReplayListFragment = new ReplayListFragment(true, mPostDetail, mPostModel, headContainer, sort, this, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getWonderReplayDetail(this, mPostModel);
     }
 
     private void assignViews() {
+        etSendContent = (EditText) findViewById(R.id.et_send_content);
+        ivAdd = (ImageView) findViewById(R.id.iv_add);
+        ivAdd.setOnClickListener(this);
+        ivAdd.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                send_image = null;
+                ivAdd.setImageResource(android.R.drawable.ic_menu_add);
+                return true;
+            }
+        });
+        btnSend = (TextView) findViewById(R.id.btn_send);
+        btnSend.setOnClickListener(this);
         appbar = (AppBarLayout) findViewById(R.id.appbar);
         mRivHead = (ImageView) findViewById(R.id.riv_head);
         mTvNick = (TextView) findViewById(R.id.tv_nick);
@@ -124,6 +152,31 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
             }
         });
         btnSpot = (TextView) findViewById(R.id.btn_spot);
+    }
+
+
+    int mParentReplyId = -1;
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.btn_send:
+                String conent = etSendContent.getText().toString();
+                if (TextUtils.isEmpty(conent)) {
+                    showToast("请输入回复内容");
+                    return;
+                } else {
+                    btnSend.setClickable(false);
+                    sendMessage(mParentReplyId, conent);
+                }
+                break;
+            case R.id.iv_add:
+                PhotoPickerIntent intent = new PhotoPickerIntent(ReplayWonderActivity.this);
+                intent.setPhotoCount(1);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+        }
     }
 
     private void setHeadViewData(LinearLayout linearLayout) {
@@ -319,7 +372,7 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                             ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
                             //ImageView imageView = new ImageView(this);
                             imageView.setAdjustViewBounds(true);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                             imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
                             pagerUrls.add(cache[k]);
@@ -411,8 +464,13 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         unregisterReceiver(postDetailReceiver);
+        /*for (int i = 0; i < headContainer.getChildCount(); i++) {
+            if (headContainer.getChildAt(i) instanceof ImageView) {
+                recycleBitmap((ImageView) headContainer.getChildAt(i));
+            }
+        }*/
+        super.onDestroy();
     }
 
     @Override
@@ -455,12 +513,18 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 break;
             case R.id.action_sort:
                 sort = sort == 1 ? 2 : 1;
+
+                for (int i = 0; i < headContainer.getChildCount(); i++) {
+                    if (headContainer.getChildAt(i) instanceof ImageView) {
+                        recycleBitmap((ImageView) headContainer.getChildAt(i));
+                    }
+                }
                 LinearLayout.LayoutParams paramsCache = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 LinearLayout headCache = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
                 headCache.setLayoutParams(paramsCache);
                 setHeadContent(headCache);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayListFragment(true, mPostDetail, mPostModel, headCache, sort, this)).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayListFragment(true, mPostDetail, mPostModel, headCache, sort, this, this)).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -605,6 +669,10 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
 
     private UMSocialService mController;
 
+    public final static int REQUEST_CODE = 1;
+    private ArrayList<String> imgs = new ArrayList<>();
+    private File send_image;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -613,19 +681,156 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
             mReplayListFragment.mReplayListProvider.initSuccess(replayMessageModels);
             return;
         }
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+            if (data != null) {
+                imgs = data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+                if (imgs.size() == 0) return;
+                send_image = new File(imgs.get(0));
+                PicassoTool.loadImage(this, imgs.get(0), ivAdd, false);
+            }
+        }
+
         UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
         if (ssoHandler != null) {
             ssoHandler.authorizeCallBack(requestCode, resultCode, data);
         }
     }
 
+
     @Override
     public void onReplayItemClick(View view) {
-        ReplayModel replayModel = (ReplayModel) view.getTag();
+        /*ReplayModel replayModel = (ReplayModel) view.getTag();
         Intent intent = new Intent(ReplayWonderActivity.this, ReplayAddActivity.class);
         intent.putExtra("model", mPostModel);
         intent.putExtra("id", replayModel.getId());
         intent.putExtra("floor", replayModel.getFloor());
-        startActivityForResult(intent, 10);
+        startActivityForResult(intent, 10);*/
+        mParentReplyId = -1;
+        etSendContent.setHint("没事写两句...");
+        etSendContent.setText("");
+
     }
+
+    @Override
+    public void onReplayClick(View view) {
+        try {
+            ReplayModel replayModel = (ReplayModel) view.getTag();
+            mParentReplyId = replayModel.getId();
+            etSendContent.setHint("回复" + replayModel.getFloor() + "楼...");
+
+        } catch (Exception e) {
+
+        }
+    }
+
+
+    private void sendMessage(int parentReplyId, String content) {
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("id", mPostModel.getId() + "");
+        body.put("areaType", mPostModel.getAreaType());
+        body.put("type", mPostModel.getType());
+        // 判断是否是回帖
+        if (-1 != parentReplyId) {
+            body.put("parentReplyId", parentReplyId + "");
+        }
+        body.put("context", content);
+        body.put("sort", sort + "");
+        for (Map.Entry<String, String> entry : body.entrySet()) {
+            Log.i("send", "key = " + entry.getKey() + " value = " + entry.getValue());
+        }
+        showWaitDialog("正在提交中...");
+
+        /*for (int i = 0; i < headContainer.getChildCount(); i++) {
+            if (headContainer.getChildAt(i) instanceof ImageView) {
+                recycleBitmap((ImageView) headContainer.getChildAt(i));
+            }
+        }*/
+
+        OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "AddReplys", body, send_image, new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideWaitDialog();
+                        btnSend.setClickable(true);
+                        showToast(getResources().getString(R.string.rc_network_error));
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+
+                if (response.isSuccessful()) {
+                    String result = response.body().string();
+                    Gson gson = new Gson();
+                    try {
+                        final ReplayBaseModel replayMessageBaseModel = gson.fromJson(result, ReplayBaseModel.class);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideWaitDialog();
+                                btnSend.setClickable(true);
+
+                                try {
+                                    if (replayMessageBaseModel.getCode().equals("1")) {
+                                        showToast("回复成功");
+                                        mParentReplyId = -1;
+                                        send_image = null;
+
+                                        etSendContent.setHint("没事写两句...");
+                                        etSendContent.setText("");
+                                        ivAdd.setImageResource(android.R.drawable.ic_menu_add);
+                                        /*for (int i = 0; i < replayMessageBaseModel.getContext().size(); i++) {
+                                            Log.i("replay_result", "replay_result = " + replayMessageBaseModel.getContext().get(i).toString());
+                                            if (i)
+                                        }*/
+                                        if (replayMessageBaseModel != null && replayMessageBaseModel.getContext().size() > 0) {
+                                            mReplayListFragment.mReplayListProvider.initSuccess(replayMessageBaseModel.getContext());
+                                            mReplayListFragment.mReplayListProvider.setId(replayMessageBaseModel.getContext().get(replayMessageBaseModel.getContext().size() - 1).getId());
+                                            Log.i("replay_id", "replay_id = " + mReplayListFragment.mReplayListProvider.getId());
+                                            mReplayListFragment.mRecyclerView.scrollToPosition(1);
+                                            mReplayListFragment.mReplayListProvider.setIsEnd(false);
+
+                                            /*mReplayListFragment.mReplayListProvider.getData().removeAll(mReplayListFragment.mReplayListProvider.getCacheReplayModels());
+                                            mReplayListFragment.mReplayListProvider.setId(mReplayListFragment.mReplayListProvider.getCacheId());
+                                            mReplayListFragment.mReplayListAdapter.notifyDataSetChanged();*/
+                                        }
+
+                                    } else {
+                                        showToast("回复失败");
+                                    }
+                                } catch (NullPointerException e) {
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            btnSend.setClickable(true);
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    } catch (Exception e) {
+
+                    }
+
+                } else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            hideWaitDialog();
+                            btnSend.setClickable(true);
+                            showToast(getResources().getString(R.string.rc_network_error));
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
 }

@@ -8,7 +8,6 @@ import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.tools.ImageUtils;
 import com.cmbb.smartkids.tools.log.Log;
-import com.facebook.stetho.okhttp.StethoInterceptor;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -35,22 +34,22 @@ import java.util.concurrent.TimeUnit;
 public class OkHttp {
     private static final String TAG = "OkHttp";
     public static final OkHttpClient mOkHttpClient = new OkHttpClient();
-    private static int cacheSize = 10 * 1024 * 1024; // 10 MiB
+    private static int cacheSize = 30 * 1024 * 1024; // 30 MiB
 
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     // timeout
     static {
-        mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
+        mOkHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
         mOkHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
-//        mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
+        //mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(MApplication.getContext()), CookiePolicy.ACCEPT_ALL));
         mOkHttpClient.setCache(new Cache(MApplication.getContext().getExternalCacheDir(), cacheSize));
     }
 
     /**
-     * 不使用异步线程。
+     * 不使用异步线程
      *
      * @param request
      * @return
@@ -108,7 +107,7 @@ public class OkHttp {
     }
 
     // post without file
-    public static void asyncPost(String url, Map<String, String> body,Callback callback) {
+    public static void asyncPost(String url, Map<String, String> body, Callback callback) {
 
 
         FormEncodingBuilder formEncodingBuilder = new FormEncodingBuilder();
@@ -155,30 +154,8 @@ public class OkHttp {
         }
         //        Date date = new Date();
         if (file != null && file.exists()) {
-            ////            //图片处理
-            //        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            //        bitmapOptions.inSampleSize = 3;
-            //        bitmapOptions.inPreferredConfig= Bitmap.Config.RGB_565;
-            //
-            ////            //Bitmap cameraBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bitmapOptions);
-            //        Bitmap cameraBitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), bitmapOptions);
-            //
-            //        /**
-            //         * 把图片旋转为正的方向
-            //         */
-            //        Bitmap bitmap = ImageTools.rotaingImageView(ImageTools.readPictureDegree(file.getAbsolutePath()), cameraBitmap);
-            //        date1 = new Date();
-            ////          byte[] bytes = Bitmap2Bytes(bitmap);
-            //
-            //        FileTools.createDirs("萌宝派");
-            //        File sendFile = new File(Environment.getExternalStorageDirectory().getAbsoluteFile(), File.separator + "萌宝派" + File.separator + file.getName());
-            //        boolean b = ImageTools.saveBitmap(bitmap, sendFile.getAbsolutePath());
-            //        //图片处理
-            //        if (b) {
-            //            multipartBuilder.addFormDataPart("image", "image", RequestBody.create(MEDIA_TYPE_PNG, sendFile));
-            //            Log.i(TAG, "add picture addres = " + sendFile.getAbsolutePath());
-            //        }
             multipartBuilder.addFormDataPart("image", "image", RequestBody.create(MEDIA_TYPE_PNG, getSmallBitmap(file.getPath())));
+
         }
         RequestBody formBody = multipartBuilder.build();
         Request request = new Request.Builder()
@@ -211,23 +188,59 @@ public class OkHttp {
         enqueue(request, callback);
     }
 
+
+    /*test*/
+    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+    public static void asyncPost(String url, Callback callback) {
+        RequestBody body = RequestBody.create(JSON, "{\n" +
+                "  \"cmd\": \"smart/register\",\n" +
+                "  \"parameters\": {\n" +
+                "    \"loginAccount\" : \"15901718791\"\n" +
+                "  }\n" +
+                "}");
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        enqueue(request, callback);
+    }
+
     // 根据路径获得图片并压缩，返回bitmap用于显示
-    public static synchronized byte[] getSmallBitmap(String filePath) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(filePath, options);
-        options.inSampleSize = calculateInSampleSize(options, 480, 800);
-        options.inJustDecodeBounds = false;
-        Bitmap bitmap2 = BitmapFactory.decodeFile(filePath, options);
+    public synchronized static byte[] getSmallBitmap(String filePath) {
+        ByteArrayOutputStream baos = null;
+        Bitmap bitmap = null;
+        Bitmap bitmapCache = null;
+        byte[] bytes = null;
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(filePath, options);
+            options.inSampleSize = calculateInSampleSize(options, 320, 540);
+            options.inJustDecodeBounds = false;
+            bitmapCache = BitmapFactory.decodeFile(filePath, options);
+            if (bitmapCache == null) {
+                return null;
+            }
+            bitmap = ImageUtils.rotaingImageView(ImageUtils.readPictureDegree(filePath), bitmapCache);
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            bytes = baos.toByteArray();
+        } catch (Exception e) {
 
-        Bitmap bitmap = ImageUtils.rotaingImageView(ImageUtils.readPictureDegree(filePath), bitmap2);
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] temp = baos.toByteArray();
-        if(baos != null)try{baos.flush();}catch (Exception e){e.printStackTrace();}
-        if(baos != null)try{baos.close();}catch (Exception e){e.printStackTrace();}
-        return temp;
+        } finally {
+            if (baos != null) try {
+                baos.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (baos != null) try {
+                baos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return bytes;
     }
 
     //计算图片的缩放值
@@ -242,6 +255,5 @@ public class OkHttp {
         }
         return inSampleSize;
     }
-
 
 }

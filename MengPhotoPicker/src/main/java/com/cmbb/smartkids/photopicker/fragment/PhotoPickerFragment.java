@@ -137,13 +137,18 @@ public class PhotoPickerFragment extends Fragment {
         btSwitchDirectory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
 
-                if (listPopupWindow.isShowing()) {
-                    listPopupWindow.dismiss();
-                } else {
-                    listPopupWindow.setHeight(Math.round(rootView.getHeight() * 0.8f));
-                    listPopupWindow.show();
+                    if (listPopupWindow.isShowing()) {
+                        listPopupWindow.dismiss();
+                    } else {
+                        listPopupWindow.setHeight(Math.round(rootView.getHeight() * 0.8f));
+                        listPopupWindow.show();
+                    }
+                } catch (Exception e) {
+                    Log.e("btSwitchDirectory", "e = " + e);
                 }
+
             }
         });
         return rootView;

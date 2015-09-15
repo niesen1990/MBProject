@@ -22,13 +22,15 @@ public class ReplayListAdapter extends ContentAdapterBase<ReplayModel> {
     DataController<ReplayModel> mDataController;
 
     private ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
+    private ReplayListViewHolder.OnReplayClickListener mOnReplayClickListener;
 
 
-    public ReplayListAdapter(Context mContext, PostModel postDetail, DataController<ReplayModel> mDataController, boolean need, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
+    public ReplayListAdapter(Context mContext, PostModel postDetail, DataController<ReplayModel> mDataController, boolean need, LinearLayout headView, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener, ReplayListViewHolder.OnReplayClickListener onReplayClickListener) {
         super(mContext, mDataController);
         this.mPostModel = postDetail;
         this.mDataController = mDataController;
         this.mOnReplayItemClickListener = onReplayItemClickListener;
+        this.mOnReplayClickListener = onReplayClickListener;
         this.mContext = mContext;
         this.mHeadView = headView;
         // 设置HeaderView
@@ -37,7 +39,7 @@ public class ReplayListAdapter extends ContentAdapterBase<ReplayModel> {
 
     @Override
     protected RecyclerView.ViewHolder onCreateCustomContentHolder(ViewGroup parent, int viewType) {
-        return ReplayListViewHolder.create(mContext, parent, mOnReplayItemClickListener);
+        return ReplayListViewHolder.create(mContext, parent, mOnReplayItemClickListener, mOnReplayClickListener);
     }
 
 

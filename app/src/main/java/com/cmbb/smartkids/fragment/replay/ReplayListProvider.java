@@ -30,6 +30,22 @@ public class ReplayListProvider extends DataController<ReplayModel> {
     private int sort = 1;
     private int id = -1;
 
+    public int getSort() {
+        return sort;
+    }
+
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public ReplayListProvider(PostModel postModel, int sort) {
         this.mPostModel = postModel;
         this.sort = sort;
@@ -73,6 +89,7 @@ public class ReplayListProvider extends DataController<ReplayModel> {
         body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.BASE_URL + mPostModel.getPortConnector() + "FindReplys", body, callback);
     }
+
 
     @Override
     public List<ReplayModel> doParser(Response response) {

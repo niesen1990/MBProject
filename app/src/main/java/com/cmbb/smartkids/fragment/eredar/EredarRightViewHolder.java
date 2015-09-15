@@ -132,18 +132,19 @@ public class EredarRightViewHolder extends RecyclerView.ViewHolder {
 
                         @Override
                         public void onResponse(final Response response) throws IOException {
+                            final String result = response.body().string();
                             ((MActivity) context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
-                                        if (response.body().string().contains("1")) {
+                                        if (result.contains("1")) {
                                             ((MActivity) context).showToast("关注成功");
                                             tvAttention.setBackgroundResource(R.drawable.ic_master_attention);
                                             masterDetailModel.setAttention(1);
                                         } else {
                                             ((MActivity) context).showToast("关注失败");
                                         }
-                                    } catch (IOException e) {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                 }

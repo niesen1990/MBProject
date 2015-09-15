@@ -211,19 +211,20 @@ public class UserActivity extends MActivity implements AppBarLayout.OnOffsetChan
 
                         @Override
                         public void onResponse(final Response response) throws IOException {
+                            final String result = response.body().string();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
                                         hideWaitDialog();
-                                        if (response.body().string().contains("1")) {
+                                        if (result.contains("1")) {
                                             attention_flag = true;
                                             showToast("关注成功");
                                             fab.setImageResource(android.R.drawable.ic_menu_delete);
                                         } else {
                                             showToast("关注失败");
                                         }
-                                    } catch (IOException e) {
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                 }

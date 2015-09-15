@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,7 @@ import com.umeng.socialize.sso.UMSsoHandler;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener {
+public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffsetChangedListener, ReplayListViewHolder.OnReplayItemClickListener, ReplayListViewHolder.OnReplayClickListener {
 
     CaseDetailListModel mCaseDetailListModel;
     PostDetail mPostDetail = new PostDetail();
@@ -71,6 +72,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
     private ImageView mIvRanklev;
     private TextView mTvHeaderTime;
     private AppBarLayout appbar;
+    private CardView cardview;
 
     private TextView btnSpot;
 
@@ -100,7 +102,10 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         mIvRanktag = (ImageView) findViewById(R.id.iv_ranktag);
         mIvRanklev = (ImageView) findViewById(R.id.iv_ranklev);
         mTvHeaderTime = (TextView) findViewById(R.id.tv_header_time);
+        cardview = (CardView) findViewById(R.id.cardview);
+        cardview.setVisibility(View.GONE);
         fabReplay = (FloatingActionButton) findViewById(R.id.fab_replay);
+        fabReplay.setVisibility(View.VISIBLE);
         fabReplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,7 +228,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         headContainer = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
         headContainer.setLayoutParams(params);
 
-        mReplayListFragment = new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headContainer, this);
+        mReplayListFragment = new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headContainer, this, this);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, mReplayListFragment).commitAllowingStateLoss();
         ApiNetwork.getCaseReplayDetail(this, mCaseDetailListModel);
         appbar.addOnOffsetChangedListener(this);
@@ -241,6 +246,11 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(postDetailReceiver);
+        for (int i = 0; i < headContainer.getChildCount(); i++) {
+            if (headContainer.getChildAt(i) instanceof ImageView) {
+                recycleBitmap((ImageView) headContainer.getChildAt(i));
+            }
+        }
     }
 
     @Override
@@ -283,7 +293,7 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
                 LinearLayout headCache = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
                 headCache.setLayoutParams(paramsCache);
                 setHeadContent(headCache, mPostDetail);
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headCache, this)).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, new ReplayCaseListFragment(true, mPostDetail, mCaseDetailListModel, headCache, this, this)).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -380,5 +390,10 @@ public class ReplayCaseActivity extends MActivity implements AppBarLayout.OnOffs
         intent.putExtra("id", replayModel.getId());
         intent.putExtra("floor", replayModel.getFloor());
         startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onReplayClick(View view) {
+
     }
 }

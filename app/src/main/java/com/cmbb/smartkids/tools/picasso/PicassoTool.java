@@ -1,6 +1,7 @@
 package com.cmbb.smartkids.tools.picasso;
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -28,7 +29,7 @@ public class PicassoTool {
      */
     public static void loadImage(Context context, String url, ImageView view, boolean circle) {
         Log.i("imageUrl", "imageUrl = " + url);
-        if (url.contains("storage") || url.contains("sdcard") || url.contains("mnt")) {
+        if (url.contains("storage") || url.contains("sdcard") || url.contains("mnt") || url.contains(Environment.getExternalStorageDirectory().getPath())) {
             if (circle) {
                 Picasso.with(context).load(new File(url)).fit().transform(new CircleTransform()).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);
             } else {
@@ -55,7 +56,11 @@ public class PicassoTool {
     }
 
     public static void loadImageWithSize(Context context, String url, ImageView view, int width, int height, boolean circle) {
-        int cacheHeight = (height / width) * (int) TDevice.getScreenWidth();
+        int cacheHeight = (int) TDevice.getScreenWidth() * height / width;
+        Log.i("loadImageWithSize", "getScreenWidth = " + TDevice.getScreenWidth());
+        Log.i("loadImageWithSize", "height = " + height);
+        Log.i("loadImageWithSize", "width = " + width);
+        Log.i("loadImageWithSize", "cacheHeight = " + cacheHeight);
         if (url.contains("storage") || url.contains("sdcard") || url.contains("mnt")) {
             if (circle) {
                 Picasso.with(context).load(new File(url)).fit().transform(new CircleTransform()).error(R.drawable.ic_loadfail).placeholder(R.drawable.ic_loading).into(view);

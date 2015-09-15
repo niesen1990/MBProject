@@ -140,6 +140,8 @@ public class SameAgeListViewHolder extends RecyclerView.ViewHolder {
                     switch (i) {
                         case 0:
                             psivSmallIcon01.setVisibility(View.VISIBLE);
+                            psivSmallIcon02.setVisibility(View.INVISIBLE);
+                            psivSmallIcon03.setVisibility(View.INVISIBLE);
                             String[] urls1 = imgs[i].split(",");
                             //循环解析是否包含smallImage
                             for (int k = 0; k < urls1.length; k++) {
@@ -155,7 +157,9 @@ public class SameAgeListViewHolder extends RecyclerView.ViewHolder {
                             }
                             break;
                         case 1:
+                            psivSmallIcon01.setVisibility(View.VISIBLE);
                             psivSmallIcon02.setVisibility(View.VISIBLE);
+                            psivSmallIcon03.setVisibility(View.INVISIBLE);
                             String[] urls2 = imgs[i].split(",");
                             for (int k = 0; k < urls2.length; k++) {
                                 if (urls2[k].contains("smallImage")) {
@@ -170,6 +174,8 @@ public class SameAgeListViewHolder extends RecyclerView.ViewHolder {
                             }
                             break;
                         case 2:
+                            psivSmallIcon01.setVisibility(View.VISIBLE);
+                            psivSmallIcon02.setVisibility(View.VISIBLE);
                             psivSmallIcon03.setVisibility(View.VISIBLE);
                             String[] urls3 = imgs[i].split(",");
                             for (int k = 0; k < urls3.length; k++) {
@@ -188,16 +194,16 @@ public class SameAgeListViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 // 判断显示图片的数量
-                if (imgs.length == 2) {
+               /* if (imgs.length == 2) {
                     psivSmallIcon01.setVisibility(View.VISIBLE);
                     psivSmallIcon02.setVisibility(View.VISIBLE);
                     psivSmallIcon03.setVisibility(View.INVISIBLE);
-                }
+                }*/
 
             } else {
                 psivSmallIcon01.setVisibility(View.VISIBLE);
-                psivSmallIcon02.setVisibility(View.VISIBLE);
-                psivSmallIcon03.setVisibility(View.VISIBLE);
+                psivSmallIcon02.setVisibility(View.INVISIBLE);
+                psivSmallIcon03.setVisibility(View.INVISIBLE);
                 String[] urls1 = img_all.split(",");
                 for (int i = 0; i < urls1.length; i++) {
                     if (urls1[i].contains("smallImage")) {

@@ -20,9 +20,11 @@ public class ReplayListFragment extends CommonFragment<ReplayModel> {
     PostModel mPostModel;
     PostDetail mPostDetail;
     public ReplayListProvider mReplayListProvider;
+    public ReplayListAdapter mReplayListAdapter;
     int sort;
 
     ReplayListViewHolder.OnReplayItemClickListener mOnReplayItemClickListener;
+    ReplayListViewHolder.OnReplayClickListener mOnReplayClickListener;
 
     LinearLayout mHeadView;
 
@@ -30,11 +32,12 @@ public class ReplayListFragment extends CommonFragment<ReplayModel> {
     }
 
     @SuppressLint("ValidFragment")
-    public ReplayListFragment(boolean needHeadView, PostDetail postDetail, PostModel postModel, LinearLayout headView, int sort, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener) {
+    public ReplayListFragment(boolean needHeadView, PostDetail postDetail, PostModel postModel, LinearLayout headView, int sort, ReplayListViewHolder.OnReplayItemClickListener onReplayItemClickListener, ReplayListViewHolder.OnReplayClickListener onReplayClickListener) {
         super();
         this.mPostDetail = postDetail;
         this.sort = sort;
         this.mOnReplayItemClickListener = onReplayItemClickListener;
+        this.mOnReplayClickListener = onReplayClickListener;
         this.need = needHeadView;
         this.mPostModel = postModel;
         this.mHeadView = headView;
@@ -49,7 +52,8 @@ public class ReplayListFragment extends CommonFragment<ReplayModel> {
     @Override
     protected RecyclerView.Adapter onGenerateAdapter(DataController<ReplayModel> controller) {
         Log.i("adapter", " generate");
-        return new ReplayListAdapter(getActivity(), mPostModel, controller, need, mHeadView, mOnReplayItemClickListener);
+        mReplayListAdapter = new ReplayListAdapter(getActivity(), mPostModel, controller, need, mHeadView, mOnReplayItemClickListener, mOnReplayClickListener);
+        return mReplayListAdapter;
     }
 
     @Override

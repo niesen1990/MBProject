@@ -58,7 +58,6 @@ public class WonderPostListProvider extends DataController<PostModel> {
         body.put("token", MApplication.token);
         body.put("plateId", mPlateModel.getId() + "");
         body.put("areaType", "WONDERFUL");
-
         body.put("type", mPlateModel.getType());
         OkHttp.asyncPost(Constants.BASE_URL + mPlateModel.getConnector() + "FindPublish", body, callback);
     }

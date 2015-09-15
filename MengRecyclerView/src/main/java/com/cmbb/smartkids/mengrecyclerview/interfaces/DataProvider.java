@@ -19,7 +19,7 @@ public interface DataProvider<T> {
 
     void doMore(Callback callback);
 
-    List<T>  doParser(Response response);
+    List<T> doParser(Response response);
 
     void doSave(List<T> data);
 

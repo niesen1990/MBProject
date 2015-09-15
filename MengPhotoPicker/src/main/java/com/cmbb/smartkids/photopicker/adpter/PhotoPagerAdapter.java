@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.cmbb.smartkids.photopicker.PhotoPickerActivity;
 import com.cmbb.smartkids.photopicker.R;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,15 +51,15 @@ public class PhotoPagerAdapter extends PagerAdapter {
         } else {
             uri = Uri.fromFile(new File(path));
         }
-        /*Glide.with(mContext)
+        Glide.with(mContext)
                 .load(uri)
                 .override(800, 800)
                 .error(R.drawable.ic_broken_image_black_48dp)
-                .into(imageView);*/
-
-        Picasso.with(mContext).load(uri).fit().placeholder(R.drawable.ic_broken_image_black_48dp)
-                .error(R.drawable.ic_broken_image_black_48dp)
                 .into(imageView);
+
+        /*Picasso.with(mContext).load(uri).resize(480, 800).placeholder(R.drawable.ic_broken_image_black_48dp)
+                .error(R.drawable.ic_broken_image_black_48dp)
+                .into(imageView);*/
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override

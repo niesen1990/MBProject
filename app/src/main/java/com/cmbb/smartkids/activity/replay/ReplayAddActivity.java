@@ -161,28 +161,38 @@ public class ReplayAddActivity extends MActivity {
 
             @Override
             public void onResponse(Response response) throws IOException {
+
                 if (response.isSuccessful()) {
                     String result = response.body().string();
                     Gson gson = new Gson();
-                    final ReplayBaseModel replayMessageBaseModel = gson.fromJson(result, ReplayBaseModel.class);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            hideWaitDialog();
-                            if (replayMessageBaseModel.getCode().equals("1")) {
-                                showToast("回复成功");
-                                for (int i = 0; i < replayMessageBaseModel.getContext().size(); i++) {
-                                    Log.i("replay_result", "replay_result = " + replayMessageBaseModel.getContext().get(i).toString());
+                    try {
+                        final ReplayBaseModel replayMessageBaseModel = gson.fromJson(result, ReplayBaseModel.class);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                hideWaitDialog();
+                                try {
+                                    if (replayMessageBaseModel.getCode().equals("1")) {
+                                        showToast("回复成功");
+                                        for (int i = 0; i < replayMessageBaseModel.getContext().size(); i++) {
+                                            Log.i("replay_result", "replay_result = " + replayMessageBaseModel.getContext().get(i).toString());
+                                        }
+                                        Intent intent = new Intent();
+                                        intent.putParcelableArrayListExtra("data", replayMessageBaseModel.getContext());
+                                        setResult(10, intent);
+                                        finish();
+                                    } else {
+                                        showToast("回复失败");
+                                    }
+                                } catch (NullPointerException e) {
+
                                 }
-                                Intent intent = new Intent();
-                                intent.putParcelableArrayListExtra("data", replayMessageBaseModel.getContext());
-                                setResult(10, intent);
-                                finish();
-                            } else {
-                                showToast("回复失败");
+
                             }
-                        }
-                    });
+                        });
+                    } catch (Exception e) {
+
+                    }
 
                 } else {
                     runOnUiThread(new Runnable() {

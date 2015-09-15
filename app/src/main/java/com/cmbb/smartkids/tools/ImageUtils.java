@@ -110,11 +110,20 @@ public class ImageUtils {
      * @return Bitmap
      */
     public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
+        //原始图片的尺寸
+        int bmpWidth = bitmap.getWidth();
+        int bmpHeight = bitmap.getHeight();
+
+        //缩放图片的尺寸
+        float scaleWidth = (float) 480 / bmpWidth;
+        float scaleHeight = (float) 800 / bmpHeight;
+
         //旋转图片 动作
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
-        // 创建新的图片
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        //matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bmpWidth, bmpHeight, matrix, true);
+        //bitmap.recycle();
         return resizedBitmap;
     }
 }

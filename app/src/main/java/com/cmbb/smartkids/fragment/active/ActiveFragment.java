@@ -192,52 +192,56 @@ public class ActiveFragment extends MFragment implements ExpandCollapseListener 
      * 初始化回话列表
      */
     private void initConversationList() {
-        int unReadAll = 0;
-        List<Conversation> conversations = RongIM.getInstance().getRongIMClient().getConversationList(Conversation.ConversationType.PRIVATE);
-        if (conversations == null) {
-            return;
-        }
-
-        List<UserAttentionModel> itemsChild = new ArrayList<UserAttentionModel>();
-        for (int i = 0; i < conversations.size(); i++) {
-            // 判断userInfo是否存在
-            if (null == RongInfoContext.getInstance().getUserNameByUserId(conversations.get(i).getTargetId())) {
-                // 用户不存在万络获取
-                ApiNetwork.getRongUserInfo(getActivity(), MApplication.token, conversations.get(i).getTargetId());
-                continue;
+        try {
+            int unReadAll = 0;
+            List<Conversation> conversations = RongIM.getInstance().getRongIMClient().getConversationList(Conversation.ConversationType.PRIVATE);
+            if (conversations == null) {
+                return;
             }
-            UserAttentionModel childItem = new UserAttentionModel();
-            childItem.setAttentionToken(conversations.get(i).getTargetId());
-            childItem.setNike(RongInfoContext.getInstance().getUserNameByUserId(conversations.get(i).getTargetId()));
-            childItem.setUserSmallHeadImg(RongInfoContext.getInstance().getUserInfoById(conversations.get(i).getTargetId()).getPortraitUri().toString());
-            childItem.setUnRead(conversations.get(i).getUnreadMessageCount());
-            unReadAll = unReadAll + conversations.get(i).getUnreadMessageCount();
-            String time = getMessageDate(conversations.get(i).getReceivedTime());
-            childItem.setTime(time);
-            String s = new String(conversations.get(i).getLatestMessage().encode());
-            if (TextUtils.isEmpty(s)) {
-                childItem.setContentLast("");
-            } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(s);
-                    String message = jsonObject.getString("content");
-                    childItem.setContentLast(message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+
+            List<UserAttentionModel> itemsChild = new ArrayList<UserAttentionModel>();
+            for (int i = 0; i < conversations.size(); i++) {
+                // 判断userInfo是否存在
+                if (null == RongInfoContext.getInstance().getUserNameByUserId(conversations.get(i).getTargetId())) {
+                    // 用户不存在万络获取
+                    ApiNetwork.getRongUserInfo(getActivity(), MApplication.token, conversations.get(i).getTargetId());
+                    continue;
                 }
+                UserAttentionModel childItem = new UserAttentionModel();
+                childItem.setAttentionToken(conversations.get(i).getTargetId());
+                childItem.setNike(RongInfoContext.getInstance().getUserNameByUserId(conversations.get(i).getTargetId()));
+                childItem.setUserSmallHeadImg(RongInfoContext.getInstance().getUserInfoById(conversations.get(i).getTargetId()).getPortraitUri().toString());
+                childItem.setUnRead(conversations.get(i).getUnreadMessageCount());
+                unReadAll = unReadAll + conversations.get(i).getUnreadMessageCount();
+                String time = getMessageDate(conversations.get(i).getReceivedTime());
+                childItem.setTime(time);
+                String s = new String(conversations.get(i).getLatestMessage().encode());
+                if (TextUtils.isEmpty(s)) {
+                    childItem.setContentLast("");
+                } else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(s);
+                        String message = jsonObject.getString("content");
+                        childItem.setContentLast(message);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                itemsChild.add(childItem);
             }
-            itemsChild.add(childItem);
-        }
-        customParentObject3.setUnRead(unReadAll);
-        ((CustomParentObject) parentObjectList.get(2)).setChildObjectList(itemsChild);
-        ((CustomParentObject) parentObjectList.get(2)).setParentText("最近联系人");
-        mActiveExpandableAdapter.setData(parentObjectList);
+            customParentObject3.setUnRead(unReadAll);
+            ((CustomParentObject) parentObjectList.get(2)).setChildObjectList(itemsChild);
+            ((CustomParentObject) parentObjectList.get(2)).setParentText("最近联系人");
+            mActiveExpandableAdapter.setData(parentObjectList);
 
-        // 发送给主页
-        Intent in = new Intent();
-        in.setAction("com.cmbb.smartkids.rong.message_count");
-        in.putExtra("count", unReadAll);
-        mLocalBroadcastManager.sendBroadcast(in);
+            // 发送给主页
+            Intent in = new Intent();
+            in.setAction("com.cmbb.smartkids.rong.message_count");
+            in.putExtra("count", unReadAll);
+            mLocalBroadcastManager.sendBroadcast(in);
+        } catch (NullPointerException e) {
+
+        }
     }
 
     /**

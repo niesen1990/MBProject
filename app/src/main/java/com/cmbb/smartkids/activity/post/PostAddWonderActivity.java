@@ -165,22 +165,26 @@ public class PostAddWonderActivity extends MActivity {
                     if (response.isSuccessful()) {
                         String result = response.body().string();
                         Log.i("addPost", "addPost = " + result);
-                        Gson gson = new Gson();
-                        final WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                fabPublish.setClickable(true);
-
-                                if (data.getCode().equals("1")) {
-                                    hideWaitDialog();
-                                    setResult(RESULT_OK);
-                                    finish();
-                                } else {
-                                    showToast("上传失败，请检查网络");
+                        try {
+                            Gson gson = new Gson();
+                            final WonderPublicBaseModel data = gson.fromJson(result, WonderPublicBaseModel.class);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fabPublish.setClickable(true);
+                                    if (data.getCode().equals("1")) {
+                                        hideWaitDialog();
+                                        setResult(RESULT_OK);
+                                        finish();
+                                    } else {
+                                        showToast("上传失败，请检查网络");
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        } catch (Exception e) {
+
+                        }
+
                     }
                 }
             });

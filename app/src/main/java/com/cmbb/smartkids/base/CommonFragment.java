@@ -27,7 +27,7 @@ import java.util.List;
  */
 public abstract class CommonFragment<T> extends ContentFragmentBase {
 
-    protected RecyclerView mRecyclerView;
+    public RecyclerView mRecyclerView;
     protected ViewGroup mRoot, mPagerPage, mLoadingPage;
     protected ContentLoadingProgressBar mLoadingBar;
 
@@ -124,17 +124,21 @@ public abstract class CommonFragment<T> extends ContentFragmentBase {
 
     @Override
     public void onRefreshDone(Exception e, List data) {
-        if (e == null) {
-            if (data == null || data.size() == 0) {
-                Toast.makeText(getActivity(), "无数据加载", Toast.LENGTH_SHORT).show();
+        try {
+            if (e == null) {
+                if (data == null || data.size() == 0) {
+                    Toast.makeText(getActivity(), "无数据加载", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "已更新" + data.size() + " 数据", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getActivity(), "已更新" + data.size() + " 数据", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                Toast.makeText(getActivity(), "网络出现问题", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            e.printStackTrace();
-            Toast.makeText(getActivity(), "网络出现问题", Toast.LENGTH_SHORT).show();
+            mSwipeRefresh.setRefreshing(false);
+        } catch (NullPointerException e1) {
+
         }
-        mSwipeRefresh.setRefreshing(false);
     }
 
     @Override

@@ -124,7 +124,14 @@ public class ApiNetwork {
                             intent.putExtra(Constants.NETWORK_FLAG, true);
                             intent.putExtra(Constants.Home.USERINFO_DATA, userInfoBaseModel.getContext());
                             context.sendBroadcast(intent);
+                        } else {
+                            Intent intent = new Intent(Constants.Home.USERINFO_DATA_INTENT);
+                            intent.putExtra(Constants.NETWORK_FLAG, true);
+                            intent.putExtra(Constants.Home.USERINFO_DATA, result);
+                            context.sendBroadcast(intent);
                         }
+                    } else {
+                        sendFailureBroadcast(context, Constants.Home.USERINFO_DATA_INTENT);
                     }
                 } catch (Exception e) {
                     Log.i("userinfo", "e");
@@ -314,21 +321,25 @@ public class ApiNetwork {
                     if (TextUtils.isEmpty(result)) {
                         return;
                     }
-                    UserAttentionBaseModel data = gson.fromJson(result, UserAttentionBaseModel.class);
-                    ArrayList<UserInfo> userInfos = new ArrayList<UserInfo>();
-                    if (data.getContext() != null && data.getContext().size() > 0) {
-                        for (int i = 0; i < data.getContext().size(); i++) {
-                            if (data.getContext().get(i).getUserSmallHeadImg().contains("upload")) {
-                                UserInfo info = new UserInfo(data.getContext().get(i).getAttentionToken(), data.getContext().get(i).getNike(),
-                                        data.getContext().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL_OLD + data.getContext().get(i).getUserSmallHeadImg()));
-                                userInfos.add(info);
-                            } else {
-                                UserInfo info = new UserInfo(data.getContext().get(i).getAttentionToken(), data.getContext().get(i).getNike(),
-                                        data.getContext().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL + data.getContext().get(i).getUserSmallHeadImg()));
-                                userInfos.add(info);
+                    try {
+                        UserAttentionBaseModel data = gson.fromJson(result, UserAttentionBaseModel.class);
+                        ArrayList<UserInfo> userInfos = new ArrayList<UserInfo>();
+                        if (data.getContext() != null && data.getContext().size() > 0) {
+                            for (int i = 0; i < data.getContext().size(); i++) {
+                                if (data.getContext().get(i).getUserSmallHeadImg().contains("upload")) {
+                                    UserInfo info = new UserInfo(data.getContext().get(i).getAttentionToken(), data.getContext().get(i).getNike(),
+                                            data.getContext().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL_OLD + data.getContext().get(i).getUserSmallHeadImg()));
+                                    userInfos.add(info);
+                                } else {
+                                    UserInfo info = new UserInfo(data.getContext().get(i).getAttentionToken(), data.getContext().get(i).getNike(),
+                                            data.getContext().get(i).getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL + data.getContext().get(i).getUserSmallHeadImg()));
+                                    userInfos.add(info);
+                                }
                             }
+                            RongInfoContext.getInstance().setUserInfos(userInfos);
                         }
-                        RongInfoContext.getInstance().setUserInfos(userInfos);
+                    } catch (Exception e) {
+
                     }
                 }
             }
@@ -353,33 +364,39 @@ public class ApiNetwork {
                     if (TextUtils.isEmpty(result)) {
                         return;
                     }
-                    LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
-                    SPCache.putString(Constants.RongToken, loginBaseModel.getContext().getRongyunToken());
-                    MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
-                    // 融云登陆
-                    RongIM.connect(MApplication.rongToken, new RongIMClient.ConnectCallback() {
-                                @Override
-                                public void onTokenIncorrect() {
-                                    Log.i("MEIZU", "---------onTokenIncorrect userId----------:");
-                                }
+                    try {
+                        LoginBaseModel loginBaseModel = gson.fromJson(result, LoginBaseModel.class);
+                        SPCache.putString(Constants.RongToken, loginBaseModel.getContext().getRongyunToken());
+                        MApplication.rongToken = loginBaseModel.getContext().getRongyunToken();
+                        // 融云登陆
+                        RongIM.connect(MApplication.rongToken, new RongIMClient.ConnectCallback() {
+                                    @Override
+                                    public void onTokenIncorrect() {
+                                        Log.i("MEIZU", "---------onTokenIncorrect userId----------:");
+                                    }
 
-                                @Override
-                                public void onSuccess(String userId) {
-                                    Log.i("MEIZU", "---------onSuccess userId----------:" + userId);
-                                    homeActivity.btnActive.setClickable(true);
-                                    homeActivity.btnAdd.setClickable(true);
-                                    homeActivity.btnMaster.setClickable(true);
-                                    homeActivity.btnTools.setClickable(true);
-                                    // 获取用户信息
-                                    RongCloudEvent.getInstance().setOtherListener();
-                                }
+                                    @Override
+                                    public void onSuccess(String userId) {
+                                        Log.i("MEIZU", "---------onSuccess userId----------:" + userId);
+                                        homeActivity.btnActive.setClickable(true);
+                                        homeActivity.btnAdd.setClickable(true);
+                                        homeActivity.btnMaster.setClickable(true);
+                                        homeActivity.btnTools.setClickable(true);
+                                        // 获取用户信息
+                                        RongCloudEvent.getInstance().setOtherListener();
+                                    }
 
-                                @Override
-                                public void onError(RongIMClient.ErrorCode e) {
-                                    Log.i("MEIZU", "---------onError ----------:" + e);
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode e) {
+                                        Log.i("MEIZU", "---------onError ----------:" + e);
+                                    }
                                 }
-                            }
-                    );
+                        );
+
+                    } catch (Exception e) {
+
+                    }
+
                 }
             }
         });

@@ -54,11 +54,13 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
     private final TextView mTvNameOther;
     private final TextView mTvHeaderFloorOther;
     private final TextView mTvContentReplayOther;
+    private final TextView btnReplayRight;
 
     private OnReplayItemClickListener mOnReplayItemClickListener;
+    private OnReplayClickListener mOnReplayClickListener;
 
 
-    private ReplayListViewHolder(View view, OnReplayItemClickListener onReplayItemClickListener) {
+    private ReplayListViewHolder(View view, OnReplayItemClickListener onReplayItemClickListener, OnReplayClickListener onReplayClickListener) {
         super(view);
         mCardview = (CardView) view.findViewById(R.id.cardview);
         mRivHead = (ImageView) view.findViewById(R.id.riv_head);
@@ -76,12 +78,14 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
         mTvNameOther = (TextView) view.findViewById(R.id.tv_name_other);
         mTvHeaderFloorOther = (TextView) view.findViewById(R.id.tv_header_floor_other);
         mTvContentReplayOther = (TextView) view.findViewById(R.id.tv_content_replay_other);
+        btnReplayRight = (TextView) view.findViewById(R.id.btn_replay_right);
         this.mOnReplayItemClickListener = onReplayItemClickListener;
+        this.mOnReplayClickListener = onReplayClickListener;
     }
 
-    public static ReplayListViewHolder create(final Context context, ViewGroup parent, OnReplayItemClickListener onReplayItemClickListener) {
+    public static ReplayListViewHolder create(final Context context, ViewGroup parent, OnReplayItemClickListener onReplayItemClickListener, OnReplayClickListener onReplayClickListener) {
         View v = LayoutInflater.from(context).inflate(R.layout.activity_replay_list_item, parent, false);
-        return new ReplayListViewHolder(v, onReplayItemClickListener);
+        return new ReplayListViewHolder(v, onReplayItemClickListener, onReplayClickListener);
     }
 
     public void onBindViewHolder(final Context context, final PostModel postDetail, final DataController<ReplayModel> mDataController, final ReplayModel entry, final int position) {
@@ -90,6 +94,13 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 mOnReplayItemClickListener.onReplayItemClick(v);
+            }
+        });
+        btnReplayRight.setTag(entry);
+        btnReplayRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnReplayClickListener.onReplayClick(v);
             }
         });
         // 未完成
@@ -280,5 +291,9 @@ public class ReplayListViewHolder extends RecyclerView.ViewHolder {
 
     public interface OnReplayItemClickListener {
         void onReplayItemClick(View view);
+    }
+
+    public interface OnReplayClickListener {
+        void onReplayClick(View view);
     }
 }

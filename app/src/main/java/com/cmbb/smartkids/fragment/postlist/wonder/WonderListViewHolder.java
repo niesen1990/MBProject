@@ -249,6 +249,7 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             }
                             break;
                         case 1:
+                            psivSmallIcon01.setVisibility(View.VISIBLE);
                             psivSmallIcon02.setVisibility(View.VISIBLE);
                             psivSmallIcon03.setVisibility(View.INVISIBLE);
                             String[] urls2 = imgs[i].split(",");
@@ -265,6 +266,8 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                             }
                             break;
                         case 2:
+                            psivSmallIcon01.setVisibility(View.VISIBLE);
+                            psivSmallIcon02.setVisibility(View.VISIBLE);
                             psivSmallIcon03.setVisibility(View.VISIBLE);
                             String[] urls3 = imgs[i].split(",");
                             for (int k = 0; k < urls3.length; k++) {
@@ -283,16 +286,16 @@ public class WonderListViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 // 判断显示图片的数量
-                if (imgs.length == 2) {
+               /* if (imgs.length == 2) {
                     psivSmallIcon01.setVisibility(View.VISIBLE);
                     psivSmallIcon02.setVisibility(View.VISIBLE);
                     psivSmallIcon03.setVisibility(View.INVISIBLE);
-                }
+                }*/
 
             } else {
                 psivSmallIcon01.setVisibility(View.VISIBLE);
-                psivSmallIcon02.setVisibility(View.VISIBLE);
-                psivSmallIcon03.setVisibility(View.VISIBLE);
+                psivSmallIcon02.setVisibility(View.INVISIBLE);
+                psivSmallIcon03.setVisibility(View.INVISIBLE);
                 String[] urls1 = img_all.split(",");
                 for (int i = 0; i < urls1.length; i++) {
                     if (urls1[i].contains("smallImage")) {

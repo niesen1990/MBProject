@@ -57,8 +57,13 @@ public class UserInfoActivity extends MActivity {
         public void onReceive(Context context, Intent intent) {
             hideWaitDialog();
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
-                userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
-                applyData(userInfoDetailModel);
+                try {
+                    userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
+                    applyData(userInfoDetailModel);
+                } catch (Exception e) {
+                    showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
+                }
+
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
             }
@@ -170,27 +175,31 @@ public class UserInfoActivity extends MActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_submit) {
-            showWaitDialog();
-            Map<String, String> body = new HashMap<>();
-            body.put("token", MApplication.token);
-            if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
-                if (etNick.getText().toString().getBytes().length > 21) {
-                    Log.i("userinfo", "userinfo1 = ");
-                    hideWaitDialog();
-                    showToast("昵称设置过长");
-                    return true;
+        try {
+            if (id == R.id.action_submit) {
+                showWaitDialog();
+                Map<String, String> body = new HashMap<>();
+                body.put("token", MApplication.token);
+                if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
+                    if (etNick.getText().toString().getBytes().length > 21) {
+                        Log.i("userinfo", "userinfo1 = ");
+                        hideWaitDialog();
+                        showToast("昵称设置过长");
+                        return true;
+                    }
+                    body.put("nike", etNick.getText().toString());
                 }
-                body.put("nike", etNick.getText().toString());
+                Log.i("userinfo", "userinfo1 = ");
+                body.put("userStatus", status + "");
+                File file = null;
+                if (imgs.size() > 0) {
+                    file = new File(imgs.get(0));
+                }
+                ApiNetwork.editUserInfo(this, body, file);
+                return true;
             }
-            Log.i("userinfo", "userinfo1 = ");
-            body.put("userStatus", status + "");
-            File file = null;
-            if (imgs.size() > 0) {
-                file = new File(imgs.get(0));
-            }
-            ApiNetwork.editUserInfo(this, body, file);
-            return true;
+        } catch (NullPointerException e) {
+
         }
 
         return super.onOptionsItemSelected(item);

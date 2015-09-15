@@ -14,10 +14,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#2196F3">
 
         <Button
             android:id="@+id/directory_button"
+            android:textColor="@android:color/white"
             style="@style/Widget.AppCompat.ActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
