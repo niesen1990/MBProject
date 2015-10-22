@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--<com.cmbb.smartkids.widget.ZoomImageView
+        android:id="@+id/ziv_daily"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+-->
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/btn_mask_bg"
+        android:padding="@dimen/activity_vertical_margin_half"
+        android:text=""
+        android:textColor="@color/hotpink" />
+
+</FrameLayout>

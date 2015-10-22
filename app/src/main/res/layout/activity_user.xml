@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout
-    android:id="@+id/coordinatorlayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -32,7 +31,7 @@
                     android:layout_height="72dp"
                     android:layout_alignParentBottom="true"
                     android:layout_margin="@dimen/activity_vertical_margin"
-                    android:src="@drawable/ic_loading"/>
+                    android:src="@drawable/ic_loading" />
 
                 <TextView
                     android:id="@+id/tv_nick"
@@ -43,7 +42,7 @@
                     android:layout_marginLeft="@dimen/activity_vertical_margin_half"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/iv_user_bac"
-                    android:text="Nick"/>
+                    android:text="Nick" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -58,7 +57,7 @@
                         android:id="@+id/iv_ranktag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ranktag4"/>
+                        android:src="@drawable/ranktag4" />
 
                     <ImageView
                         android:id="@+id/iv_lv"
@@ -66,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_constellation"
                         android:layout_marginLeft="2dp"
-                        android:src="@drawable/lv1"/>
+                        android:src="@drawable/lv1" />
 
                     <TextView
                         android:id="@+id/tv_content"
@@ -76,7 +75,7 @@
                         android:layout_marginRight="@dimen/activity_vertical_margin"
                         android:singleLine="true"
                         android:text="DIY达人"
-                        android:textColor="@color/gold"/>
+                        android:textColor="@color/gold" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -96,7 +95,7 @@
                     android:layout_height="?attr/actionBarSize"
                     app:tabGravity="center"
                     app:tabIndicatorColor="@android:color/white"
-                    app:tabMode="scrollable"/>
+                    app:tabMode="scrollable" />
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -108,7 +107,7 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -117,7 +116,7 @@
         android:layout_margin="4dp"
         android:src="@android:drawable/ic_menu_add"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom|right|end"/>
+        app:layout_anchorGravity="bottom|right|end" />
 
 
 </com.cmbb.smartkids.widget.coordinator.MengCoordinatorLayout>

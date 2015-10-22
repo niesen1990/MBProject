@@ -122,7 +122,7 @@ public class ImagePreviewActivity extends MActivity {
         if (index < 0)
             index = 0;
         ImageView item = (ImageView) vp.getChildAt(index);
-        new AsyncTask<ImageView, Void, Void>() {
+        /*new AsyncTask<ImageView, Void, Void>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -140,7 +140,8 @@ public class ImagePreviewActivity extends MActivity {
                 super.onPostExecute(aVoid);
                 hideWaitDialog();
             }
-        }.execute(item);
+        }.execute(item);*/
+        saveImage(item);
     }
 
     /**
@@ -150,6 +151,9 @@ public class ImagePreviewActivity extends MActivity {
         // 首先保存图片
         if (item != null) {
             item.setDrawingCacheEnabled(true);
+            /*item.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            item.layout(0, 0, item.getMeasuredWidth(), item.getMeasuredHeight());*/
+            item.buildDrawingCache(true);
             Bitmap bmp = Bitmap.createBitmap(item.getDrawingCache());
             item.setDrawingCacheEnabled(false);
             File appDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Smartkids");

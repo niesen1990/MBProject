@@ -74,6 +74,7 @@ public class SplashActivity extends MActivity {
                 } else {
                     // 登陆
                     MApplication.token = SPCache.getString(Constants.SharePreference.USER_TOKEN, "");
+                    Log.e("Token", "Token = " + MApplication.token);
                     MApplication.rongToken = SPCache.getString(Constants.SharePreference.RONG_TOKEN, "");
                     MApplication.eredar = SPCache.getInt(Constants.SharePreference.USER_EREDAR, 0);
                     MApplication.userStatus = SPCache.getInt(Constants.SharePreference.USER_USERSTATUS, 0);

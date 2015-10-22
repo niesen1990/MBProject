@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -39,8 +40,9 @@ import com.cmbb.smartkids.photopicker.utils.PhotoPickerIntent;
 import com.cmbb.smartkids.tools.RankTools;
 import com.cmbb.smartkids.tools.ShareUtils;
 import com.cmbb.smartkids.tools.TDevice;
-import com.cmbb.smartkids.tools.picasso.PicassoTool;
 import com.cmbb.smartkids.tools.log.Log;
+import com.cmbb.smartkids.tools.picasso.PicassoTool;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -366,13 +368,22 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                     String[] cache = imgUrls[j].split(",");
                     for (int k = 0; k < cache.length; k++) {
                         if (cache[k].contains("bigImage")) {
-                            ImageView imageView = new ImageView(this);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            SimpleDraweeView imageView = (SimpleDraweeView) getLayoutInflater().inflate(R.layout.activity_replay_head_img_fresco, null);
+                            //ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
+                            //ImageView imageView = new ImageView(this);
+                            imageView.setAspectRatio(Float.parseFloat(cache[k + 1]) / Float.parseFloat(cache[k + 2]));
+                            LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                            imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
                             imageView.setLayoutParams(params);
+                            /*ImageView imageView = new ImageView(this);
+                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            imageView.setLayoutParams(params);*/
+
                             shareImgUrl = cache[k];
                             pagerUrls.add(cache[k]);
                             //PicassoTool.loadImage(this, cache[k], imageView, false);
-                            PicassoTool.loadImageWithSize(this, cache[k], imageView, (int) Double.parseDouble(cache[k + 1]), (int) Double.parseDouble(cache[k + 2]), false);
+                            //PicassoTool.loadImageWithSize(this, cache[k], imageView, (int) Double.parseDouble(cache[k + 1]), (int) Double.parseDouble(cache[k + 2]), false);
+                            imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(cache[k])));
 
                             imageView.setTag(R.id.image, pagerUrls.size() - 1);
                             imageView.setOnClickListener(new View.OnClickListener() {
@@ -398,9 +409,10 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                     }
                 }
             } else {
-                ImageView imageView = new ImageView(this);
+                /*ImageView imageView = new ImageView(this);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setLayoutParams(params);
+                imageView.setLayoutParams(params);*/
+                SimpleDraweeView imageView = (SimpleDraweeView) getLayoutInflater().inflate(R.layout.activity_replay_head_img_fresco, null);
                 imageView.setTag(R.id.image, pagerUrls.size() - 1);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -415,8 +427,14 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
                     pagerUrls.add(imgUrl.split(",")[1]);
+
+                    imageView.setAspectRatio(Float.parseFloat(imgUrl.split(",")[2]) / Float.parseFloat(imgUrl.split(",")[3]));
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
+                    imageView.setLayoutParams(params);
                     //PicassoTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
-                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[1], imageView, (int) Double.parseDouble(imgUrl.split(",")[2]), (int) Double.parseDouble(imgUrl.split(",")[3]), false);
+                    //PicassoTool.loadImageWithSize(this, imgUrl.split(",")[1], imageView, (int) Double.parseDouble(imgUrl.split(",")[2]), (int) Double.parseDouble(imgUrl.split(",")[3]), false);
+                    imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(imgUrl.split(",")[1])));
 
                     linearLayout.addView(imageView);
                     TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
@@ -428,9 +446,13 @@ public class ReplayAgeCityActivity extends MActivity implements AppBarLayout.OnO
                 } else {
                     shareImgUrl = imgUrl.split(",")[0];
                     pagerUrls.add(imgUrl.split(",")[0]);
+                    imageView.setAspectRatio(Float.parseFloat(imgUrl.split(",")[1]) / Float.parseFloat(imgUrl.split(",")[2]));
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
+                    imageView.setLayoutParams(params);
                     //PicassoTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
-                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[0], imageView, (int) Double.parseDouble(imgUrl.split(",")[1]), (int) Double.parseDouble(imgUrl.split(",")[2]), false);
-
+                    //PicassoTool.loadImageWithSize(this, imgUrl.split(",")[0], imageView, (int) Double.parseDouble(imgUrl.split(",")[1]), (int) Double.parseDouble(imgUrl.split(",")[2]), false);
+                    imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(imgUrl.split(",")[0])));
                     linearLayout.addView(imageView);
                 }
             }

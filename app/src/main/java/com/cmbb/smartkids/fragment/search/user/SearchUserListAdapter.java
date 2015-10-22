@@ -20,7 +20,7 @@ public class SearchUserListAdapter extends ContentAdapterBase<SearchModel> {
 
     public SearchUserListAdapter(Context mContext, DataController<SearchModel> mDataController, boolean need) {
         super(mContext, mDataController);
-        moreFlag = true;
+        //moreFlag = true;
         this.mContext = mContext;
         // 设置HeaderView
         setNeedHeadView(need);

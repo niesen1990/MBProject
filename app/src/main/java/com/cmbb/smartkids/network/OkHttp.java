@@ -8,6 +8,9 @@ import com.cmbb.smartkids.base.MApplication;
 import com.cmbb.smartkids.model.photo.PhotoAdd;
 import com.cmbb.smartkids.tools.ImageUtils;
 import com.cmbb.smartkids.tools.log.Log;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.backends.okhttp.OkHttpImagePipelineConfigFactory;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -46,7 +49,13 @@ public class OkHttp {
         //mOkHttpClient.networkInterceptors().add(new StethoInterceptor());
         mOkHttpClient.setCookieHandler(new CookieManager(new PersistentCookieStore(MApplication.getContext()), CookiePolicy.ACCEPT_ALL));
         mOkHttpClient.setCache(new Cache(MApplication.getContext().getExternalCacheDir(), cacheSize));
+        //fresco
+        ImagePipelineConfig config = OkHttpImagePipelineConfigFactory
+                .newBuilder(MApplication.getContext(), mOkHttpClient)
+                .build();
+        Fresco.initialize(MApplication.getContext(), config);
     }
+
 
     /**
      * 不使用异步线程

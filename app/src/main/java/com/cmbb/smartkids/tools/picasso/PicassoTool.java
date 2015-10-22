@@ -55,6 +55,19 @@ public class PicassoTool {
         }
     }
 
+    public static String getImageUrl(String url) {
+        if (url.contains("storage") || url.contains("sdcard") || url.contains("mnt") || url.contains(Environment.getExternalStorageDirectory().getPath())) {
+            return url;
+        }
+        if (url.contains("upload")) {
+            String httpUrl = url.contains("http") ? url : Constants.BASE_IMAGE_URL_OLD + url;
+            return httpUrl;
+        } else {
+            String httpUrl = url.contains("http") ? url : Constants.BASE_IMAGE_URL + url;
+            return httpUrl;
+        }
+    }
+
     public static void loadImageWithSize(Context context, String url, ImageView view, int width, int height, boolean circle) {
         int cacheHeight = (int) TDevice.getScreenWidth() * height / width;
         Log.i("loadImageWithSize", "getScreenWidth = " + TDevice.getScreenWidth());

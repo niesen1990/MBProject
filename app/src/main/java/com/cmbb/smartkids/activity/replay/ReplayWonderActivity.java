@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -41,6 +42,7 @@ import com.cmbb.smartkids.tools.ShareUtils;
 import com.cmbb.smartkids.tools.TDevice;
 import com.cmbb.smartkids.tools.log.Log;
 import com.cmbb.smartkids.tools.picasso.PicassoTool;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.Request;
@@ -369,17 +371,19 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     String[] cache = imgUrls[j].split(",");
                     for (int k = 0; k < cache.length; k++) {
                         if (cache[k].contains("bigImage")) {
-                            ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
+                            SimpleDraweeView imageView = (SimpleDraweeView) getLayoutInflater().inflate(R.layout.activity_replay_head_img_fresco, null);
+                            //ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
                             //ImageView imageView = new ImageView(this);
-                            imageView.setAdjustViewBounds(true);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                            imageView.setAspectRatio(Float.parseFloat(cache[k + 1]) / Float.parseFloat(cache[k + 2]));
+                            LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                            imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
                             imageView.setLayoutParams(params);
                             shareImgUrl = cache[k];
                             pagerUrls.add(cache[k]);
                             Log.i("width", "width = " + cache[k + 1] + " height = " + cache[k + 2]);
                             //PicassoTool.loadImage(this, cache[k], imageView, false);
-                            PicassoTool.loadImageWithSize(this, cache[k], imageView, (int) Double.parseDouble(cache[k + 1]), (int) Double.parseDouble(cache[k + 2]), false);
-
+                            //PicassoTool.loadImageWithSize(this, cache[k], imageView, (int) Double.parseDouble(cache[k + 1]), (int) Double.parseDouble(cache[k + 2]), false);
+                            imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(cache[k])));
                             imageView.setTag(R.id.image, pagerUrls.size() - 1);
                             imageView.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -403,11 +407,12 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                     }
                 }
             } else {
-                ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
+                /*ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.activity_replay_head_img, null);
                 //ImageView imageView = new ImageView(this);
                 imageView.setAdjustViewBounds(true);
                 imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setLayoutParams(params);
+                imageView.setLayoutParams(params);*/
+                SimpleDraweeView imageView = (SimpleDraweeView) getLayoutInflater().inflate(R.layout.activity_replay_head_img_fresco, null);
                 imageView.setTag(R.id.image, pagerUrls.size() - 1);
                 imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -422,9 +427,13 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 if (imgUrl.split(",").length == 4) {
                     shareImgUrl = imgUrl.split(",")[1];
                     pagerUrls.add(imgUrl.split(",")[1]);
+                    imageView.setAspectRatio(Float.parseFloat(imgUrl.split(",")[2]) / Float.parseFloat(imgUrl.split(",")[3]));
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
+                    imageView.setLayoutParams(params);
                     //PicassoTool.loadImage(this, imgUrl.split(",")[1], imageView, false);
-                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[1], imageView, (int) Double.parseDouble(imgUrl.split(",")[2]), (int) Double.parseDouble(imgUrl.split(",")[3]), false);
-
+                    //PicassoTool.loadImageWithSize(this, imgUrl.split(",")[1], imageView, (int) Double.parseDouble(imgUrl.split(",")[2]), (int) Double.parseDouble(imgUrl.split(",")[3]), false);
+                    imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(imgUrl.split(",")[1])));
                     llContainer.addView(imageView);
                     TextView textView = (TextView) getLayoutInflater().inflate(R.layout.activity_post_detail_head_text, null);
                     textView.setLayoutParams(params);
@@ -435,8 +444,13 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 } else {
                     shareImgUrl = imgUrl.split(",")[0];
                     pagerUrls.add(imgUrl.split(",")[0]);
+                    imageView.setAspectRatio(Float.parseFloat(imgUrl.split(",")[1]) / Float.parseFloat(imgUrl.split(",")[2]));
+                    LinearLayout.LayoutParams imageViewParams = new LinearLayout.LayoutParams((int) TDevice.getScreenWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+                    imageViewParams.setMargins(TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this), TDevice.dip2px(8, this));
+                    imageView.setLayoutParams(params);
                     //PicassoTool.loadImage(this, imgUrl.split(",")[0], imageView, false);
-                    PicassoTool.loadImageWithSize(this, imgUrl.split(",")[0], imageView, (int) Double.parseDouble(imgUrl.split(",")[1]), (int) Double.parseDouble(imgUrl.split(",")[2]), false);
+                    //PicassoTool.loadImageWithSize(this, imgUrl.split(",")[0], imageView, (int) Double.parseDouble(imgUrl.split(",")[1]), (int) Double.parseDouble(imgUrl.split(",")[2]), false);
+                    imageView.setImageURI(Uri.parse(PicassoTool.getImageUrl(imgUrl.split(",")[0])));
                     llContainer.addView(imageView);
                 }
             }
@@ -513,12 +527,6 @@ public class ReplayWonderActivity extends MActivity implements AppBarLayout.OnOf
                 break;
             case R.id.action_sort:
                 sort = sort == 1 ? 2 : 1;
-
-                for (int i = 0; i < headContainer.getChildCount(); i++) {
-                    if (headContainer.getChildAt(i) instanceof ImageView) {
-                        recycleBitmap((ImageView) headContainer.getChildAt(i));
-                    }
-                }
                 LinearLayout.LayoutParams paramsCache = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 LinearLayout headCache = (LinearLayout) getLayoutInflater().inflate(R.layout.activity_replay_list_head, null);
                 headCache.setLayoutParams(paramsCache);

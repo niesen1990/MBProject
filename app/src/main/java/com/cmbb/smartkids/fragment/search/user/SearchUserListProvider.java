@@ -29,6 +29,8 @@ public class SearchUserListProvider extends DataController<SearchModel> {
     private Context mContext;
     private String content;
 
+    private int id = -1;
+
     public SearchUserListProvider(Context context, String content) {
         mContext = context;
         this.content = content;
@@ -36,6 +38,7 @@ public class SearchUserListProvider extends DataController<SearchModel> {
 
     @Override
     public void doInitialize(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("type", 1 + "");
@@ -45,12 +48,26 @@ public class SearchUserListProvider extends DataController<SearchModel> {
 
     @Override
     public void doRefresh(Callback callback) {
-
+        id = -1;
+        /*Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("type", 1 + "");
+        body.put("name", content);
+        OkHttp.asyncPost(Constants.Search.SEARCH_URL, body, content, callback);*/
     }
 
     @Override
     public void doMore(Callback callback) {
-
+        Map<String, String> body = new HashMap<>();
+        body.put("token", MApplication.token);
+        body.put("type", 1 + "");
+        body.put("name", content);
+        if (-1 != id) {
+            body.put("id", id + "");
+            body.put("upDown", 2 + "");
+        }
+        Log.e("search", "search id  = " + id);
+        OkHttp.asyncPost(Constants.Search.SEARCH_URL, body, content, callback);
     }
 
     @Override
@@ -63,6 +80,11 @@ public class SearchUserListProvider extends DataController<SearchModel> {
             }
             Gson gson = new Gson();
             SearchBaseModel data = gson.fromJson(result, SearchBaseModel.class);
+            try {
+                id = data.getContext().get(data.getContext().size() - 1).getUserId();
+            } catch (Exception e) {
+
+            }
             return data.getContext();
         } catch (Exception e) {
             e.printStackTrace();

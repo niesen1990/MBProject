@@ -43,7 +43,6 @@ public class ReplayCaseListFragment extends CommonFragment<ReplayModel> {
     @Override
     protected DataController<ReplayModel> onGenerateDataController() {
         return new ReplayCaseListProvider(mCaseDetailListModel);
-
     }
 
     @Override

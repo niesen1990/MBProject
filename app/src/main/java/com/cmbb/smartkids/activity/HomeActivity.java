@@ -127,23 +127,31 @@ public class HomeActivity extends MActivity {
         public void onReceive(Context context, Intent intent) {
             Log.i("userinfo", "userinfo flag = " + intent.getBooleanExtra(Constants.NETWORK_FLAG, false));
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
-                userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
-                tvNick.setText(userInfoDetailModel.getNike());
-                switch (userInfoDetailModel.getUserStatus()) {
-                    case 1:
-                        tvStatus.setText("备孕中");
-                        break;
-                    case 2:
-                        tvStatus.setText("怀孕中");
-                        break;
-                    case 3:
-                        tvStatus.setText("已出生");
-                        break;
+                try {
+                    userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
+                    if (null != userInfoDetailModel) {
+                        tvNick.setText(userInfoDetailModel.getNike());
+                        switch (userInfoDetailModel.getUserStatus()) {
+                            case 1:
+                                tvStatus.setText("备孕中");
+                                break;
+                            case 2:
+                                tvStatus.setText("怀孕中");
+                                break;
+                            case 3:
+                                tvStatus.setText("已出生");
+                                break;
+                        }
+                        MApplication.userStatus = userInfoDetailModel.getUserStatus();
+                        MApplication.authority = userInfoDetailModel.getAuthority();
+                        MApplication.eredar = userInfoDetailModel.getEredar();
+                        PicassoTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
+                    } else {
+                        showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
+                    }
+                } catch (Exception e) {
+                    showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
                 }
-                MApplication.userStatus = userInfoDetailModel.getUserStatus();
-                MApplication.authority = userInfoDetailModel.getAuthority();
-                MApplication.eredar = userInfoDetailModel.getEredar();
-                PicassoTool.loadImage(HomeActivity.this, userInfoDetailModel.getUserSmallHeadImg(), ivHead, true);
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
             }

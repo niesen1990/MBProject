@@ -182,7 +182,6 @@ public class UserInfoActivity extends MActivity {
                 body.put("token", MApplication.token);
                 if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
                     if (etNick.getText().toString().getBytes().length > 21) {
-                        Log.i("userinfo", "userinfo1 = ");
                         hideWaitDialog();
                         showToast("昵称设置过长");
                         return true;
@@ -200,6 +199,7 @@ public class UserInfoActivity extends MActivity {
             }
         } catch (NullPointerException e) {
 
+            Log.e("UserInfoActivity", "UserInfoActivity = " + e);
         }
 
         return super.onOptionsItemSelected(item);

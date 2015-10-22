@@ -79,7 +79,6 @@ public class ApiNetwork {
                             if (!TextUtils.isEmpty(rongToken)) {
                                 ArrayList<UserInfo> userInfos = new ArrayList<UserInfo>();
                                 if (userInfoBaseModel.getContext().getUserSmallHeadImg().contains("upload")) {
-
                                     UserInfo info = new UserInfo(rongToken, userInfoBaseModel.getContext().getNike(),
                                             userInfoBaseModel.getContext().getUserSmallHeadImg() == null ? null : Uri.parse(Constants.BASE_IMAGE_URL_OLD + userInfoBaseModel.getContext().getUserSmallHeadImg()));
                                     userInfos.add(info);
@@ -117,6 +116,7 @@ public class ApiNetwork {
                 try {
                     if (response.isSuccessful()) {
                         String result = response.body().string();
+                        Log.e("editUserInfo", "editUserInfo =  " + result);
                         Gson gson = new Gson();
                         UserInfoBaseModel userInfoBaseModel = gson.fromJson(result, UserInfoBaseModel.class);
                         if ("1".equals(userInfoBaseModel.getCode())) {
@@ -127,7 +127,7 @@ public class ApiNetwork {
                         } else {
                             Intent intent = new Intent(Constants.Home.USERINFO_DATA_INTENT);
                             intent.putExtra(Constants.NETWORK_FLAG, true);
-                            intent.putExtra(Constants.Home.USERINFO_DATA, result);
+                            intent.putExtra(Constants.Home.USERINFO_DATA, userInfoBaseModel.getContext().getFlag());
                             context.sendBroadcast(intent);
                         }
                     } else {
@@ -372,12 +372,10 @@ public class ApiNetwork {
                         RongIM.connect(MApplication.rongToken, new RongIMClient.ConnectCallback() {
                                     @Override
                                     public void onTokenIncorrect() {
-                                        Log.i("MEIZU", "---------onTokenIncorrect userId----------:");
                                     }
 
                                     @Override
                                     public void onSuccess(String userId) {
-                                        Log.i("MEIZU", "---------onSuccess userId----------:" + userId);
                                         homeActivity.btnActive.setClickable(true);
                                         homeActivity.btnAdd.setClickable(true);
                                         homeActivity.btnMaster.setClickable(true);

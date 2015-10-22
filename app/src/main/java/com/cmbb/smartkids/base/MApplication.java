@@ -55,7 +55,6 @@ public class MApplication extends Application {
     public void onCreate() {
         super.onCreate();
         if ("com.cmbb.smartkids".equals(TDevice.getCurProcessName(getApplicationContext())) || "io.rong.push".equals(TDevice.getCurProcessName(getApplicationContext()))) {
-
             instance = this;
             mContext = getApplicationContext();
             Log.i("application", "application = ");
@@ -82,7 +81,6 @@ public class MApplication extends Application {
             if ("com.cmbb.smartkids".equals(TDevice.getCurProcessName(getApplicationContext()))) {
                 RongCloudEvent.init(this);
                 RongInfoContext.init(this);
-                //Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
                 try {
                     RongIM.registerMessageType(DeAgreedFriendRequestMessage.class);
                     RongIM.registerMessageTemplate(new DeContactNotificationMessageProvider());
@@ -97,6 +95,7 @@ public class MApplication extends Application {
     private void initRong() {
         RongIM.init(this);
     }
+
 
     /**
      * 初始化Stetho
