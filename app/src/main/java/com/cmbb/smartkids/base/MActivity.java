@@ -98,14 +98,19 @@ public abstract class MActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         _isVisible = true;
         super.onResume();
-        MobclickAgent.onResume(this);
+        if (MApplication.UmengFlag) {
+            MobclickAgent.onResume(this);
+        }
+
     }
 
     @Override
     protected void onPause() {
         _isVisible = false;
         super.onPause();
-        MobclickAgent.onPause(this);
+        if (MApplication.UmengFlag) {
+            MobclickAgent.onPause(this);
+        }
     }
 
     @Override

@@ -34,7 +34,6 @@ import java.util.ArrayList;
 public class ImagePreviewDailyActivity extends MActivity {
     private final String TAG = ImagePreviewDailyActivity.class.getSimpleName();
     private ViewPager vp;
-    private CirclePageIndicator indicator;
     private ImagePreviewDailyAdapter adapter;
     private ArrayList<ImagePreviewDailyAdapter.DailyModel> data;
     private int index = 0;
@@ -58,12 +57,12 @@ public class ImagePreviewDailyActivity extends MActivity {
         adapter.setData(data);
         vp.setOffscreenPageLimit(10);
         vp.setAdapter(adapter);
-        indicator = (CirclePageIndicator) findViewById(R.id.indicator_image_preview);
+        /*indicator = (CirclePageIndicator) findViewById(R.id.indicator_image_preview);
         indicator.setFillColor(getResources().getColor(R.color.colorPrimary));
         indicator.setStrokeWidth(1.0f);
         indicator.setStrokeColor(getResources().getColor(R.color.color_white));
         indicator.setSnap(true);
-        indicator.setViewPager(vp);
+        indicator.setViewPager(vp);*/
     }
 
     private void initData() {
@@ -73,7 +72,7 @@ public class ImagePreviewDailyActivity extends MActivity {
             data = bundle.getParcelableArrayList("data");
             if (data != null && data.size() > 0) {
                 adapter.setData(this.data);
-                indicator.setCurrentItem(index);
+                vp.setCurrentItem(index);
             }
         } else {
             showToast("数据出错啦...");
@@ -81,7 +80,7 @@ public class ImagePreviewDailyActivity extends MActivity {
     }
 
     private void addListener() {
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 

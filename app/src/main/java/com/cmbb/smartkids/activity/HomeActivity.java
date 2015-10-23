@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -127,7 +128,7 @@ public class HomeActivity extends MActivity {
         public void onReceive(Context context, Intent intent) {
             Log.i("userinfo", "userinfo flag = " + intent.getBooleanExtra(Constants.NETWORK_FLAG, false));
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
-                try {
+                if (intent.getParcelableExtra(Constants.Home.USERINFO_DATA) instanceof Parcelable) {
                     userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
                     if (null != userInfoDetailModel) {
                         tvNick.setText(userInfoDetailModel.getNike());
@@ -149,8 +150,9 @@ public class HomeActivity extends MActivity {
                     } else {
                         showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
                     }
-                } catch (Exception e) {
+                } else {
                     showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
+
                 }
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
@@ -169,6 +171,7 @@ public class HomeActivity extends MActivity {
 
     @Override
     protected void init(Bundle savedInstanceState) {
+
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
         mLocalBroadcastManager.registerReceiver(new BroadcastReceiver() {
             @Override

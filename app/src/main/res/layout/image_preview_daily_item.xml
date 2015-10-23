@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<com.cmbb.smartkids.widget.ZoomImageView
+    <com.cmbb.smartkids.widget.ZoomImageView
         android:id="@+id/ziv_daily"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
--->
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"

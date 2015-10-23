@@ -51,6 +51,9 @@ public class MApplication extends Application {
     public static int eredar;// 达人权限
     public static int userStatus;//用户状态
 
+    //public static boolean PygFlag = true;
+    public static boolean UmengFlag = true;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -68,14 +71,15 @@ public class MApplication extends Application {
             authority = SPCache.getInt(Constants.SharePreference.USER_AUTHORITY, 0);
 
             initLog();
+            // 初始化融云
+            initRong();
             //initStetho();
             //初始化百度地图
             // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
             SDKInitializer.initialize(this);
             //初始化umeng推送
             initPushAgent();
-            // 初始化融云
-            initRong();
+
 
         /* 必须在使用 RongIM 的进程注册回调、注册自定义消息等 */
             if ("com.cmbb.smartkids".equals(TDevice.getCurProcessName(getApplicationContext()))) {
@@ -91,6 +95,7 @@ public class MApplication extends Application {
             initUmengAnalytics();
         }
     }
+
 
     private void initRong() {
         RongIM.init(this);
@@ -108,8 +113,10 @@ public class MApplication extends Application {
     }
 
     private void initUmengAnalytics() {
-        MobclickAgent.setDebugMode(false);
-        MobclickAgent.setCatchUncaughtExceptions(true);
+        if (UmengFlag) {
+            MobclickAgent.setDebugMode(false);
+            MobclickAgent.setCatchUncaughtExceptions(true);
+        }
     }
 
 

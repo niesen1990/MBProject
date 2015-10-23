@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,13 +58,13 @@ public class UserInfoActivity extends MActivity {
         public void onReceive(Context context, Intent intent) {
             hideWaitDialog();
             if (intent.getBooleanExtra(Constants.NETWORK_FLAG, false)) {
-                try {
+                if (intent.getParcelableExtra(Constants.Home.USERINFO_DATA) instanceof Parcelable) {
                     userInfoDetailModel = intent.getParcelableExtra(Constants.Home.USERINFO_DATA);
                     applyData(userInfoDetailModel);
-                } catch (Exception e) {
+                } else {
                     showToast(intent.getStringExtra(Constants.Home.USERINFO_DATA));
-                }
 
+                }
             } else {
                 showToast(intent.getStringExtra(Constants.NETWORK_FAILURE));
             }
@@ -175,33 +176,27 @@ public class UserInfoActivity extends MActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        try {
-            if (id == R.id.action_submit) {
-                showWaitDialog();
-                Map<String, String> body = new HashMap<>();
-                body.put("token", MApplication.token);
-                if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
-                    if (etNick.getText().toString().getBytes().length > 21) {
-                        hideWaitDialog();
-                        showToast("昵称设置过长");
-                        return true;
-                    }
-                    body.put("nike", etNick.getText().toString());
+        if (id == R.id.action_submit) {
+            showWaitDialog();
+            Map<String, String> body = new HashMap<>();
+            body.put("token", MApplication.token);
+            if (!etNick.getText().toString().equals(userInfoDetailModel.getNike())) {
+                if (etNick.getText().toString().getBytes().length > 21) {
+                    hideWaitDialog();
+                    showToast("昵称设置过长");
+                    return true;
                 }
-                Log.i("userinfo", "userinfo1 = ");
-                body.put("userStatus", status + "");
-                File file = null;
-                if (imgs.size() > 0) {
-                    file = new File(imgs.get(0));
-                }
-                ApiNetwork.editUserInfo(this, body, file);
-                return true;
+                body.put("nike", etNick.getText().toString());
             }
-        } catch (NullPointerException e) {
-
-            Log.e("UserInfoActivity", "UserInfoActivity = " + e);
+            Log.i("userinfo", "userinfo1 = ");
+            body.put("userStatus", status + "");
+            File file = null;
+            if (imgs.size() > 0) {
+                file = new File(imgs.get(0));
+            }
+            ApiNetwork.editUserInfo(this, body, file);
+            return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

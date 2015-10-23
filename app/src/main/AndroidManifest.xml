@@ -514,6 +514,15 @@
             android:label="@string/title_activity_user_record"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+
+        <!--蒲公英-->
+        <activity android:name="com.pgyersdk.activity.FeedbackActivity"/>
+
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="f0120e851754d3011dd7b251134e42c7" >
+        </meta-data>
+        <!--蒲公英-->
     </application>
 
 </manifest>

@@ -55,8 +55,8 @@ public class ImagePreviewDailyAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(final ViewGroup container, int position) {
-        View rootView = LayoutInflater.from(container.getContext()).inflate(R.layout.image_preview_daily_item, container);
-        /*final ZoomImageView img = (ZoomImageView) rootView.findViewById(R.id.ziv_daily);
+        View rootView = LayoutInflater.from(container.getContext()).inflate(R.layout.image_preview_daily_item, null);
+        final ZoomImageView img = (ZoomImageView) rootView.findViewById(R.id.ziv_daily);
         img.setScaleType(ImageView.ScaleType.FIT_CENTER);
         String imgUrl = data.get(position).getUrl();
         Log.e("ZoomImageView", "ZoomImageView = " + data.get(position).toString());
@@ -66,34 +66,37 @@ public class ImagePreviewDailyAdapter extends PagerAdapter {
             public void onPhotoTap(View view, float x, float y) {
                 activity.finish();
             }
-        });*/
+        });
 
         Log.e("ZoomImageView", "ZoomImageView = " + data.get(position).toString());
         final TextView tvContent = (TextView) rootView.findViewById(R.id.tv_content);
         if (TextUtils.isEmpty(data.get(position).getContent())) {
             tvContent.setText("");
             tvContent.setVisibility(View.GONE);
+        } else if (data.get(position).getContent().equals("null")) {
+            tvContent.setText("");
+            tvContent.setVisibility(View.GONE);
         } else {
             tvContent.setText(data.get(position).getContent());
             tvContent.setVisibility(View.VISIBLE);
         }
+        container.addView(rootView);
         return rootView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
-
             /*
              * Recycle the old bitmap to free up memory straight away
              */
-        /*try {
+        try {
             final ImageView imageView = (ImageView) object;
             final Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
             imageView.setImageBitmap(null);
             bitmap.recycle();
         } catch (Exception e) {
-        }*/
+        }
     }
 
     public static class DailyModel implements Parcelable {
@@ -118,10 +121,7 @@ public class ImagePreviewDailyAdapter extends PagerAdapter {
 
         @Override
         public String toString() {
-            return "DailyModel{" +
-                    "url='" + url + '\'' +
-                    ", content='" + content + '\'' +
-                    '}';
+            return "DailyModel{" + "url='" + url + '\'' + ", content='" + content + '\'' + '}';
         }
 
         @Override
@@ -153,6 +153,4 @@ public class ImagePreviewDailyAdapter extends PagerAdapter {
             }
         };
     }
-
-
 }
