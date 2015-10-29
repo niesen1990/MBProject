@@ -8,7 +8,7 @@ android {
         applicationId 'com.cmbb.smartkids'
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 39
+        versionCode 40
         versionName "2.0.13"
     }
     buildTypes {
@@ -52,6 +52,9 @@ android {
         }
         Lenovo {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "Lenovo"]
+        }
+        ZhiZhen01 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ZhiZhen01"]
         }
     }
 

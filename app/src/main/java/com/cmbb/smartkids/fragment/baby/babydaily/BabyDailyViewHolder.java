@@ -40,7 +40,6 @@ public class BabyDailyViewHolder extends RecyclerView.ViewHolder {
     private SimpleDraweeView riv02;
     private SimpleDraweeView riv03;
 
-
     private BabyDailyViewHolder(View view) {
         super(view);
         timeAxleRl = (RelativeLayout) view.findViewById(R.id.time_axle_rl);
@@ -63,15 +62,27 @@ public class BabyDailyViewHolder extends RecyclerView.ViewHolder {
 
         // 图片加载
         String imgUrl = entry.getSmallImg();
-        String content = entry.getContext();
+        String content = "";
+        if (TextUtils.isEmpty(entry.getContext())) {
+            content = "";
+        } else {
+            content = entry.getContext();
+        }
+
         if (!TextUtils.isEmpty(imgUrl)) {
             String[] imgUrls = imgUrl.split("\\^#\\^");
-            String[] contents = content.split("\\^#\\^");
-
+            String[] contents = null;
+            if (!TextUtils.isEmpty(content)) {
+                contents = content.split("\\^#\\^");
+            }
             ArrayList<ImagePreviewDailyAdapter.DailyModel> dailyModels = new ArrayList<>();
             for (int i = 0; i < imgUrls.length; i++) {
                 ImagePreviewDailyAdapter.DailyModel dailyModel = new ImagePreviewDailyAdapter.DailyModel();
-                dailyModel.setContent(contents[i]);
+                if (null != contents) {
+                    dailyModel.setContent(contents[i]);
+                } else {
+                    dailyModel.setContent(" ");
+                }
                 dailyModel.setUrl(imgUrls[i].split(",")[1]);
                 dailyModels.add(dailyModel);
             }

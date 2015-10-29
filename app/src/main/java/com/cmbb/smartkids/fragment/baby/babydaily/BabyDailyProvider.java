@@ -28,15 +28,16 @@ public class BabyDailyProvider extends DataController<BabyDailyModel> {
     private Context mContext;
 
     private BabyListModel mBabyListModel;
+    int id = -1;
 
     public BabyDailyProvider(Context context, BabyListModel babyRelationId) {
         mContext = context;
         this.mBabyListModel = babyRelationId;
     }
 
-
     @Override
     public void doInitialize(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("babyRelationId", mBabyListModel.getBabyId() + "");
@@ -45,6 +46,7 @@ public class BabyDailyProvider extends DataController<BabyDailyModel> {
 
     @Override
     public void doRefresh(Callback callback) {
+        id = -1;
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("babyRelationId", mBabyListModel.getBabyId() + "");
@@ -56,6 +58,8 @@ public class BabyDailyProvider extends DataController<BabyDailyModel> {
         Map<String, String> body = new HashMap<>();
         body.put("token", MApplication.token);
         body.put("babyRelationId", mBabyListModel.getBabyId() + "");
+        body.put("id", id + "");
+        body.put("upDown", 2 + "");
         OkHttp.asyncPost(Constants.Baby.FINDBYBABYGROWING_URL, body, callback);
     }
 
@@ -70,6 +74,11 @@ public class BabyDailyProvider extends DataController<BabyDailyModel> {
             Gson gson = new Gson();
             BabyDailyBaseModel data = gson.fromJson(result, BabyDailyBaseModel.class);
             List<BabyDailyModel> plateModels = data.getContext();
+            try {
+                id = data.getContext().get(data.getContext().size() - 1).getId();
+            } catch (Exception e) {
+
+            }
             return plateModels;
         } catch (Exception e) {
             e.printStackTrace();

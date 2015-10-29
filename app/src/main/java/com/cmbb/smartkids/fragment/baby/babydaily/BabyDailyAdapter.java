@@ -19,7 +19,7 @@ public class BabyDailyAdapter extends ContentAdapterBase<BabyDailyModel> {
     public BabyDailyAdapter(Context mContext, DataController<BabyDailyModel> mDataController, boolean need) {
         super(mContext, mDataController);
         this.mContext = mContext;
-        moreFlag = true;
+        moreFlag = false;
         // 设置HeaderView
         setNeedHeadView(need);
     }

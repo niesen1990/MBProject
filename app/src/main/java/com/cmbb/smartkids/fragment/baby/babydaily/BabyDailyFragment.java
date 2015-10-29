@@ -17,7 +17,6 @@ public class BabyDailyFragment extends CommonFragment<BabyDailyModel> {
     boolean need;
     BabyListModel mBabyListModel;
 
-
     public BabyDailyFragment() {
     }
 
@@ -39,8 +38,7 @@ public class BabyDailyFragment extends CommonFragment<BabyDailyModel> {
 
     @Override
     protected boolean enableRefresh() {
-        return false;
+        return true;
     }
-
 
 }

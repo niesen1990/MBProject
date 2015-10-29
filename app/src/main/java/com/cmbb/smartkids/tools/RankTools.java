@@ -183,6 +183,10 @@ public class RankTools {
                 break;
             case 4:
                 return imags[5];
+            case 5:
+                return imags[0];
+            case 6:
+                return imags[0];
             default:
                 return -1;
         }

@@ -41,5 +41,4 @@ public class CaseDetailListFragment extends CommonFragment<CaseDetailListModel> 
         return true;
     }
 
-
 }
